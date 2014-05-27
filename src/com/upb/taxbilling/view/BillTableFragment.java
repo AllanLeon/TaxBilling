@@ -1,4 +1,6 @@
-package com.example.billproject.view;
+package com.upb.taxbilling.view;
+
+import com.upb.taxbilling.R;
 
 import android.app.Fragment;
 import android.graphics.Color;
@@ -12,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-
-import com.example.billproject.R;
 
 /**
  * The fragment where the table (list) of bills is stored.
