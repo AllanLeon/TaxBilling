@@ -85,4 +85,172 @@ public class Bill {
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
 	}
+
+	/**
+	 * @return the nit
+	 */
+	public int getNit() {
+		return nit;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return the billNumber
+	 */
+	public int getBillNumber() {
+		return billNumber;
+	}
+
+	/**
+	 * @return the autorizationNumber
+	 */
+	public int getAutorizationNumber() {
+		return autorizationNumber;
+	}
+
+	/**
+	 * @return the emissionDate
+	 */
+	public Date getEmissionDate() {
+		return emissionDate;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public Double getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @return the controlCode
+	 */
+	public String getControlCode() {
+		return controlCode;
+	}
+
+	/**
+	 * @return the limitEmissionDate
+	 */
+	public Date getLimitEmissionDate() {
+		return limitEmissionDate;
+	}
+
+	/**
+	 * @return the iceAmount
+	 */
+	public Double getIceAmount() {
+		return iceAmount;
+	}
+
+	/**
+	 * @return the noTaxSaleAmount
+	 */
+	public Double getNoTaxSaleAmount() {
+		return noTaxSaleAmount;
+	}
+
+	/**
+	 * @return the taxpayerNIT
+	 */
+	public int getTaxpayerNIT() {
+		return taxpayerNIT;
+	}
+
+	/**
+	 * @return the taxpayerName
+	 */
+	public String getTaxpayerName() {
+		return taxpayerName;
+	}
+
+	/**
+	 * @param nit the nit to set
+	 */
+	public void setNit(int nit) {
+		this.nit = nit;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param billNumber the billNumber to set
+	 */
+	public void setBillNumber(int billNumber) {
+		this.billNumber = billNumber;
+	}
+
+	/**
+	 * @param autorizationNumber the autorizationNumber to set
+	 */
+	public void setAutorizationNumber(int autorizationNumber) {
+		this.autorizationNumber = autorizationNumber;
+	}
+
+	/**
+	 * @param emissionDate the emissionDate to set
+	 */
+	public void setEmissionDate(Date emissionDate) {
+		this.emissionDate = emissionDate;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	/**
+	 * @param controlCode the controlCode to set
+	 */
+	public void setControlCode(String controlCode) {
+		this.controlCode = controlCode;
+	}
+
+	/**
+	 * @param limitEmissionDate the limitEmissionDate to set
+	 */
+	public void setLimitEmissionDate(Date limitEmissionDate) {
+		this.limitEmissionDate = limitEmissionDate;
+	}
+
+	/**
+	 * @param iceAmount the iceAmount to set
+	 */
+	public void setIceAmount(Double iceAmount) {
+		this.iceAmount = iceAmount;
+	}
+
+	/**
+	 * @param noTaxSaleAmount the noTaxSaleAmount to set
+	 */
+	public void setNoTaxSaleAmount(Double noTaxSaleAmount) {
+		this.noTaxSaleAmount = noTaxSaleAmount;
+	}
+
+	/**
+	 * @param taxpayerNIT the taxpayerNIT to set
+	 */
+	public void setTaxpayerNIT(int taxpayerNIT) {
+		this.taxpayerNIT = taxpayerNIT;
+	}
+
+	/**
+	 * @param taxpayerName the taxpayerName to set
+	 */
+	public void setTaxpayerName(String taxpayerName) {
+		this.taxpayerName = taxpayerName;
+	}
 }
