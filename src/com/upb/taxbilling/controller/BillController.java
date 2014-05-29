@@ -26,6 +26,38 @@ public class BillController {
 	 * Constructor that initializes the bill list.
 	 */
 	public BillController() {
-		this.bills = new ArrayList<Bill>();
+		bills = new ArrayList<Bill>();
+	}
+	
+	/**
+	 * Adds a given bill to the list.
+	 * @param bill the bill that will be added.
+	 */
+	public void addBill(Bill bill) {
+		bills.add(bill);
+	}
+	
+	/**
+	 * Removes a bill in a given position.
+	 * @param position of the bill that will be removed.
+	 */
+	public void removeBillAt(int position) {
+		bills.remove(position);
+	}
+	
+	/**
+	 * @return the list of bills. 
+	 */
+	public List<Bill> getBillList() {
+		return bills;
+	}
+	
+	/**
+	 * Returns a bill in a given position.
+	 * @param position of the bill that will be returned.
+	 * @return a bill in a given position.
+	 */
+	public Bill getBillAt(int position) {
+		return bills.get(position);
 	}
 }
