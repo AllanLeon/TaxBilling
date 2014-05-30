@@ -11,9 +11,9 @@ import com.upb.taxbilling.R;
 
 /**
  * The fragment where the information about a bill is registered.
- * @author Allan Leon
- * @author Franco Montiel
- * @author Gina Cardozo
+ * @author Kevin Aguilar
+ * @author Vanessa Sanjinez
+ * @author Alejandra Navarro
  */
 public class RegisterFragment extends Fragment {
 
