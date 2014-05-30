@@ -71,7 +71,6 @@ public class Bill {
 	public Bill(int nit, String name, int billNumber, int autorizationNumber,
 			Date emissionDate, Double amount, String controlCode,
 			Date limitEmissionDate, int taxpayerNIT, String taxpayerName) {
-		super();
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
@@ -84,6 +83,31 @@ public class Bill {
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
+	}
+	
+	/**
+	 * Constructor with only the parameters of the bills' table.
+	 * @param nit
+	 * @param billNumber
+	 * @param autorizationNumber
+	 * @param emissionDate
+	 * @param amount
+	 * @param controlCode
+	 */
+	public Bill(int nit, int billNumber, int autorizationNumber,
+			Date emissionDate, Double amount, String controlCode) {
+		this.nit = nit;
+		this.name = "";
+		this.billNumber = billNumber;
+		this.autorizationNumber = autorizationNumber;
+		this.emissionDate = emissionDate;
+		this.amount = amount;
+		this.controlCode = controlCode;
+		this.limitEmissionDate = new Date();
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = 0;
+		this.taxpayerName = "";
 	}
 
 	/**
