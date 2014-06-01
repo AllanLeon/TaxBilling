@@ -57,25 +57,6 @@ public class BillTableFragment extends Fragment {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_bill_table, container, false);
-            return rootView;
-        }
-    }
-
-    /**
      * Adds a row with the given data of the bill to the given table.
      * @param contentTable the table where the row will be added.
      * @param number of the bill
