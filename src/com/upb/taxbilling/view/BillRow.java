@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.TableRow;
@@ -120,6 +121,8 @@ public class BillRow extends TableRow {
     	this.addView(t5);
     	this.addView(t6);
     	this.addView(t7);
+    	
+    	setFieldsStyle();
 	}
 
     /**
@@ -150,5 +153,15 @@ public class BillRow extends TableRow {
         	t6.setText(bill.getControlCode());
         }
         throw new BillException("The bill doesn't contain information.");
+    }
+
+    /**
+     * Sets the text style of the fields of this row.
+     */
+    private void setFieldsStyle() {
+    	for(int i = 0; i < 7; i++) {
+    		EditText view = (EditText) this.getChildAt(i);
+        	view.setTextColor(Color.rgb(1, 3, 38));
+    	}
     }
 }
