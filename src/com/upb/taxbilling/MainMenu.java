@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.upb.taxbilling.view.BillTableFragment;
 import com.upb.taxbilling.view.RegisterFragment;
+import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
  * The main menu of the application, this is the first activity that the compiler starts.

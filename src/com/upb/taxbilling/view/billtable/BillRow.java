@@ -1,4 +1,4 @@
-package com.upb.taxbilling.view;
+package com.upb.taxbilling.view.billtable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

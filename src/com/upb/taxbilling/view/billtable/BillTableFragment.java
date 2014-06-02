@@ -1,4 +1,4 @@
-package com.upb.taxbilling.view;
+package com.upb.taxbilling.view.billtable;
 
 import android.app.Fragment;
 import android.os.Bundle;
