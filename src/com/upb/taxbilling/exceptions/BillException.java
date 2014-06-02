@@ -7,6 +7,11 @@ package com.upb.taxbilling.exceptions;
 public class BillException extends Exception {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Constructor that receives a message as a parameter.
 	 * @param message of the exception.
 	 */

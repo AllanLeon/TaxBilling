@@ -1,9 +1,7 @@
 package com.upb.taxbilling.view;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.upb.taxbilling.R;
-import com.upb.taxbilling.model.data.Bill;
 
 /**
  * The fragment where the table (list) of bills is stored.

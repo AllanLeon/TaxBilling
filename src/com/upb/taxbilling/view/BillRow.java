@@ -2,6 +2,7 @@ package com.upb.taxbilling.view;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,6 +21,16 @@ public class BillRow extends TableRow {
 
 	private Bill bill;
 	private int rowNumber;
+	
+	/**
+	 * Default constructor of a TableRow, receives a context as a parameter.
+	 * @param context
+	 */
+	public BillRow(Context context) {
+		super(context);
+		this.rowNumber = 0;
+		initializeComponents();
+	}
 
 	/**
 	 * Constructor method that receives the context and the number of the row as
@@ -132,7 +143,7 @@ public class BillRow extends TableRow {
      */
     public void updateRowInfo() throws BillException {
         if (bill != null) {
-        	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        	DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         	
         	EditText t1 = (EditText) this.getChildAt(1);
         	t1.setText(Integer.toString(bill.getNit()));
