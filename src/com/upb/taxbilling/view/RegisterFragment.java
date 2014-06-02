@@ -1,4 +1,4 @@
-package com.example.billproject.view;
+package com.upb.taxbilling.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,13 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.billproject.R;
+import com.upb.taxbilling.R;
 
 /**
  * The fragment where the information about a bill is registered.
- * @author Allan Leon
- * @author Franco Montiel
- * @author Gina Cardozo
+ * @author Kevin Aguilar
+ * @author Vanessa Sanjinez
+ * @author Alejandra Navarro
  */
 public class RegisterFragment extends Fragment {
 
@@ -41,25 +41,5 @@ public class RegisterFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
-            return rootView;
-            
-        }
     }
 }
