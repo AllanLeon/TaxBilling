@@ -82,4 +82,20 @@ public class RegisterFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
     
+    public Taxpayer getDataTaxpayer()
+    {
+  	
+		Taxpayer taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
+		return taxpayer;
+		
+    }
+    
+    public Company getDataCompany()
+    {
+  	
+		Company company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
+		return company;
+		
+    }
+    
 }
