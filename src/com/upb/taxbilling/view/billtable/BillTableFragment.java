@@ -70,8 +70,9 @@ public class BillTableFragment extends Fragment {
     public void onClickAddButton(View view) {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-    	Bill b1 = addElectronicBill();
-    	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow),b1);
+    	//Bill b1 = addElectronicBill();
+    	Bill b2 = addManualBill();
+    	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow),b2);
     	contentTable.addView(row);
     	
     //	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
@@ -110,6 +111,13 @@ public class BillTableFragment extends Fragment {
 		ArrayList<Bill> elec = new ArrayList<Bill>();
     	Bill b1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
     	elec.add(b1);
+    	return b1;
+    }
+    
+    public Bill addManualBill() {
+		ArrayList<Bill> man = new ArrayList<Bill>();
+    	Bill b1 = new Bill(1008565022,9032,3904001124321L);
+    	man.add(b1);
     	return b1;
     }
     
