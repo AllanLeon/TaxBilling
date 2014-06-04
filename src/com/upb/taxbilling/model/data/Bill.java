@@ -12,7 +12,7 @@ public class Bill {
 	private int nit;
 	private String name;
 	private int billNumber;
-	private int autorizationNumber;
+	private long autorizationNumber;
 	private Date emissionDate;
 	private Double amount;
 	private String controlCode;
@@ -37,7 +37,7 @@ public class Bill {
 	 * @param taxpayerNIT
 	 * @param taxpayerName
 	 */
-	public Bill(int nit, String name, int billNumber, int autorizationNumber,
+	public Bill(int nit, String name, int billNumber, long autorizationNumber,
 			Date emissionDate, Double amount, String controlCode,
 			Date limitEmissionDate, Double iceAmount, Double noTaxSaleAmount,
 			int taxpayerNIT, String taxpayerName) {
@@ -68,7 +68,7 @@ public class Bill {
 	 * @param taxpayerNIT
 	 * @param taxpayerName
 	 */
-	public Bill(int nit, String name, int billNumber, int autorizationNumber,
+	public Bill(int nit, String name, int billNumber, long autorizationNumber,
 			Date emissionDate, Double amount, String controlCode,
 			Date limitEmissionDate, int taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
@@ -94,7 +94,7 @@ public class Bill {
 	 * @param amount
 	 * @param controlCode
 	 */
-	public Bill(int nit, int billNumber, int autorizationNumber,
+	public Bill(int nit, int billNumber, long autorizationNumber,
 			Date emissionDate, Double amount, String controlCode) {
 		this.nit = nit;
 		this.name = "";
@@ -106,6 +106,27 @@ public class Bill {
 		this.limitEmissionDate = new Date();
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = 0;
+		this.taxpayerName = "";
+	}
+	
+	/**
+	 * Constructor with only the parameters of the bills' table of an manual bill.
+	 * @param nit
+	 * @param billNumber
+	 * @param autorizationNumber
+	 */
+	public Bill(int nit, int billNumber, long autorizationNumber) {
+		this.nit = nit;
+		this.name = null;
+		this.billNumber = billNumber;
+		this.autorizationNumber = autorizationNumber;
+		this.emissionDate = null;
+		this.amount = null;
+		this.controlCode = null;
+		this.limitEmissionDate = new Date();
+		this.iceAmount = null;
+		this.noTaxSaleAmount = null;
 		this.taxpayerNIT = 0;
 		this.taxpayerName = "";
 	}
@@ -134,7 +155,7 @@ public class Bill {
 	/**
 	 * @return the autorizationNumber
 	 */
-	public int getAutorizationNumber() {
+	public long getAutorizationNumber() {
 		return autorizationNumber;
 	}
 
@@ -218,7 +239,7 @@ public class Bill {
 	/**
 	 * @param autorizationNumber the autorizationNumber to set
 	 */
-	public void setAutorizationNumber(int autorizationNumber) {
+	public void setAutorizationNumber(long autorizationNumber) {
 		this.autorizationNumber = autorizationNumber;
 	}
 
