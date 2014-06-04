@@ -2,10 +2,15 @@ package com.upb.taxbilling.view;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.model.data.Bill;
+import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -35,20 +40,10 @@ public class ExportBill extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 	
-	public void ExportDataRegister(){
+	public void ExportDataRegister(String[] arrayUser){
 		
 		//Bill bill = new Bill(12345, "name", 111, 222, null, 33.3, "controlCode", null, 44.4, 55.5, 54321, "taxpayerName");
 		
-		RegisterFragment rf = new RegisterFragment();
-		
-		String  User = (""+rf.getDataTaxpayer().getNameLastname()+","
-						  +rf.getDataTaxpayer().getAddress()+","
-						  +rf.getDataTaxpayer().getIdentityNumber()+","
-						  +rf.getDataTaxpayer().getExpeditionPlace()+","
-						  +rf.getDataCompany().getEmployerBussinesName()+","
-						  +rf.getDataCompany().getNitNumber()+","
-						  +rf.getDataCompany().getAddress()+"");
-		String [] arrayUser = User.split(",");
 		
 		FileWriter fichero = null;
         PrintWriter pw = null;
@@ -76,4 +71,32 @@ public class ExportBill extends Fragment{
              	 }
 		
 	}
+	
+	public String[] UserData()
+	{
+		RegisterFragment rf = new RegisterFragment();
+		String  User = (""+rf.getDataTaxpayer().getNameLastname()+","
+				  +rf.getDataTaxpayer().getAddress()+","
+				  +rf.getDataTaxpayer().getIdentityNumber()+","
+				  +rf.getDataTaxpayer().getExpeditionPlace()+","
+				  +rf.getDataCompany().getEmployerBussinesName()+","
+				  +rf.getDataCompany().getNitNumber()+","
+				  +rf.getDataCompany().getAddress()+"");
+		String [] ArrayUser = User.split(",");
+		return ArrayUser;
+	}
+	
+	public void BillData()
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		BillTableFragment btf =  new BillTableFragment();
+		//btf.getArrayListBill();
+		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
+		String bill = (""+ArrayBillData.get(0).getNit()+"|"
+						 +ArrayBillData.get(0).getBillNumber()+"|"
+						 +ArrayBillData.get(0).getAutorizationNumber()+"|"
+						 +df.format(ArrayBillData.get(0).getEmissionDate())+"");
+	}
+	
+	
 }
