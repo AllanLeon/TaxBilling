@@ -4,11 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.model.data.Bill;
 
@@ -27,6 +28,8 @@ import com.upb.taxbilling.model.data.Bill;
  * @author Gina Cardozo
  */
 public class BillTableFragment extends Fragment {
+	
+	private String value;
 
 	/**
      * {@inheritDoc}
@@ -39,10 +42,9 @@ public class BillTableFragment extends Fragment {
 		final Button button = (Button) view.findViewById(R.id.ButtonAdd);
 	        button.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	                onClickAddButton(v);
+	                	onClickAddButton(v);
 	            }
 	        });
-	    popUpMessage(view);
 	    return view;
 	}
 
@@ -63,18 +65,38 @@ public class BillTableFragment extends Fragment {
 
     /**
      * This method executes when the addButton is pressed.
-     * Adds a empty row to the bill table.
+     * Adds a new bill to the bill table.
      * @param view
-     * @throws Exception 
      */
     public void onClickAddButton(View view) {
-    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-    	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     	//Bill b1 = addElectronicBill();
-    	Bill b2 = addManualBill();
-    	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow),b2);
-    	contentTable.addView(row);
-    	
+
+/*		String date = popUpMessage(view);
+        Date convertedDate;
+		try {
+			convertedDate = new SimpleDateFormat("dd/mm/yyyy").parse(date);
+			b2.setEmissionDate(convertedDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+*/
+		popUpMessage(view,new PromptRunnable(){
+			// put whatever code you want to run after user enters a result
+			public void run() {
+		    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+		    	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
+				Bill b2 = addManualBill();
+				// get the value we stored from the dialog
+				value = this.getValue();
+				Double convertedImp = Double.parseDouble(value);
+				b2.setAmount(convertedImp);
+				BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b2);
+				contentTable.addView(row);
+			}
+		});
+
+
     //	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     //	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     //	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
@@ -121,8 +143,7 @@ public class BillTableFragment extends Fragment {
     	return b1;
     }
     
-    public void popUpMessage(View v) {
-        //ash
+    public void popUpMessage(View v, final PromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
     	alert.setTitle("Title");
@@ -134,8 +155,13 @@ public class BillTableFragment extends Fragment {
 
     	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
     	public void onClick(DialogInterface dialog, int whichButton) {
-    	  Editable value = input.getText();
-    	  // Do something with value!
+    		value = input.getText().toString();
+			dialog.dismiss();
+			// set value from the dialog inside our runnable implementation
+			postrun.setValue(value);
+			// now that we have stored the value, lets run our Runnable
+			postrun.run();
+			return;
     	  }
     	});
 
@@ -144,7 +170,6 @@ public class BillTableFragment extends Fragment {
     	    // Canceled.
     	  }
     	});
-
     	alert.show();
     }
 }
