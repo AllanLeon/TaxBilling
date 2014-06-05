@@ -28,7 +28,8 @@ public class RegisterFragment extends Fragment {
 	EditText EmployerBussinesName;
 	EditText NitNumber;
 	EditText AddressCompany;
-	
+	Taxpayer taxpayer;
+	Company company;
 	/**
      * {@inheritDoc}
      */
@@ -59,8 +60,8 @@ public class RegisterFragment extends Fragment {
 				
 				// Instance of the classes Company and Taxpayer
 				
-				Taxpayer taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
-				Company company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
+				taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
+				company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
 			}
 		});
 		
@@ -85,7 +86,6 @@ public class RegisterFragment extends Fragment {
     public Taxpayer getDataTaxpayer()
     {
   	
-		Taxpayer taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
 		return taxpayer;
 		
     }
@@ -93,7 +93,6 @@ public class RegisterFragment extends Fragment {
     public Company getDataCompany()
     {
   	
-		Company company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
 		return company;
 		
     }
