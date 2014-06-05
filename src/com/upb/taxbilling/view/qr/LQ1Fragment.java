@@ -51,7 +51,7 @@ public class LQ1Fragment extends Fragment {
 		textbox = (TextView) view.findViewById(R.id.textView1);
 		final Button btn1 = (Button) view.findViewById(R.id.button1);
 		final Button btn2 = (Button) view.findViewById(R.id.button2);
-		final TextView texto1 = textbox;
+		final TextView text1 = textbox;
 		final ImageView imgv = (ImageView) view.findViewById(R.id.imageView1);
 		/**
 		 * Shows the QR code(saved in resources) on a Imageview
@@ -68,8 +68,12 @@ public class LQ1Fragment extends Fragment {
 				 */
 				Bitmap qrCodeBitmap = BitmapFactory.decodeResource(
 						getResources(), R.drawable.qr1);
-				String msg = DecodeQRCode.decodeQRCode(qrCodeBitmap);
-				texto1.setText(msg);
+				try {
+					String msg = DecodeQRCode.decodeQRCode(qrCodeBitmap);
+					text1.setText(msg);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 			}
 		});
