@@ -1,6 +1,10 @@
 package com.upb.taxbilling.model.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
 
 /**
  * Contains the information of a bill.
@@ -13,7 +17,7 @@ public class Bill {
 	private String name;
 	private int billNumber;
 	private int autorizationNumber;
-	private Date emissionDate;
+	private static Date emissionDate;
 	private Double amount;
 	private String controlCode;
 	private Date limitEmissionDate;
@@ -21,6 +25,8 @@ public class Bill {
 	private Double noTaxSaleAmount;
 	private int taxpayerNIT;
 	private String taxpayerName;
+	private Date UpdateDate;
+	
 
 	/**
 	 * Constructor with all the parameters of an electronic bill.
@@ -53,6 +59,8 @@ public class Bill {
 		this.noTaxSaleAmount = noTaxSaleAmount;
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
+		this.UpdateDate = new Date();
+		
 	}
 
 	/**
@@ -75,7 +83,7 @@ public class Bill {
 		this.name = name;
 		this.billNumber = billNumber;
 		this.autorizationNumber = autorizationNumber;
-		this.emissionDate = emissionDate;
+		this.emissionDate = new Date();
 		this.amount = amount;
 		this.controlCode = controlCode;
 		this.limitEmissionDate = limitEmissionDate;
@@ -83,6 +91,8 @@ public class Bill {
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
+		this.UpdateDate = new Date();
+		
 	}
 	
 	/**
@@ -93,9 +103,10 @@ public class Bill {
 	 * @param emissionDate
 	 * @param amount
 	 * @param controlCode
+	 * @param limitEmissionDate 
 	 */
 	public Bill(int nit, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode) {
+			Date emissionDate, Double amount, String controlCode, Date limitEmissionDate) {
 		this.nit = nit;
 		this.name = "";
 		this.billNumber = billNumber;
@@ -103,11 +114,13 @@ public class Bill {
 		this.emissionDate = emissionDate;
 		this.amount = amount;
 		this.controlCode = controlCode;
-		this.limitEmissionDate = new Date();
+		this.limitEmissionDate = limitEmissionDate;
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = 0;
 		this.taxpayerName = "";
+		this.UpdateDate = new Date();
+		
 	}
 
 	/**
@@ -277,4 +290,25 @@ public class Bill {
 	public void setTaxpayerName(String taxpayerName) {
 		this.taxpayerName = taxpayerName;
 	}
+	
+	public void TopDate() {
+		Calendar c = Calendar.getInstance();
+		  c.setTime(emissionDate);
+		  c.add(Calendar.DAY_OF_MONTH, +120);  
+		  limitEmissionDate=c.getTime();		
+	}
+	
+	public boolean VerifyBill(){
+        Date updateDate = new Date();
+       
+        
+        if (updateDate.getTime() > limitEmissionDate.getTime()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+	
+
+	
 }
