@@ -24,10 +24,11 @@ public class DecodeQRCode {
 	 * Method to decode the QR code of a given image
 	 * @param img to be decoded
 	 * @return
+	 * @throws Exception 
 	 */
-	public static String decodeQRCode(Bitmap img) {
+	public static String decodeQRCode(Bitmap img) throws Exception {
 		if (img == null) {
-			return null;
+			throw new Exception("Image not found");
 		}
 		int width = img.getWidth();
 		int height = img.getHeight();
@@ -44,7 +45,7 @@ public class DecodeQRCode {
 		}
 		catch (ReaderException e) 
 		{
-			return null;
+			throw new Exception("Image not found");
 		}
 		return res.getText();
 	}
