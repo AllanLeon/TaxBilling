@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 
 import com.upb.taxbilling.view.RegisterFragment;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
+import com.upb.taxbilling.view.qr.LQ1Fragment;
 
 /**
  * The main menu of the application, this is the first activity that the compiler starts.
@@ -53,6 +54,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                                 getString(R.string.title_menu),
                                 getString(R.string.title_register),
                                 getString(R.string.title_bill_table),
+                                getString(R.string.title_qr_reader),
                         }),
                 this);        
     }
@@ -132,6 +134,11 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            	case 2:
            		getFragmentManager().beginTransaction()
                 .replace(R.id.container, new BillTableFragment())
+                .commit();
+           		break;
+           	case 3:
+           		getFragmentManager().beginTransaction()
+                .replace(R.id.container, new LQ1Fragment())
                 .commit();
            		break;
         }
