@@ -1,10 +1,7 @@
 package com.upb.taxbilling.model.data;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 
 /**
  * Contains the information of a bill.
@@ -17,7 +14,7 @@ public class Bill {
 	private String name;
 	private int billNumber;
 	private int autorizationNumber;
-	private static Date emissionDate;
+	private Date emissionDate;
 	private Double amount;
 	private String controlCode;
 	private Date limitEmissionDate;
@@ -25,8 +22,6 @@ public class Bill {
 	private Double noTaxSaleAmount;
 	private int taxpayerNIT;
 	private String taxpayerName;
-	private Date UpdateDate;
-	
 
 	/**
 	 * Constructor with all the parameters of an electronic bill.
@@ -44,8 +39,7 @@ public class Bill {
 	 * @param taxpayerName
 	 */
 	public Bill(int nit, String name, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode,
-			Date limitEmissionDate, Double iceAmount, Double noTaxSaleAmount,
+			Date emissionDate, Double amount, String controlCode, Double iceAmount, Double noTaxSaleAmount,
 			int taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
@@ -54,13 +48,11 @@ public class Bill {
 		this.emissionDate = emissionDate;
 		this.amount = amount;
 		this.controlCode = controlCode;
-		this.limitEmissionDate = limitEmissionDate;
+		this.limitEmissionDate = calculateLimitEmmisionDate();
 		this.iceAmount = iceAmount;
 		this.noTaxSaleAmount = noTaxSaleAmount;
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
-		this.UpdateDate = new Date();
-		
 	}
 
 	/**
@@ -77,8 +69,8 @@ public class Bill {
 	 * @param taxpayerName
 	 */
 	public Bill(int nit, String name, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode,
-			Date limitEmissionDate, int taxpayerNIT, String taxpayerName) {
+			Date emissionDate, Double amount, String controlCode, int taxpayerNIT,
+			String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
@@ -86,13 +78,11 @@ public class Bill {
 		this.emissionDate = new Date();
 		this.amount = amount;
 		this.controlCode = controlCode;
-		this.limitEmissionDate = limitEmissionDate;
+		this.limitEmissionDate = calculateLimitEmmisionDate();
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = taxpayerNIT;
-		this.taxpayerName = taxpayerName;
-		this.UpdateDate = new Date();
-		
+		this.taxpayerName = taxpayerName;		
 	}
 	
 	/**
@@ -106,7 +96,7 @@ public class Bill {
 	 * @param limitEmissionDate 
 	 */
 	public Bill(int nit, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode, Date limitEmissionDate) {
+			Date emissionDate, Double amount, String controlCode) {
 		this.nit = nit;
 		this.name = "";
 		this.billNumber = billNumber;
@@ -114,13 +104,11 @@ public class Bill {
 		this.emissionDate = emissionDate;
 		this.amount = amount;
 		this.controlCode = controlCode;
-		this.limitEmissionDate = limitEmissionDate;
+		this.limitEmissionDate = calculateLimitEmmisionDate();
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = 0;
 		this.taxpayerName = "";
-		this.UpdateDate = new Date();
-		
 	}
 
 	/**
@@ -291,27 +279,25 @@ public class Bill {
 		this.taxpayerName = taxpayerName;
 	}
 	
-	/*
+	/**
 	 * In this method 120 days has been add to emission date which become limit emission date's bill
 	 */
-	public void TopDate() {
+	public Date calculateLimitEmmisionDate() {
 		Calendar c = Calendar.getInstance();
-		  c.setTime(emissionDate);
-		  c.add(Calendar.DAY_OF_MONTH, +120);  
-		  limitEmissionDate=c.getTime();		
+		c.setTime(emissionDate);
+		c.add(Calendar.DAY_OF_MONTH, +120);  
+		return c.getTime();		
 	}
-	/*
-	 * this method compares the update date with the limit emission date's bill
+	
+	/**
+	 * This method compares the update date with the limit emission date's bill
 	 */
 	public boolean VerifyBill(){
-        Date updateDate = new Date();
-        if (updateDate.getTime() > limitEmissionDate.getTime()) {
+        Date today = new Date();
+        if (today.getTime() > limitEmissionDate.getTime()) {
             return false;
         } else {
             return true;
         }
     }
-	
-
-	
 }
