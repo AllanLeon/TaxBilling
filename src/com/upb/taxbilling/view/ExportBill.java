@@ -48,6 +48,11 @@ public class ExportBill extends Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
+		
+	public void ClickExport()
+	{
+		ExportDataRegister(UserData());
+	}
 	
 	public void ExportDataRegister(ArrayList<String> ArrayUser){
 		
@@ -75,9 +80,7 @@ public class ExportBill extends Fragment{
 		 
 		    File f = new File(ruta_sd.getAbsolutePath(), "Factura.txt");
 		 
-		    OutputStreamWriter fout =
-		        new OutputStreamWriter(
-		            new FileOutputStream(f));
+		    OutputStreamWriter fout =  new OutputStreamWriter(new FileOutputStream(f));
 		
 		for(int i=0; i <= ArrayUser.size(); i++)
 		{
@@ -90,7 +93,11 @@ public class ExportBill extends Fragment{
 		catch (Exception ex)
 		{
 		    Log.e("Ficheros", "Error al escribir fichero a tarjeta SD");
-		}
+		}		
+	}
+	
+	public void ExportDataBill()
+	{
 		
 	}
 	
@@ -108,7 +115,7 @@ public class ExportBill extends Fragment{
 		return ArrayUser;
 	}
 	
-	public void BillData()
+	public ArrayList<String> BillData()
 	{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		BillTableFragment btf =  new BillTableFragment();
@@ -116,14 +123,15 @@ public class ExportBill extends Fragment{
 		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
 		
 		ArrayList<String> ArrayBill = new ArrayList<String>();
-		ArrayBill.add(Integer.toString(ArrayBillData.get(0).getNit()));
-		ArrayBill.add(Integer.toString(ArrayBillData.get(0).getBillNumber()));
-		ArrayBill.add(Integer.toString(ArrayBillData.get(0).getAutorizationNumber()));
-		ArrayBill.add(df.format(ArrayBillData.get(0).getEmissionDate()));
-		ArrayBill.add(Double.toString(ArrayBillData.get(0).getAmount()));
-		ArrayBill.add(ArrayBillData.get(0).getControlCode());
-
+		for(int i=0; i <= ArrayBill.size() ; i++)
+		{
+			ArrayBill.add(Integer.toString(ArrayBillData.get(i).getNit())+"|"
+		              +"|"+Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
+		              +"|"+Integer.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
+		              +"|"+df.format(ArrayBillData.get(i).getEmissionDate())+"|"
+				      +"|"+Double.toString(ArrayBillData.get(i).getAmount())+"|"
+				      +"|"+ArrayBillData.get(i).getControlCode());
+		}
+		return ArrayBill;
 	}
-	
-	
 }

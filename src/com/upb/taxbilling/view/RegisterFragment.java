@@ -48,23 +48,6 @@ public class RegisterFragment extends Fragment {
 		NitNumber = (EditText)view.findViewById(R.id.editText6);
 		AddressCompany = (EditText)view.findViewById(R.id.editText7);
 		
-		// Save Data Register
-		
-		SaveButton.setOnClickListener(new View.OnClickListener() 
-		{
-			
-			@Override
-			public void onClick(View v) 
-			{
-				// TODO Auto-generated method stub
-				
-				// Instance of the classes Company and Taxpayer
-				
-				taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
-				company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
-			}
-		});
-		
 	    return view;
 	}
 
@@ -81,6 +64,13 @@ public class RegisterFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ClickSave()
+    {
+    	Toast.makeText(getActivity(), "Saving", Toast.LENGTH_SHORT).show();
+    	taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
+		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
     }
     
     public Taxpayer getDataTaxpayer()
