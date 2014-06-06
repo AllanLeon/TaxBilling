@@ -28,8 +28,8 @@ public class RegisterFragment extends Fragment {
 	EditText EmployerBussinesName;
 	EditText NitNumber;
 	EditText AddressCompany;
-	Taxpayer taxpayer;
-	Company company;
+	static Taxpayer taxpayer;
+	static Company company;
 	/**
      * {@inheritDoc}
      */
@@ -39,7 +39,6 @@ public class RegisterFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_register,
 				container, false);
 		
-		SaveButton = (Button)view.findViewById(R.id.button1);
 		NameLastname = (EditText)view.findViewById(R.id.editText1);
 		Address = (EditText)view.findViewById(R.id.editText2);
 		ExpeditionPlace = (EditText)view.findViewById(R.id.editText4);
@@ -47,11 +46,37 @@ public class RegisterFragment extends Fragment {
 		EmployerBussinesName  = (EditText)view.findViewById(R.id.editText5);
 		NitNumber = (EditText)view.findViewById(R.id.editText6);
 		AddressCompany = (EditText)view.findViewById(R.id.editText7);
+		SaveButton = (Button)view.findViewById(R.id.button1);
+		
+		SaveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ClickSaveData(v);
+			}
+		});
 		
 	    return view;
 	}
-
-	/**
+	
+	public void ClickSaveData(View v)
+	{
+		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
+		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
+		Toast.makeText(getActivity(), "Saving", Toast.LENGTH_SHORT).show();
+	}
+	
+    public Taxpayer getDataTaxpayer()
+    {	
+		return taxpayer;		
+    }
+    
+    public Company getDataCompany()
+    {  	
+		return company;		
+    }
+    
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -64,27 +89,6 @@ public class RegisterFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void ClickSave()
-    {
-    	Toast.makeText(getActivity(), "Saving", Toast.LENGTH_SHORT).show();
-    	taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
-		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
-    }
-    
-    public Taxpayer getDataTaxpayer()
-    {
-  	
-		return taxpayer;
-		
-    }
-    
-    public Company getDataCompany()
-    {
-  	
-		return company;
-		
     }
     
 }

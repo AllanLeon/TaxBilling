@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.upb.taxbilling.view.ExportBill;
 import com.upb.taxbilling.view.RegisterFragment;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
@@ -53,6 +54,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                                 getString(R.string.title_menu),
                                 getString(R.string.title_register),
                                 getString(R.string.title_bill_table),
+                                getString(R.string.title_export_bill),
                         }),
                 this);        
     }
@@ -133,6 +135,11 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            		getFragmentManager().beginTransaction()
                 .replace(R.id.container, new BillTableFragment())
                 .commit();
+           		break;
+           	case 3:
+           		getFragmentManager().beginTransaction()
+           		.replace(R.id.container, new ExportBill())
+           		.commit();
            		break;
         }
          return true;

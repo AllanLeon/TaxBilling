@@ -174,8 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/save"
-                    style="@style/ButtonStyle" 
-                    android:onClick="ClickSave"/>
+                    style="@style/ButtonStyle" />
 
             </LinearLayout>
         </LinearLayout>
