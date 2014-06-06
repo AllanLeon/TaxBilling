@@ -65,11 +65,10 @@ public class ExportBill extends Fragment{
 		
 	public void ClickExport(View v)
 	{
-		this.ExportDataRegister(this.UserData());
-		Toast.makeText(getActivity(), "Exporting", Toast.LENGTH_SHORT).show();
+		this.ExportDataRegister(this.UserData(),this.BillData());
 	}
 	
-	public void ExportDataRegister(ArrayList<String> ArrayUser){
+	public void ExportDataRegister(ArrayList<String> ArrayUser, ArrayList<String> ArrayBill){
 		
 		String estado = Environment.getExternalStorageState();
 		 
@@ -100,7 +99,15 @@ public class ExportBill extends Fragment{
 		{
 		    	fout.write(ArrayUser.get(i));
 		    	fout.write("\n");
-		} 
+		}
+		Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
+		
+		for(int i=0; i < ArrayBill.size(); i++)
+		{
+		    	fout.write(ArrayBill.get(i));
+		    	fout.write("\n");
+		}
+		Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
 		fout.close();
 		    
 		}
@@ -110,16 +117,10 @@ public class ExportBill extends Fragment{
 		}		
 	}
 	
-	public void ExportDataBill()
-	{
-		
-	}
-	
 	public ArrayList<String> UserData()
 	{		
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> ArrayUser = new ArrayList<String>();
-		Toast.makeText(getActivity(), rf.getDataTaxpayer().getNameLastname(), Toast.LENGTH_SHORT).show();
 		
 		ArrayUser.add(rf.getDataTaxpayer().getNameLastname());
 		ArrayUser.add(rf.getDataTaxpayer().getAddress());
@@ -134,27 +135,24 @@ public class ExportBill extends Fragment{
 	
 	public ArrayList<String> BillData()
 	{
-		Bill bill1 = new Bill(12345, "name1", 111, 222, null, 33.3, "controlCode", null, 44.4, 55.5, 54321, "taxpayerName");
-		Bill bill2 = new Bill(12345, "name2", 111, 222, null, 33.3, "controlCode", null, 44.4, 55.5, 54321, "taxpayerName");
-		Bill bill3 = new Bill(12345, "name3", 111, 222, null, 33.3, "controlCode", null, 44.4, 55.5, 54321, "taxpayerName");
+		Date now =  new Date();
+		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
+		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-		//BillTableFragment btf =  new BillTableFragment();
-		//btf.getArrayListBill();
 		ArrayList<String> ArrayBill = new ArrayList<String>();
 		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
 		ArrayBillData.add(bill1);
 		ArrayBillData.add(bill2);
-		ArrayBillData.add(bill3);
 		
-		for(int i=0; i <= ArrayBillData.size() ; i++)
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		for(int i=0; i < ArrayBillData.size() ; i++)
 		{
 			ArrayBill.add(Integer.toString(ArrayBillData.get(i).getNit())+"|"
-		              +"|"+Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
-		              +"|"+Integer.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
-		              +"|"+df.format(ArrayBillData.get(i).getEmissionDate())+"|"
-				      +"|"+Double.toString(ArrayBillData.get(i).getAmount())+"|"
-				      +"|"+ArrayBillData.get(i).getControlCode());
+		              +Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
+		              +Integer.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
+		              +df.format(ArrayBillData.get(i).getEmissionDate())+"|"
+				      +Double.toString(ArrayBillData.get(i).getAmount())+"|"
+				      +ArrayBillData.get(i).getControlCode());
 		}
 		return ArrayBill;
 	}
