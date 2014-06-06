@@ -95,6 +95,8 @@ public class ExportBill extends Fragment{
 		 
 		    OutputStreamWriter fout =  new OutputStreamWriter(new FileOutputStream(f));
 		
+		fout.write("DiCaprio");
+		fout.write("\n");
 		for(int i=0; i < ArrayUser.size(); i++)
 		{
 		    	fout.write(ArrayUser.get(i));
