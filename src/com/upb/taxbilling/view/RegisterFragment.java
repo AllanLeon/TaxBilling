@@ -19,7 +19,10 @@ import com.upb.taxbilling.model.data.Taxpayer;
  * @author Alejandra Navarro
  */
 public class RegisterFragment extends Fragment {
-	
+	/**
+	 *EditText attributes to get user information
+	 *Taxpayer and Company attributes to save user information  
+	 */
 	Button SaveButton;
 	EditText NameLastname;
 	EditText Address;
@@ -30,9 +33,11 @@ public class RegisterFragment extends Fragment {
 	EditText AddressCompany;
 	static Taxpayer taxpayer;
 	static Company company;
+	
 	/**
      * {@inheritDoc}
      */
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -59,6 +64,11 @@ public class RegisterFragment extends Fragment {
 	    return view;
 	}
 	
+	/**
+	 * Method to save user data in taxpayer and company
+	 * @param v
+	 */
+	
 	public void ClickSaveData(View v)
 	{
 		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
@@ -66,10 +76,22 @@ public class RegisterFragment extends Fragment {
 		Toast.makeText(getActivity(), "Saving", Toast.LENGTH_SHORT).show();
 	}
 	
+	/**
+	 * Method to return information saved in Taxpayer
+	 * This return an Taxpayer
+	 * @return
+	 */
+	
     public Taxpayer getDataTaxpayer()
     {	
 		return taxpayer;		
     }
+    
+    /**
+     * Method to return information saved in Taxpayer
+     * This return an Company
+     * @return
+     */
     
     public Company getDataCompany()
     {  	

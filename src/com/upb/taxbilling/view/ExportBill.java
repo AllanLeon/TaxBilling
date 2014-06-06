@@ -30,6 +30,11 @@ import android.widget.Toast;
 
 public class ExportBill extends Fragment{
 	
+	/**
+	 *Boolean attributes to check availabilities SD memory
+	 *Button attribute to run the data export 
+	 */
+	
 	boolean sdDisponible = false;
 	boolean sdAccesoEscritura = false;
 	Button Export;
@@ -38,8 +43,8 @@ public class ExportBill extends Fragment{
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
 				container, false);
-		Export = (Button)view.findViewById(R.id.button1);
 		
+		Export = (Button)view.findViewById(R.id.button1);
 		Export.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -62,16 +67,33 @@ public class ExportBill extends Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
-		
+	
+	/**
+	 * Method to export user data and bill data
+	 * This method is called by the button Export
+	 * @param v
+	 */
+	
 	public void ClickExport(View v)
 	{
 		this.ExportDataRegister(this.UserData(),this.BillData());
 	}
 	
+	/**
+	 * Method to create the file and write user data and bill data
+	 * This method receives as parameters an ArrayList of user data and an ArrayList of bill data
+	 * @param ArrayUser
+	 * @param ArrayBill
+	 */
+	
 	public void ExportDataRegister(ArrayList<String> ArrayUser, ArrayList<String> ArrayBill){
 		
 		String estado = Environment.getExternalStorageState();
-		 
+		
+		/**
+		 * Two IF to check availabilities SD memory  
+		 */
+		
 		if (estado.equals(Environment.MEDIA_MOUNTED))
 		{
 		    sdDisponible = true;
@@ -119,6 +141,11 @@ public class ExportBill extends Fragment{
 		}		
 	}
 	
+	/**
+	 * This method returns an ArrayList of user data sorted  
+	 * @return
+	 */
+	
 	public ArrayList<String> UserData()
 	{		
 		RegisterFragment rf =  new RegisterFragment();
@@ -134,6 +161,11 @@ public class ExportBill extends Fragment{
 		
 		return ArrayUser;
 	}
+	
+	/**
+	 * This method returns an ArrayList of bill data sorted
+	 * @return
+	 */
 	
 	public ArrayList<String> BillData()
 	{
