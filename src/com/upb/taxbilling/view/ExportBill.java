@@ -128,7 +128,7 @@ public class ExportBill extends Fragment{
 		    	fout.write("\n");
 		}
 		Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
-		
+		fout.write("\n");
 		for(int i=0; i < ArrayBill.size(); i++)
 		{
 		    	fout.write(ArrayBill.get(i));
