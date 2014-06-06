@@ -32,7 +32,9 @@ public class BillTableFragment extends Fragment {
 	private String value;
 	private String impValue;
 	private String dateValue;
-	boolean flag = false;
+	ArrayList<Bill> electronicBills = new ArrayList<Bill>();
+	ArrayList<Bill> manualBills = new ArrayList<Bill>();
+
 	
 	/**
      * {@inheritDoc}
@@ -75,20 +77,26 @@ public class BillTableFragment extends Fragment {
     	//Bill b1 = addElectronicBill();
     	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-    	final Bill b2 = addManualBill();
-    	    	
+    	final Bill b2 = newManualBill();
+
+    	//Launches first pop-up message and waits for the user to type a value.
 		popUpMessage(view, "Importe faltante", "Introduzca el importe correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
-			// put whatever code you want to run after user enters a result
+			/**
+			 * Saves the typed value into the Bill object at the Amount attribute.
+			 * At user confirmation, launches the second pop-up message.
+			 */
 			public void run() {
-				// get the value we stored from the dialog
 				value = this.getValue();
 				impValue = value;
 				Double convertedImp = Double.parseDouble(impValue);
 				b2.setAmount(convertedImp);
 				popUpMessage(view, "Fecha faltante", "Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
-					// put whatever code you want to run after user enters a result
+					/**
+					 * Saves the typed value into the Bill object at the Date attribute.
+					 * At user confirmation, prints the Bill object with the inserted data
+					 * into the table. Also aggregates the bill to an independent ManualBill Array.
+					 */
 					public void run() {
-						// get the value we stored from the dialog
 						value = this.getValue();
 						dateValue = value;
 						Date convertedDate = null;
@@ -100,6 +108,7 @@ public class BillTableFragment extends Fragment {
 							e.printStackTrace();
 						}
 						b2.setEmissionDate(convertedDate);
+						manualBills.add(b2);
 						BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b2);
 						contentTable.addView(row);
 					}
@@ -108,10 +117,6 @@ public class BillTableFragment extends Fragment {
 			}
 		});
    	}
-    //	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-    //	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-    //	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
-    //	contentTable.addView(row);
 
     /**
      * Returns the next bill number of a given row, if the row is empty it return zero.
@@ -130,7 +135,11 @@ public class BillTableFragment extends Fragment {
     	return number;
     }
     
-    public Bill addElectronicBill() {
+    /**
+     * Creates a defined electronic bill.
+     * @return a user defined electronic bill with all fields filled.
+     */
+    public Bill newElectronicBill() {
     	String dateString = "31/05/2014";
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
         Date convertedDate = null;
@@ -140,46 +149,49 @@ public class BillTableFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ArrayList<Bill> elec = new ArrayList<Bill>();
-    	Bill b1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
-    	elec.add(b1);
-    	return b1;
+    	Bill elec1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
+    	return elec1;
     }
     
-    public Bill addManualBill() {
-		ArrayList<Bill> man = new ArrayList<Bill>();
-    	Bill b1 = new Bill(1008565022,9032,3904001124321L);
-    	man.add(b1);
-    	return b1;
+    /**
+     * Creates a defined manual bill.
+     * @return a user created manual bill with only the electronic parameters.
+     */
+    public Bill newManualBill() {
+    	Bill manu1 = new Bill(1008565022,9032,3904001124321L);    	
+    	return manu1;
     }
     
-    public void popUpMessage(View v, String title, String mess, final PromptRunnable postrun) {
-    	AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+    /**
+     * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
+     * @param view 
+     * @param title Sets a Title for the pop-up message.
+     * @param mess Sets an Information Message for the user input. 
+     * @param postrun Functional class that waits for the user input, validation
+     * 				  and then executes the next command. 
+     */
+    public void popUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
+    	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+    	alert.setTitle(customTitle);
+    	alert.setMessage(customMessage);
 
-    	alert.setTitle(title);
-    	alert.setMessage(mess);
-
-    	// Set an EditText view to get user input 
-    	final EditText input = new EditText(v.getContext());
+    	final EditText input = new EditText(view.getContext());
     	alert.setView(input);
 
     	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-		public void onClick(DialogInterface dialog, int whichButton) {
-    		value = input.getText().toString();
-			dialog.dismiss();
-			// set value from the dialog inside our runnable implementation
-			postrun.setValue(value);
-			// now that we have stored the value, lets run our Runnable
-			postrun.run();
-			return;
-    	  }
+    		public void onClick(DialogInterface dialog, int whichButton) {
+    			value = input.getText().toString();
+    			dialog.dismiss();
+    			postrun.setValue(value);
+    			postrun.run();
+    			return;
+    		}
     	});
 
     	alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    	  public void onClick(DialogInterface dialog, int whichButton) {
+    		public void onClick(DialogInterface dialog, int whichButton) {
     	    // Canceled.
-    	  }
+    		}
     	});
     	alert.show();
     }
