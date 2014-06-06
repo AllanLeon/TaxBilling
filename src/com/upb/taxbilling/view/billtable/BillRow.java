@@ -154,12 +154,9 @@ public class BillRow extends TableRow {
         	EditText t3 = (EditText) this.getChildAt(3);
         	t3.setText(Long.toString(bill.getAutorizationNumber()));
         	
-   //     	EditText t4 = (EditText) this.getChildAt(4);
-   //     	t4.setText(df.format(bill.getEmissionDate()));
-        	
         	EditText t4 = (EditText) this.getChildAt(4);
-        	t4.setText("");
-        	
+        	t4.setText(df.format(bill.getEmissionDate()));
+        	        	
         	EditText t5 = (EditText) this.getChildAt(5);
         	t5.setText(Double.toString(bill.getAmount()));
         	

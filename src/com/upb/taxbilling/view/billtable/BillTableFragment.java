@@ -30,7 +30,10 @@ import com.upb.taxbilling.model.data.Bill;
 public class BillTableFragment extends Fragment {
 	
 	private String value;
-
+	private String impValue;
+	private String dateValue;
+	boolean flag = false;
+	
 	/**
      * {@inheritDoc}
      */
@@ -68,40 +71,47 @@ public class BillTableFragment extends Fragment {
      * Adds a new bill to the bill table.
      * @param view
      */
-    public void onClickAddButton(View view) {
+    public void onClickAddButton(final View view) {
     	//Bill b1 = addElectronicBill();
-
-/*		String date = popUpMessage(view);
-        Date convertedDate;
-		try {
-			convertedDate = new SimpleDateFormat("dd/mm/yyyy").parse(date);
-			b2.setEmissionDate(convertedDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/
-		popUpMessage(view,new PromptRunnable(){
+    	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	final TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
+    	final Bill b2 = addManualBill();
+    	    	
+		popUpMessage(view, "Importe faltante", "Introduzca el importe correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
 			// put whatever code you want to run after user enters a result
 			public void run() {
-		    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-		    	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-				Bill b2 = addManualBill();
 				// get the value we stored from the dialog
 				value = this.getValue();
-				Double convertedImp = Double.parseDouble(value);
+				impValue = value;
+				Double convertedImp = Double.parseDouble(impValue);
 				b2.setAmount(convertedImp);
-				BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b2);
-				contentTable.addView(row);
+				popUpMessage(view, "Fecha faltante", "Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
+					// put whatever code you want to run after user enters a result
+					public void run() {
+						// get the value we stored from the dialog
+						value = this.getValue();
+						dateValue = value;
+						Date convertedDate = null;
+						try {
+							convertedDate = new SimpleDateFormat("dd/mm/yyyy").parse(dateValue);
+							b2.setEmissionDate(convertedDate);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						b2.setEmissionDate(convertedDate);
+						BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b2);
+						contentTable.addView(row);
+					}
+				});
+
 			}
 		});
-
-
+   	}
     //	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     //	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     //	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
     //	contentTable.addView(row);
-    }
 
     /**
      * Returns the next bill number of a given row, if the row is empty it return zero.
@@ -143,18 +153,19 @@ public class BillTableFragment extends Fragment {
     	return b1;
     }
     
-    public void popUpMessage(View v, final PromptRunnable postrun) {
+    public void popUpMessage(View v, String title, String mess, final PromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 
-    	alert.setTitle("Title");
-    	alert.setMessage("Message");
+    	alert.setTitle(title);
+    	alert.setMessage(mess);
 
     	// Set an EditText view to get user input 
     	final EditText input = new EditText(v.getContext());
     	alert.setView(input);
 
     	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-    	public void onClick(DialogInterface dialog, int whichButton) {
+
+		public void onClick(DialogInterface dialog, int whichButton) {
     		value = input.getText().toString();
 			dialog.dismiss();
 			// set value from the dialog inside our runnable implementation
