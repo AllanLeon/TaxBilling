@@ -73,7 +73,7 @@ public class RegisterFragment extends Fragment {
 	{
 		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
 		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
-		Toast.makeText(getActivity(), "Saving", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 	}
 	
 	/**
