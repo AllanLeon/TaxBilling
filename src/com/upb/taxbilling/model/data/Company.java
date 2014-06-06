@@ -1,12 +1,27 @@
 package com.upb.taxbilling.model.data;
 
+/**
+ * Contains the information of a company
+ * @author Kevin Aguilar
+ * @author Alejandra Navarro
+ */
+
 public class Company {
+	
+	/**
+	 * Attributes to save the information about Company
+	 */
 	
 	private String Address;
 	private String EmployerBussinesName;
 	private Integer NitNumber;
 	
-	//Constructor method with parameters
+	/**
+	 * Constructor method with parameters
+	 * @param Address
+	 * @param EmployerBussinesName
+	 * @param NitNumber
+	 */
 	
 	public Company(String Address,String EmployerBussinesName,Integer NitNumber)
 	{		
@@ -15,7 +30,10 @@ public class Company {
 		this.NitNumber = NitNumber;
 	}
 	
-	//Getters And Setters
+	/**
+	 * Getters And Setters
+	 * @return
+	 */
 	
 	public String getAddress() 
 	{

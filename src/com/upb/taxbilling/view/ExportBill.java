@@ -27,7 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-
+/**
+ * The fragment where the information about a User and Bill is export to a file
+ * @author Kevin Aguilar
+ */
 public class ExportBill extends Fragment{
 	
 	/**
@@ -91,7 +94,7 @@ public class ExportBill extends Fragment{
 		String estado = Environment.getExternalStorageState();
 		
 		/**
-		 * Two IF to check availabilities SD memory  
+		 * Two "if" to check availabilities SD memory  
 		 */
 		
 		if (estado.equals(Environment.MEDIA_MOUNTED))

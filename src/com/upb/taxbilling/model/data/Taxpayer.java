@@ -1,13 +1,25 @@
 package com.upb.taxbilling.model.data;
 
+/**
+ * Contains the information of a taxpayer
+ * @author Vanessa Sanjinez
+ * @author Gina Cardozo
+ */
+
 public class Taxpayer {
-		
+	
+	/**
+	 * Attributes to save the information about Taxpayer
+	 */
+	
 	private String NameLastname;
 	private String Address;
 	private String ExpeditionPlace;
 	private int IdentityNumber;
 
-	//Constructor Method with parameters 
+	/**
+	 * Constructor method with parameters
+	 */
 	 
 	public Taxpayer(String NameLastname, String Address, String ExpeditionPlace, int IdentityNumber)
 	{
@@ -17,7 +29,10 @@ public class Taxpayer {
 		this.IdentityNumber = IdentityNumber;
 	}
 	
-	//Getters and Setters
+	/**
+	 * Getters and Setters
+	 * @return
+	 */
 	
 	public String getNameLastname() {
 		return NameLastname;
