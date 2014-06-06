@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BillReader {
+public class BillAnalyzer {
 	
 	private Pattern billPattern;
 	
-	public BillReader() {
+	public BillAnalyzer() {
 		billPattern = Pattern.compile("\\|");
 	}
 	
