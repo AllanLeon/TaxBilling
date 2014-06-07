@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -41,11 +43,26 @@ public class ExportBill extends Fragment{
 	boolean sdDisponible = false;
 	boolean sdAccesoEscritura = false;
 	Button Export;
+	TextView NameAndLastName;
+	TextView Address;
+	TextView ExpeditionPlace;
+	TextView IdentityNumber;
+	TextView AddressCompany;
+	TextView EmployerBussinesName;
+	TextView NitNumber;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
 				container, false);
+		
+		NameAndLastName = (TextView)view.findViewById(R.id.textView8);
+		Address = (TextView)view.findViewById(R.id.textView9);
+		IdentityNumber = (TextView)view.findViewById(R.id.textView10);
+		ExpeditionPlace = (TextView)view.findViewById(R.id.textView11);
+		EmployerBussinesName  = (TextView)view.findViewById(R.id.textView12);
+		NitNumber = (TextView)view.findViewById(R.id.textView13);
+		AddressCompany = (TextView)view.findViewById(R.id.textView14);
 		
 		Export = (Button)view.findViewById(R.id.button1);
 		Export.setOnClickListener(new View.OnClickListener() {	
@@ -56,6 +73,7 @@ public class ExportBill extends Fragment{
 			}
 		});
 		
+		this.ShowUserData(this.UserData());
 		
 	    return view;
 	}
@@ -193,4 +211,16 @@ public class ExportBill extends Fragment{
 		}
 		return ArrayBill;
 	}
+	
+	public void ShowUserData(ArrayList<String> UserData)
+	{
+		NameAndLastName.setText(UserData.get(0));
+		Address.setText(UserData.get(1));
+		IdentityNumber.setText(UserData.get(2));
+		ExpeditionPlace.setText(UserData.get(3));
+		EmployerBussinesName.setText(UserData.get(4));
+		NitNumber.setText(UserData.get(5));
+		AddressCompany.setText(UserData.get(6));
+	}
+	
 }
