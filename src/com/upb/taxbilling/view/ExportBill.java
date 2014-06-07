@@ -240,7 +240,7 @@ public class ExportBill extends Fragment{
 		for(int i = 0; i < ArrayBillData.size(); i++)
 		{
 			
-			TotalAmount = (TotalAmount + ArrayBillData.get(i).getAmount());
+			TotalAmount = (TotalAmount + (ArrayBillData.get(i).getAmount()*0.13));
 		}
 		
 		Show_TotalAmount.setText(Double.toString(TotalAmount));

@@ -16,6 +16,7 @@
 
         <TextView
             android:id="@+id/textView1"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +37,7 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -56,6 +58,7 @@
 
         <TextView
             android:id="@+id/textView3"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,6 +79,7 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -96,6 +100,7 @@
 
         <TextView
             android:id="@+id/textView5"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -116,6 +121,7 @@
 
         <TextView
             android:id="@+id/textView6"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -136,6 +142,7 @@
 
         <TextView
             android:id="@+id/textView7"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -156,6 +163,7 @@
 
         <TextView
             android:id="@+id/textView15"
+            style="@style/text_register_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -172,6 +180,7 @@
 
     <Button
         android:id="@+id/button1"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
