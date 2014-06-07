@@ -56,7 +56,7 @@ public class LQ1Fragment extends Fragment {
 		/**
 		 * Shows the QR code(saved in resources) on a Imageview
 		 */
-		imgv.setImageResource(R.drawable.qr1);
+		imgv.setImageResource(R.drawable.qr_code);
 		/**
 		 * On Click button Event
 		 */
@@ -67,7 +67,7 @@ public class LQ1Fragment extends Fragment {
 				 * Binarization of the image of the QR Code
 				 */
 				Bitmap qrCodeBitmap = BitmapFactory.decodeResource(
-						getResources(), R.drawable.qr1);
+						getResources(), R.drawable.qr_code);
 				try {
 					String msg = DecodeQRCode.decodeQRCode(qrCodeBitmap);
 					text1.setText(msg);
