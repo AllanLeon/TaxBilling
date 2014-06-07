@@ -40,8 +40,9 @@ public class ExportBill extends Fragment{
 	 *Button attribute to run the data export 
 	 */
 	
-	boolean sdDisponible = false;
-	boolean sdAccesoEscritura = false;
+	private double TotalAmount;
+	private boolean sdDisponible = false;
+	private boolean sdAccesoEscritura = false;
 	Button Export;
 	TextView NameAndLastName;
 	TextView Address;
@@ -50,6 +51,7 @@ public class ExportBill extends Fragment{
 	TextView AddressCompany;
 	TextView EmployerBussinesName;
 	TextView NitNumber;
+	TextView Show_TotalAmount;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class ExportBill extends Fragment{
 		EmployerBussinesName  = (TextView)view.findViewById(R.id.textView12);
 		NitNumber = (TextView)view.findViewById(R.id.textView13);
 		AddressCompany = (TextView)view.findViewById(R.id.textView14);
+		Show_TotalAmount = (TextView)view.findViewById(R.id.textView16);
 		
 		Export = (Button)view.findViewById(R.id.button1);
 		Export.setOnClickListener(new View.OnClickListener() {	
@@ -74,6 +77,7 @@ public class ExportBill extends Fragment{
 		});
 		
 		this.ShowUserData(this.UserData());
+		this.ShowBillAmount();
 		
 	    return view;
 	}
@@ -221,6 +225,25 @@ public class ExportBill extends Fragment{
 		EmployerBussinesName.setText(UserData.get(4));
 		NitNumber.setText(UserData.get(5));
 		AddressCompany.setText(UserData.get(6));
+	}
+	
+	public void ShowBillAmount(/*ArrayList<Bill> BillData*/)
+	{
+		TotalAmount = 0;
+		Date now =  new Date();
+		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
+		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
+		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
+		ArrayBillData.add(bill1);
+		ArrayBillData.add(bill2);
+		
+		for(int i = 0; i < ArrayBillData.size(); i++)
+		{
+			
+			TotalAmount = (TotalAmount + ArrayBillData.get(i).getAmount());
+		}
+		
+		Show_TotalAmount.setText(Double.toString(TotalAmount));
 	}
 	
 }
