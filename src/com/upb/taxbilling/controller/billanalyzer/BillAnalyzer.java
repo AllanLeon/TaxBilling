@@ -7,10 +7,9 @@ import java.util.regex.Pattern;
 
 public class BillAnalyzer {
 	
-	private Pattern billPattern;
+	private static String DIVIDER = "\\|";
 	
 	public BillAnalyzer() {
-		billPattern = Pattern.compile("\\|");
 	}
 	
 	/**
@@ -22,15 +21,6 @@ public class BillAnalyzer {
 	public List<String> tokenizeBillText(String billText) {
 		List<String> billInfo = new ArrayList<String>();
 		while(!billText.equals("")) {
-			Matcher matcher = billPattern.matcher(billText);
-			if (matcher.find()) {
-	            String token = matcher.group().trim();
-	            billInfo.add(token);
-	            billText = matcher.replaceFirst("");
-	        }
-			else {
-				throw new IllegalArgumentException("Formato de factura no valido.");
-			}
 		}
 		return billInfo;
 	}
