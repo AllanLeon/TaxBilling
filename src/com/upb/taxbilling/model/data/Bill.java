@@ -20,8 +20,10 @@ public class Bill {
 	private Date limitEmissionDate;
 	private Double iceAmount;
 	private Double noTaxSaleAmount;
-	private int taxpayerNIT;
+	private String taxpayerNIT;
 	private String taxpayerName;
+	private int economicActivity;
+	private int subsidiary;
 
 	/**
 	 * Constructor with all the parameters of an electronic bill.
@@ -39,8 +41,9 @@ public class Bill {
 	 * @param taxpayerName
 	 */
 	public Bill(int nit, String name, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode, Double iceAmount, Double noTaxSaleAmount,
-			int taxpayerNIT, String taxpayerName) {
+			Date emissionDate, Double amount, String controlCode,
+			Date limitEmissionDate, Double iceAmount, Double noTaxSaleAmount,
+			String taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
@@ -53,6 +56,8 @@ public class Bill {
 		this.noTaxSaleAmount = noTaxSaleAmount;
 		this.taxpayerNIT = taxpayerNIT;
 		this.taxpayerName = taxpayerName;
+		this.economicActivity = 0;
+		this.subsidiary = 0;
 	}
 
 	/**
@@ -69,8 +74,8 @@ public class Bill {
 	 * @param taxpayerName
 	 */
 	public Bill(int nit, String name, int billNumber, int autorizationNumber,
-			Date emissionDate, Double amount, String controlCode, int taxpayerNIT,
-			String taxpayerName) {
+			Date emissionDate, Double amount, String controlCode,
+			Date limitEmissionDate, String taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
@@ -78,11 +83,13 @@ public class Bill {
 		this.emissionDate = new Date();
 		this.amount = amount;
 		this.controlCode = controlCode;
-		this.limitEmissionDate = calculateLimitEmmisionDate();
+		this.limitEmissionDate = limitEmissionDate;
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = taxpayerNIT;
-		this.taxpayerName = taxpayerName;		
+		this.taxpayerName = taxpayerName;
+		this.economicActivity = 0;
+		this.subsidiary = 0;
 	}
 	
 	/**
@@ -107,8 +114,65 @@ public class Bill {
 		this.limitEmissionDate = calculateLimitEmmisionDate();
 		this.iceAmount = 0.0;
 		this.noTaxSaleAmount = 0.0;
-		this.taxpayerNIT = 0;
+		this.taxpayerNIT = "";
 		this.taxpayerName = "";
+		this.economicActivity = 0;
+		this.subsidiary = 0;
+	}
+	
+	/**
+	 * Constructor of a manual bill.
+	 * @param nit
+	 * @param name
+	 * @param autorizationNumber
+	 * @param limitEmissionDate
+	 * @param amount
+	 * @param economicActivity
+	 * @param subsidiary
+	 */
+	public Bill(int nit, String name, int autorizationNumber, Date limitEmissionDate,
+			double amount, int economicActivity, int subsidiary) {
+		this.nit = nit;
+		this.name = name;
+		this.billNumber = 0;
+		this.autorizationNumber = autorizationNumber;
+		this.emissionDate = new Date();
+		this.amount = amount;
+		this.controlCode = "";
+		this.limitEmissionDate = limitEmissionDate;
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = "";
+		this.taxpayerName = "";
+		this.economicActivity = economicActivity;
+		this.subsidiary = subsidiary;
+	}
+	
+	/**
+	 * Constructor of a manual bill without the optional parameters.
+	 * @param nit
+	 * @param name
+	 * @param autorizationNumber
+	 * @param limitEmissionDate
+	 * @param economicActivity
+	 * @param subsidiary
+	 */
+	public Bill(int nit, String name, int autorizationNumber,
+			Date limitEmissionDate, int economicActivity, int subsidiary) {
+		this.nit = nit;
+		this.name = name;
+		this.billNumber = 0;
+		this.autorizationNumber = autorizationNumber;
+		this.emissionDate = new Date();
+		this.amount = 0.0;
+		this.controlCode = "";
+		this.limitEmissionDate = limitEmissionDate;
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = "";
+		this.taxpayerName = "";
+		this.economicActivity = economicActivity;
+		this.subsidiary = subsidiary;
 	}
 
 	/**
@@ -184,7 +248,7 @@ public class Bill {
 	/**
 	 * @return the taxpayerNIT
 	 */
-	public int getTaxpayerNIT() {
+	public String getTaxpayerNIT() {
 		return taxpayerNIT;
 	}
 
@@ -193,6 +257,20 @@ public class Bill {
 	 */
 	public String getTaxpayerName() {
 		return taxpayerName;
+	}
+
+	/**
+	 * @return the economicActivity
+	 */
+	public int getEconomicActivity() {
+		return economicActivity;
+	}
+
+	/**
+	 * @return the subsidiary
+	 */
+	public int getSubsidiary() {
+		return subsidiary;
 	}
 
 	/**
@@ -268,7 +346,7 @@ public class Bill {
 	/**
 	 * @param taxpayerNIT the taxpayerNIT to set
 	 */
-	public void setTaxpayerNIT(int taxpayerNIT) {
+	public void setTaxpayerNIT(String taxpayerNIT) {
 		this.taxpayerNIT = taxpayerNIT;
 	}
 
@@ -277,6 +355,20 @@ public class Bill {
 	 */
 	public void setTaxpayerName(String taxpayerName) {
 		this.taxpayerName = taxpayerName;
+	}
+
+	/**
+	 * @param economicActivity the economicActivity to set
+	 */
+	public void setEconomicActivity(int economicActivity) {
+		this.economicActivity = economicActivity;
+	}
+
+	/**
+	 * @param subsidiary the subsidiary to set
+	 */
+	public void setSubsidiary(int subsidiary) {
+		this.subsidiary = subsidiary;
 	}
 	
 	/**
