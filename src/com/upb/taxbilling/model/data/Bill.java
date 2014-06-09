@@ -192,7 +192,7 @@ public class Bill {
 		this.limitEmissionDate = new Date();
 		this.iceAmount = null;
 		this.noTaxSaleAmount = null;
-		this.taxpayerNIT = 0;
+		this.taxpayerNIT = "";
 		this.taxpayerName = "";
 	}
 
