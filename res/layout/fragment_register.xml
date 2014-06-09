@@ -15,7 +15,8 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +81,8 @@
                     android:id="@+id/editText1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10"
+                    tools:ignore="TextFields" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -93,7 +95,8 @@
                     android:id="@+id/editText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10"
+                    tools:ignore="TextFields" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -120,7 +123,9 @@
                     android:id="@+id/editText4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10"
+                    tools:ignore="TextFields" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -139,7 +144,8 @@
                     android:id="@+id/editText5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10"
+                    tools:ignore="TextFields" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -166,7 +172,8 @@
                     android:id="@+id/editText7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10" />
+                    android:ems="10"
+                    tools:ignore="TextFields" />
 
                 <Button
                     android:id="@+id/button1"
