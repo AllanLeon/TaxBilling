@@ -30,7 +30,7 @@ public class BillAnalyzer {
 	/**
 	 * Creates a manual bill with a given list of a bill's information.
 	 * @param billInfo information of the bill
-	 * @return a new manual bull
+	 * @return a new manual bill
 	 * @throws BillException if the bill couldn't be created
 	 */
 	private Bill createManualBill(List<String> billInfo) throws BillException {
@@ -52,7 +52,46 @@ public class BillAnalyzer {
 			return new Bill(nit, name, autorizationNumber, limitEmissionDate,
 					ammount, economicActivity, subsidiary);
 		} catch (Exception ex) {
-			throw new BillException("El formato de la factura manual es incorrecto," +
+			throw new BillException("No se pudo reconocer la factura manual," +
+					"el problema puede ser debido a:\n" + ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Creates an electronic bill with a given list of a bill's information.
+	 * @param billInfo information of the bill
+	 * @return a new electronic bill
+	 * @throws BillException if the bill couldn't be created
+	 */
+	private Bill createElectronicBill(List<String> billInfo) throws BillException {
+		try {
+		int nit = Integer.parseInt(billInfo.get(0));
+		String name = billInfo.get(1);
+		int billNumber = Integer.parseInt(billInfo.get(2));
+		int autorizationNumber = Integer.parseInt(billInfo.get(3));
+		Date emissionDate = new SimpleDateFormat(
+				"dd/MM/yyyy", Locale.ENGLISH).parse(billInfo.get(4));
+		Double amount = Double.parseDouble(billInfo.get(5));
+		String controlCode = billInfo.get(6);
+		Date limitEmissionDate = new SimpleDateFormat(
+				"dd/MM/yyyy", Locale.ENGLISH).parse(billInfo.get(7));
+		int aux = 8;
+		Double iceAmount = 0.0;
+		Double noTaxSaleAmount = 0.0;
+		if (billInfo.size() == 12) {
+			iceAmount = Double.parseDouble(billInfo.get(aux));
+			aux++;
+			noTaxSaleAmount = Double.parseDouble(billInfo.get(aux));
+			aux++;
+		}
+		String taxpayerNIT = billInfo.get(aux);
+		String taxpayerName = billInfo.get(aux + 1);
+		
+		return new Bill(nit, name, billNumber, autorizationNumber, emissionDate,
+				amount, controlCode, limitEmissionDate, iceAmount, noTaxSaleAmount,
+				taxpayerNIT, taxpayerName);
+		} catch (Exception ex) {
+			throw new BillException("No se pudo reconocer la factura electronica," +
 					"el problema puede ser debido a:\n" + ex.getMessage());
 		}
 	}
