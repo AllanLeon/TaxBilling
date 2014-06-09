@@ -7,9 +7,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.upb.taxbilling.R;
 
@@ -62,19 +62,19 @@ public class BillTableFragment extends Fragment {
     public void onClickAddButton(View view) {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-    	BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
+    	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(lastRow));
     	contentTable.addView(row);;
     }
 
     /**
-     * Returns the next bill number of a given row, if the row is empty it return zero.
+     * Returns the next row number of a given row, if the row is empty it return zero.
      * @param lastRow the row of which the next number is calculated
-     * @return the next bill number
+     * @return the next row number
      */
-    private int getNextBillNumber(TableRow lastRow) {
+    private int getNextRowNumber(TableRow lastRow) {
     	int number = 0;
     	try {
-    		EditText lastNumber = (EditText) lastRow.getChildAt(0);
+    		TextView lastNumber = (TextView) lastRow.getChildAt(0);
     		String text = lastNumber.getText().toString();
     		number = Integer.parseInt(text) + 1;
     	} catch (Exception e) {
