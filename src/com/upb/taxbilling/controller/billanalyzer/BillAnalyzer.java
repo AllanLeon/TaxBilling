@@ -9,11 +9,29 @@ import java.util.Locale;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 
+/**
+ * Analyzes and creates a bill based on a text and it's information.
+ * @author Allan Leon
+ */
 public class BillAnalyzer {
 	
 	private static String DIVIDER = "\\|";
 	
-	public BillAnalyzer() {
+	/**
+	 * Creates a bill based on a given text.
+	 * @param billText containing the bill's info
+	 * @return a new bill with billText's info
+	 * @throws BillException if the bill couldn't be created
+	 */
+	public Bill parseBill(String billText) throws BillException {
+		List<String> billInfo = tokenizeBillText(billText);
+		Bill bill;
+		if (billInfo.size() < 8) {
+			bill = createManualBill(billInfo);
+		} else {
+			bill = createElectronicBill(billInfo);
+		}
+		return bill;
 	}
 	
 	/**
