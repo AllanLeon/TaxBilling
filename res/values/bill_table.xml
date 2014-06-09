@@ -29,4 +29,7 @@
         <item name="android:background">#F2F1DF</item>
     </style>
     
+    <color name="RowSelectedColor">#6377C5</color>
+    <color name="RowNormalColor">#F2F1DF</color>
+    
 </resources>
