@@ -2,23 +2,16 @@ package com.upb.taxbilling.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import com.upb.taxbilling.R;
-import com.upb.taxbilling.model.data.Bill;
-import com.upb.taxbilling.view.billtable.BillTableFragment;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Telephony.Sms.Conversations;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.upb.taxbilling.R;
+import com.upb.taxbilling.model.data.Bill;
 
 /**
  * The fragment where the information about a User and Bill is export to a file
@@ -210,7 +206,7 @@ public class ExportBill extends Fragment{
 		{
 			ArrayBill.add(Integer.toString(ArrayBillData.get(i).getNit())+"|"
 		              +Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
-		              +Integer.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
+		              +Long.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
 		              +df.format(ArrayBillData.get(i).getEmissionDate())+"|"
 				      +Double.toString(ArrayBillData.get(i).getAmount())+"|"
 				      +ArrayBillData.get(i).getControlCode());
