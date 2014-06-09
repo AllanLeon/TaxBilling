@@ -2,7 +2,8 @@
 
 <resources>
     
-    <string name="total_amount">Importe Total</string>
+    <string name="total_amount">Total del Rubro</string>
     <string name="export">Exportar</string>
+    <string name="payment_on_account">Determinación del pago a cuenta</string>
     
 </resources>

@@ -52,6 +52,7 @@ public class ExportBill extends Fragment{
 	TextView EmployerBussinesName;
 	TextView NitNumber;
 	TextView Show_TotalAmount;
+	TextView Show_payment_on_account;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class ExportBill extends Fragment{
 		NitNumber = (TextView)view.findViewById(R.id.textView13);
 		AddressCompany = (TextView)view.findViewById(R.id.textView14);
 		Show_TotalAmount = (TextView)view.findViewById(R.id.textView16);
+		Show_payment_on_account = (TextView)view.findViewById(R.id.textView18);
 		
 		Export = (Button)view.findViewById(R.id.button1);
 		Export.setOnClickListener(new View.OnClickListener() {	
@@ -240,10 +242,11 @@ public class ExportBill extends Fragment{
 		for(int i = 0; i < ArrayBillData.size(); i++)
 		{
 			
-			TotalAmount = (TotalAmount + (ArrayBillData.get(i).getAmount()*0.13));
+			TotalAmount = (TotalAmount + ArrayBillData.get(i).getAmount());
 		}
 		
 		Show_TotalAmount.setText(Double.toString(TotalAmount));
+		Show_payment_on_account.setText(Double.toString((TotalAmount*0.13)));
 	}
 	
 }
