@@ -130,10 +130,10 @@ public class Bill {
 	 * @param econimicActivity
 	 * @param subsidiary
 	 */
-	public Bill(int nit, int name, int autorizationNumber, Date limitEmissionDate,
+	public Bill(int nit, String name, int autorizationNumber, Date limitEmissionDate,
 			double amount, int econimicActivity, int subsidiary) {
 		this.nit = nit;
-		this.name = "";
+		this.name = name;
 		this.billNumber = 0;
 		this.autorizationNumber = autorizationNumber;
 		this.emissionDate = new Date();
@@ -157,10 +157,10 @@ public class Bill {
 	 * @param econimicActivity
 	 * @param subsidiary
 	 */
-	public Bill(int nit, int name, int autorizationNumber, Date limitEmissionDate,
-			int econimicActivity, int subsidiary) {
+	public Bill(int nit, String name, int autorizationNumber,
+			Date limitEmissionDate, int econimicActivity, int subsidiary) {
 		this.nit = nit;
-		this.name = "";
+		this.name = name;
 		this.billNumber = 0;
 		this.autorizationNumber = autorizationNumber;
 		this.emissionDate = new Date();
