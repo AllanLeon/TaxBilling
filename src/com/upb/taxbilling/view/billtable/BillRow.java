@@ -21,6 +21,7 @@ public class BillRow extends TableRow {
 
 	private Bill bill;
 	private int rowNumber;
+	private boolean isHighlighted;
 	
 	/**
 	 * Default constructor of a TableRow, receives a context as a parameter.
@@ -29,6 +30,7 @@ public class BillRow extends TableRow {
 	public BillRow(Context context) {
 		super(context);
 		this.rowNumber = 0;
+		this.isHighlighted = false;
 		initializeComponents();
 	}
 
@@ -41,6 +43,7 @@ public class BillRow extends TableRow {
 	public BillRow(Context context, int rowNumber) {
 		super(context);
 		this.rowNumber = rowNumber;
+		this.isHighlighted = false;
 		initializeComponents();
 	}
 
@@ -56,6 +59,7 @@ public class BillRow extends TableRow {
 		super(context);
 		this.rowNumber = rowNumber;
 		this.bill = bill;
+		this.isHighlighted = false;
 		initializeComponents();
 		try {
 			updateRowInfo();
@@ -90,6 +94,25 @@ public class BillRow extends TableRow {
 	 */
 	public int getRowNumber() {
 		return rowNumber;
+	}
+	
+	/**
+	 * @return true if the row is highlighted else returns false.
+	 */
+	public boolean isHighlighted() {
+		return isHighlighted;
+	}
+	
+	/**
+	 * Updates the row's highlight, if the row is already highlighted the highlight
+	 * is removed, else the row is highlighted.
+	 */
+	public void updateHighlight() {
+		if (isHighlighted) {
+			isHighlighted = false;
+		} else {
+			isHighlighted = true;
+		}
 	}
 
 	/**
