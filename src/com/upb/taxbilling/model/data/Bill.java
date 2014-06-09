@@ -127,11 +127,11 @@ public class Bill {
 	 * @param autorizationNumber
 	 * @param limitEmissionDate
 	 * @param amount
-	 * @param econimicActivity
+	 * @param economicActivity
 	 * @param subsidiary
 	 */
 	public Bill(int nit, String name, int autorizationNumber, Date limitEmissionDate,
-			double amount, int econimicActivity, int subsidiary) {
+			double amount, int economicActivity, int subsidiary) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = 0;
@@ -144,7 +144,7 @@ public class Bill {
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = "";
 		this.taxpayerName = "";
-		this.economicActivity = econimicActivity;
+		this.economicActivity = economicActivity;
 		this.subsidiary = subsidiary;
 	}
 	
@@ -154,11 +154,11 @@ public class Bill {
 	 * @param name
 	 * @param autorizationNumber
 	 * @param limitEmissionDate
-	 * @param econimicActivity
+	 * @param economicActivity
 	 * @param subsidiary
 	 */
 	public Bill(int nit, String name, int autorizationNumber,
-			Date limitEmissionDate, int econimicActivity, int subsidiary) {
+			Date limitEmissionDate, int economicActivity, int subsidiary) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = 0;
@@ -171,7 +171,7 @@ public class Bill {
 		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = "";
 		this.taxpayerName = "";
-		this.economicActivity = econimicActivity;
+		this.economicActivity = economicActivity;
 		this.subsidiary = subsidiary;
 	}
 
