@@ -70,10 +70,21 @@ public class BillTableFragment extends Fragment {
 
     /**
      * This method executes when the addButton is pressed.
+     * Adds a blank row to the table.
+     * @param view
+     */
+    public void onClickAddButton(View view) {
+    	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	final TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
+		BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
+		contentTable.addView(row);
+   	}
+    
+    /**
      * Adds a new bill to the bill table.
      * @param view
      */
-    public void onClickAddButton(final View view) {
+    public void runManualBill(final View view) {
     	//Bill b1 = addElectronicBill();
     	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
@@ -116,7 +127,8 @@ public class BillTableFragment extends Fragment {
 
 			}
 		});
-   	}
+
+    }
 
     /**
      * Returns the next bill number of a given row, if the row is empty it return zero.
