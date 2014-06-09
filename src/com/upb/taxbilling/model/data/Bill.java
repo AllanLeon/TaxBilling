@@ -260,6 +260,20 @@ public class Bill {
 	}
 
 	/**
+	 * @return the economicActivity
+	 */
+	public int getEconomicActivity() {
+		return economicActivity;
+	}
+
+	/**
+	 * @return the subsidiary
+	 */
+	public int getSubsidiary() {
+		return subsidiary;
+	}
+
+	/**
 	 * @param nit the nit to set
 	 */
 	public void setNit(int nit) {
@@ -341,6 +355,20 @@ public class Bill {
 	 */
 	public void setTaxpayerName(String taxpayerName) {
 		this.taxpayerName = taxpayerName;
+	}
+
+	/**
+	 * @param economicActivity the economicActivity to set
+	 */
+	public void setEconomicActivity(int economicActivity) {
+		this.economicActivity = economicActivity;
+	}
+
+	/**
+	 * @param subsidiary the subsidiary to set
+	 */
+	public void setSubsidiary(int subsidiary) {
+		this.subsidiary = subsidiary;
 	}
 	
 	/**
