@@ -1,14 +1,21 @@
 package com.upb.taxbilling.view.billtable.events;
 
+import android.content.res.Resources;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.view.billtable.BillRow;
-import com.upb.taxbilling.view.billtable.BillTableFragment;
 
+/**
+ * Event that executes when the number of a row is clicked.
+ * @author Allan Leon
+ */
 public class RowClickedListener implements OnClickListener {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onClick(View v) {
 		BillRow row = (BillRow) v.getParent();
@@ -21,7 +28,11 @@ public class RowClickedListener implements OnClickListener {
 	 */
 	private void highLightRow(BillRow row) {
 		row.updateHighlight();
-		//BillTableFragment table = (BillTableFragment) findViewById(R.id.ContentTable);
-		//table.updateRowsBackground();
+		Resources resource = row.getResources();
+		if (row.isHighlighted()) {
+			row.setBackgroundColor(resource.getColor(R.color.RowSelectedColor));
+		} else {
+			row.setBackgroundColor(resource.getColor(R.color.RowNormalColor));
+		}
 	}
 }
