@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#F2F1DF" >
+    android:layout_height="wrap_content" >
 
     <LinearLayout
         android:layout_width="wrap_content"

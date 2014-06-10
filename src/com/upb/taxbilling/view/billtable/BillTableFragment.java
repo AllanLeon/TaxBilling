@@ -249,6 +249,5 @@ public class BillTableFragment extends Fragment {
     			i--;
     		}
     	}
-    	//getActivity().findViewById(R.id.ContentScrollView).setBackgroundColor(getResources().getColor(R.color.RowNormalColor));
     }
 }
