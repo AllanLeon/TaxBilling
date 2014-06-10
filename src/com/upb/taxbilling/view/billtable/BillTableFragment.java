@@ -58,6 +58,12 @@ public class BillTableFragment extends Fragment {
                 	onClickRemoveButton(v);
             }
         });
+        final Button buttonClean = (Button) view.findViewById(R.id.ButtonClean);
+        buttonClean.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                	onClickCleanButton(v);
+            }
+        });
 	    return view;
 	}
 
@@ -97,6 +103,15 @@ public class BillTableFragment extends Fragment {
     public void onClickRemoveButton(View view) {
     	removeHighlightedRows();
     	updateRowNumbers();
+   	}
+    
+    /**
+     * This method executes when the clean button is pressed.
+     * Removes all the rows in the table.
+     * @param view
+     */
+    public void onClickCleanButton(View view) {
+    	cleanTable();
    	}
     
     /**
