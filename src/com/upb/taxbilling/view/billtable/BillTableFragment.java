@@ -207,4 +207,15 @@ public class BillTableFragment extends Fragment {
     	});
     	alert.show();
     }
+    
+    /**
+     * Updates the row number of all the rows in the contentTable.
+     */
+    public void updateRowNumbers() {
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	for(int i = 1; i < contentTable.getChildCount(); i++) {
+    		BillRow row = (BillRow) contentTable.getChildAt(i);
+    		row.setRowNumber(i);
+    	}
+    }
 }
