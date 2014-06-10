@@ -2,30 +2,28 @@ package com.upb.taxbilling.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import com.upb.taxbilling.R;
-import com.upb.taxbilling.model.data.Bill;
-import com.upb.taxbilling.view.billtable.BillTableFragment;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Telephony.Sms.Conversations;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.upb.taxbilling.R;
+import com.upb.taxbilling.model.data.Bill;
 
 /**
  * The fragment where the information about a User and Bill is export to a file
@@ -38,14 +36,34 @@ public class ExportBill extends Fragment{
 	 *Button attribute to run the data export 
 	 */
 	
-	boolean sdDisponible = false;
-	boolean sdAccesoEscritura = false;
+	private double TotalAmount;
+	private boolean sdDisponible = false;
+	private boolean sdAccesoEscritura = false;
 	Button Export;
+	TextView NameAndLastName;
+	TextView Address;
+	TextView ExpeditionPlace;
+	TextView IdentityNumber;
+	TextView AddressCompany;
+	TextView EmployerBussinesName;
+	TextView NitNumber;
+	TextView Show_TotalAmount;
+	TextView Show_payment_on_account;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
 				container, false);
+		
+		NameAndLastName = (TextView)view.findViewById(R.id.textView8);
+		Address = (TextView)view.findViewById(R.id.textView9);
+		IdentityNumber = (TextView)view.findViewById(R.id.textView10);
+		ExpeditionPlace = (TextView)view.findViewById(R.id.textView11);
+		EmployerBussinesName  = (TextView)view.findViewById(R.id.textView12);
+		NitNumber = (TextView)view.findViewById(R.id.textView13);
+		AddressCompany = (TextView)view.findViewById(R.id.textView14);
+		Show_TotalAmount = (TextView)view.findViewById(R.id.textView16);
+		Show_payment_on_account = (TextView)view.findViewById(R.id.textView18);
 		
 		Export = (Button)view.findViewById(R.id.button1);
 		Export.setOnClickListener(new View.OnClickListener() {	
@@ -56,6 +74,8 @@ public class ExportBill extends Fragment{
 			}
 		});
 		
+		this.ShowUserData(this.UserData());
+		this.ShowBillAmount();
 		
 	    return view;
 	}
@@ -186,11 +206,43 @@ public class ExportBill extends Fragment{
 		{
 			ArrayBill.add(Integer.toString(ArrayBillData.get(i).getNit())+"|"
 		              +Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
-		              +Integer.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
+		              +Long.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
 		              +df.format(ArrayBillData.get(i).getEmissionDate())+"|"
 				      +Double.toString(ArrayBillData.get(i).getAmount())+"|"
 				      +ArrayBillData.get(i).getControlCode());
 		}
 		return ArrayBill;
 	}
+	
+	public void ShowUserData(ArrayList<String> UserData)
+	{
+		NameAndLastName.setText(UserData.get(0));
+		Address.setText(UserData.get(1));
+		IdentityNumber.setText(UserData.get(2));
+		ExpeditionPlace.setText(UserData.get(3));
+		EmployerBussinesName.setText(UserData.get(4));
+		NitNumber.setText(UserData.get(5));
+		AddressCompany.setText(UserData.get(6));
+	}
+	
+	public void ShowBillAmount(/*ArrayList<Bill> BillData*/)
+	{
+		TotalAmount = 0;
+		Date now =  new Date();
+		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
+		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
+		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
+		ArrayBillData.add(bill1);
+		ArrayBillData.add(bill2);
+		
+		for(int i = 0; i < ArrayBillData.size(); i++)
+		{
+			
+			TotalAmount = (TotalAmount + ArrayBillData.get(i).getAmount());
+		}
+		
+		Show_TotalAmount.setText(Double.toString(TotalAmount));
+		Show_payment_on_account.setText(Double.toString((TotalAmount*0.13)));
+	}
+	
 }
