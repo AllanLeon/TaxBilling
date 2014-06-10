@@ -10,9 +10,11 @@ import android.graphics.Typeface;
 import android.text.InputType;
 import android.view.Gravity;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.events.RowClickedListener;
@@ -207,5 +209,11 @@ public class BillRow extends TableRow {
     		EditText view = (EditText) this.getChildAt(i);
         	view.setTextColor(Color.rgb(1, 3, 38));
     	}
+    	setBackgroundColor(getResources().getColor(R.color.RowNormalColor));
+    	TableLayout.LayoutParams tableRowParams =
+    			  new TableLayout.LayoutParams
+    			  (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
+    	tableRowParams.setMargins(0, 0, 0, 1);
+    	setLayoutParams(tableRowParams);
     }
 }
