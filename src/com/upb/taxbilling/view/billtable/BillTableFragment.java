@@ -250,4 +250,12 @@ public class BillTableFragment extends Fragment {
     		}
     	}
     }
+    
+    /**
+     * Cleans all the rows in the table.
+     */
+    public void cleanTable() {
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	contentTable.removeViews(1, contentTable.getChildCount() - 1);
+    }
 }
