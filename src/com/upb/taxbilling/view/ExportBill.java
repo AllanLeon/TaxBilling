@@ -37,48 +37,48 @@ public class ExportBill extends Fragment{
 	 *Button attribute to run the data export 
 	 */
 	
-	private double TotalAmount;
-	private boolean sdDisponible = false;
-	private boolean sdAccesoEscritura = false;
-	Button Export;
-	TextView NameAndLastName;
-	TextView Address;
-	TextView ExpeditionPlace;
-	TextView IdentityNumber;
-	TextView AddressCompany;
-	TextView EmployerBussinesName;
-	TextView NitNumber;
-	TextView Email;
-	TextView Show_TotalAmount;
-	TextView Show_payment_on_account;
+	private double totalAmount;
+	private boolean sdAvailable = false;
+	private boolean sdWriteAccess = false;
+	Button export;
+	TextView nameAndLastName;
+	TextView address;
+	TextView expeditionPlace;
+	TextView identityNumber;
+	TextView addressCompany;
+	TextView employerBussinesName;
+	TextView nitNumber;
+	TextView email;
+	TextView showTotalAmount;
+	TextView showPaymentOnAccount;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
 				container, false);
 		
-		NameAndLastName = (TextView)view.findViewById(R.id.textView8);
-		Address = (TextView)view.findViewById(R.id.textView9);
-		IdentityNumber = (TextView)view.findViewById(R.id.textView10);
-		ExpeditionPlace = (TextView)view.findViewById(R.id.textView11);
-		EmployerBussinesName  = (TextView)view.findViewById(R.id.textView12);
-		NitNumber = (TextView)view.findViewById(R.id.textView13);
-		AddressCompany = (TextView)view.findViewById(R.id.textView14);
-		Email = (TextView)view.findViewById(R.id.textView20);
-		Show_TotalAmount = (TextView)view.findViewById(R.id.textView16);
-		Show_payment_on_account = (TextView)view.findViewById(R.id.textView18);
+		nameAndLastName = (TextView)view.findViewById(R.id.textView8);
+		address = (TextView)view.findViewById(R.id.textView9);
+		identityNumber = (TextView)view.findViewById(R.id.textView10);
+		expeditionPlace = (TextView)view.findViewById(R.id.textView11);
+		employerBussinesName  = (TextView)view.findViewById(R.id.textView12);
+		nitNumber = (TextView)view.findViewById(R.id.textView13);
+		addressCompany = (TextView)view.findViewById(R.id.textView14);
+		email = (TextView)view.findViewById(R.id.textView20);
+		showTotalAmount = (TextView)view.findViewById(R.id.textView16);
+		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
 		
-		Export = (Button)view.findViewById(R.id.button1);
-		Export.setOnClickListener(new View.OnClickListener() {	
+		export = (Button)view.findViewById(R.id.button1);
+		export.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ClickExport(v);
+				clickExport(v);
 			}
 		});
 		
-		this.ShowUserData(this.UserData());
-		this.ShowBillAmount();
+		this.showUserData(this.userData());
+		this.showBillAmount();
 		
 	    return view;
 	}
@@ -100,9 +100,9 @@ public class ExportBill extends Fragment{
 	 * @param v
 	 */
 	
-	public void ClickExport(View v)
+	public void clickExport(View v)
 	{
-		this.ExportDataRegister(this.UserData(),this.BillData());
+		this.exportDataRegister(this.userData(),this.billData());
 	}
 	
 	/**
@@ -112,28 +112,28 @@ public class ExportBill extends Fragment{
 	 * @param ArrayBill
 	 */
 	
-	public void ExportDataRegister(ArrayList<String> ArrayUser, ArrayList<String> ArrayBill){
+	public void exportDataRegister(ArrayList<String> arrayUser, ArrayList<String> arrayBill){
 		
-		String estado = Environment.getExternalStorageState();
+		String status = Environment.getExternalStorageState();
 		
 		/**
 		 * Two "if" to check availabilities SD memory  
 		 */
 		
-		if (estado.equals(Environment.MEDIA_MOUNTED))
+		if (status.equals(Environment.MEDIA_MOUNTED))
 		{
-		    sdDisponible = true;
-		    sdAccesoEscritura = true;
+		    sdAvailable = true;
+		    sdWriteAccess = true;
 		}
-		else if (estado.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
+		else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
 		{
-		    sdDisponible = true;
-		    sdAccesoEscritura = false;
+		    sdAvailable = true;
+		    sdWriteAccess = false;
 		}
 		else
 		{
-		    sdDisponible = false;
-		    sdAccesoEscritura = false;
+		    sdAvailable = false;
+		    sdWriteAccess = false;
 		}
 		try
 		{
@@ -145,16 +145,16 @@ public class ExportBill extends Fragment{
 		
 		fout.write("DiCaprio");
 		fout.write("\n");
-		for(int i=0; i < ArrayUser.size(); i++)
+		for(int i=0; i < arrayUser.size(); i++)
 		{
-		    	fout.write(ArrayUser.get(i));
+		    	fout.write(arrayUser.get(i));
 		    	fout.write("\n");
 		}
 		Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
 		fout.write("\n");
-		for(int i=0; i < ArrayBill.size(); i++)
+		for(int i=0; i < arrayBill.size(); i++)
 		{
-		    	fout.write(ArrayBill.get(i));
+		    	fout.write(arrayBill.get(i));
 		    	fout.write("\n");
 		}
 		Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
@@ -172,21 +172,21 @@ public class ExportBill extends Fragment{
 	 * @return
 	 */
 	
-	public ArrayList<String> UserData()
+	public ArrayList<String> userData()
 	{		
 		RegisterFragment rf =  new RegisterFragment();
-		ArrayList<String> ArrayUser = new ArrayList<String>();
+		ArrayList<String> arrayUser = new ArrayList<String>();
 		
-		ArrayUser.add(rf.getDataTaxpayer().getEmail());
-		ArrayUser.add(rf.getDataTaxpayer().getNameLastname());
-		ArrayUser.add(rf.getDataTaxpayer().getAddress());
-		ArrayUser.add(Integer.toString(rf.getDataTaxpayer().getIdentityNumber()));
-		ArrayUser.add(rf.getDataTaxpayer().getExpeditionPlace());
-		ArrayUser.add(rf.getDataCompany().getEmployerBussinesName());
-		ArrayUser.add(Integer.toString(rf.getDataCompany().getNitNumber()));
-		ArrayUser.add(rf.getDataCompany().getAddress());
+		arrayUser.add(rf.getDataTaxpayer().getEmail());
+		arrayUser.add(rf.getDataTaxpayer().getNameLastname());
+		arrayUser.add(rf.getDataTaxpayer().getAddress());
+		arrayUser.add(Integer.toString(rf.getDataTaxpayer().getIdentityNumber()));
+		arrayUser.add(rf.getDataTaxpayer().getExpeditionPlace());
+		arrayUser.add(rf.getDataCompany().getEmployerBussinesName());
+		arrayUser.add(Integer.toString(rf.getDataCompany().getNitNumber()));
+		arrayUser.add(rf.getDataCompany().getAddress());
 		
-		return ArrayUser;
+		return arrayUser;
 	}
 	
 	/**
@@ -194,28 +194,28 @@ public class ExportBill extends Fragment{
 	 * @return
 	 */
 	
-	public ArrayList<String> BillData()
+	public ArrayList<String> billData()
 	{
 		Date now =  new Date();
 		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
 		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
 
-		ArrayList<String> ArrayBill = new ArrayList<String>();
-		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
-		ArrayBillData.add(bill1);
-		ArrayBillData.add(bill2);
+		ArrayList<String> arrayBill = new ArrayList<String>();
+		ArrayList<Bill> arrayBillData = new ArrayList<Bill>();
+		arrayBillData.add(bill1);
+		arrayBillData.add(bill2);
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-		for(int i=0; i < ArrayBillData.size() ; i++)
+		for(int i=0; i < arrayBillData.size() ; i++)
 		{
-			ArrayBill.add(Integer.toString(ArrayBillData.get(i).getNit())+"|"
-		              +Integer.toString(ArrayBillData.get(i).getBillNumber())+"|"
-		              +Long.toString(ArrayBillData.get(i).getAutorizationNumber())+"|"
-		              +df.format(ArrayBillData.get(i).getEmissionDate())+"|"
-				      +Double.toString(ArrayBillData.get(i).getAmount())+"|"
-				      +ArrayBillData.get(i).getControlCode());
+			arrayBill.add(Integer.toString(arrayBillData.get(i).getNit())+"|"
+		              +Integer.toString(arrayBillData.get(i).getBillNumber())+"|"
+		              +Long.toString(arrayBillData.get(i).getAutorizationNumber())+"|"
+		              +df.format(arrayBillData.get(i).getEmissionDate())+"|"
+				      +Double.toString(arrayBillData.get(i).getAmount())+"|"
+				      +arrayBillData.get(i).getControlCode());
 		}
-		return ArrayBill;
+		return arrayBill;
 	}
 	
 	/**
@@ -224,16 +224,16 @@ public class ExportBill extends Fragment{
 	 * @param UserData
 	 */
 	
-	public void ShowUserData(ArrayList<String> UserData)
+	public void showUserData(ArrayList<String> userData)
 	{
-		NameAndLastName.setText(UserData.get(1));
-		Address.setText(UserData.get(2));
-		IdentityNumber.setText(UserData.get(3));
-		ExpeditionPlace.setText(UserData.get(4));
-		EmployerBussinesName.setText(UserData.get(5));
-		NitNumber.setText(UserData.get(6));
-		AddressCompany.setText(UserData.get(7));
-		Email.setText(UserData.get(0));
+		nameAndLastName.setText(userData.get(1));
+		address.setText(userData.get(2));
+		identityNumber.setText(userData.get(3));
+		expeditionPlace.setText(userData.get(4));
+		employerBussinesName.setText(userData.get(5));
+		nitNumber.setText(userData.get(6));
+		addressCompany.setText(userData.get(7));
+		email.setText(userData.get(0));
 	
 	}
 	
@@ -242,9 +242,9 @@ public class ExportBill extends Fragment{
 	 * This method receives as parameters an ArrayList of bill data.
 	 */
 	
-	public void ShowBillAmount(/*ArrayList<Bill> BillData*/)
+	public void showBillAmount(/*ArrayList<Bill> BillData*/)
 	{
-		TotalAmount = 0;
+		totalAmount = 0;
 		Date now =  new Date();
 		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
 		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
@@ -255,11 +255,11 @@ public class ExportBill extends Fragment{
 		for(int i = 0; i < ArrayBillData.size(); i++)
 		{
 			
-			TotalAmount = (TotalAmount + ArrayBillData.get(i).getAmount());
+			totalAmount = (totalAmount + ArrayBillData.get(i).getAmount());
 		}
 		
-		Show_TotalAmount.setText(Double.toString(TotalAmount));
-		Show_payment_on_account.setText(Double.toString((TotalAmount*0.13)));
+		showTotalAmount.setText(Double.toString(totalAmount));
+		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
 	}
 	
 }

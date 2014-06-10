@@ -12,23 +12,23 @@ public class Taxpayer {
 	 * Attributes to save the information about Taxpayer
 	 */
 	
-	private String NameLastname;
-	private String Address;
-	private String ExpeditionPlace;
-	private String Email;
-	private int IdentityNumber;
+	private String nameLastname;
+	private String address;
+	private String expeditionPlace;
+	private String email;
+	private int identityNumber;
 
 	/**
 	 * Constructor method with parameters
 	 */
 	 
-	public Taxpayer(String NameLastname, String Address, String ExpeditionPlace, String Email, int IdentityNumber)
+	public Taxpayer(String nameLastname, String address, String expeditionPlace, String email, int identityNumber)
 	{
-		this.NameLastname = NameLastname;
-		this.Address = Address;
-		this.ExpeditionPlace = ExpeditionPlace;
-		this.Email = Email;
-		this.IdentityNumber = IdentityNumber;
+		this.nameLastname = nameLastname;
+		this.address = address;
+		this.expeditionPlace = expeditionPlace;
+		this.email = email;
+		this.identityNumber = identityNumber;
 	}
 	
 	/**
@@ -37,44 +37,44 @@ public class Taxpayer {
 	 */
 	
 	public String getNameLastname() {
-		return NameLastname;
+		return nameLastname;
 	}
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public String getExpeditionPlace() {
-		return ExpeditionPlace;
+		return expeditionPlace;
 	}
 
 	public int getIdentityNumber() {
-		return IdentityNumber;
+		return identityNumber;
 	}
 	
 	public String getEmail() 
 	{
-		return Email;
+		return email;
 	}
 	
 	public void setNameLastname(String nameLastname) {
-		NameLastname = nameLastname;
+		this.nameLastname = nameLastname;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 
 	public void setExpeditionPlace(String expeditionPlace) {
-		ExpeditionPlace = expeditionPlace;
+		this.expeditionPlace = expeditionPlace;
 	}
 
 	public void setIdentityNumber(int identityNumber) {
-		IdentityNumber = identityNumber;
+		this.identityNumber = identityNumber;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 	
 	
