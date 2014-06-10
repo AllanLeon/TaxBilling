@@ -91,6 +91,8 @@ public class BillRow extends TableRow {
 	 */
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
+		TextView t1 = (TextView) this.getChildAt(0);
+		t1.setText(Integer.toString(rowNumber));
 	}
 	
 	/**
