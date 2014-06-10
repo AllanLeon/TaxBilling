@@ -218,4 +218,18 @@ public class BillTableFragment extends Fragment {
     		row.setRowNumber(i);
     	}
     }
+    
+    /**
+     * Removes the highlighted rows of the content table.
+     */
+    public void removeHighlightedRows() {
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	for (int i = 1; i < contentTable.getChildCount(); i++) {
+    		BillRow row = (BillRow) contentTable.getChildAt(i);
+    		if (row.isHighlighted()) {
+    			contentTable.removeViewAt(i);
+    			i--;
+    		}
+    	}
+    }
 }
