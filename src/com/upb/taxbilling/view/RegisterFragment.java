@@ -31,6 +31,7 @@ public class RegisterFragment extends Fragment {
 	EditText EmployerBussinesName;
 	EditText NitNumber;
 	EditText AddressCompany;
+	EditText Email;
 	static Taxpayer taxpayer;
 	static Company company;
 	
@@ -51,6 +52,7 @@ public class RegisterFragment extends Fragment {
 		EmployerBussinesName  = (EditText)view.findViewById(R.id.editText5);
 		NitNumber = (EditText)view.findViewById(R.id.editText6);
 		AddressCompany = (EditText)view.findViewById(R.id.editText7);
+		Email = (EditText)view.findViewById(R.id.editText10);
 		SaveButton = (Button)view.findViewById(R.id.button1);
 		
 		SaveButton.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +73,7 @@ public class RegisterFragment extends Fragment {
 	
 	public void ClickSaveData(View v)
 	{
-		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
+		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Email.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
 		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
 		Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 	}

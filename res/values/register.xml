@@ -14,6 +14,7 @@
     <string name="month">Mes</string>
     <string name="year">Año</string>
     <string name="save">Guardar</string>
+    <string name="email">Email</string>
     <color name="registerBackgroundColor">#F2F1DF</color>
     
     <!-- Style used in the textviews of the register fragment. -->
