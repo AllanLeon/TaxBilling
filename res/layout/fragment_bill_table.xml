@@ -31,7 +31,15 @@
                 style="@style/ButtonStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="1dp"
                 android:text="@string/ButtonRemove" />
+            
+            <Button
+                android:id="@+id/ButtonClean"
+                style="@style/ButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ButtonClean" />
         </LinearLayout>
 
         <!-- Layout that contains the header row of the table -->
