@@ -36,8 +36,6 @@ public class ExportBill extends Fragment{
 	 */
 	
 	private double TotalAmount;
-	private boolean sdDisponible = false;
-	private boolean sdAccesoEscritura = false;
 	Button Export;
 	TextView NameAndLastName;
 	TextView Address;
@@ -112,10 +110,13 @@ public class ExportBill extends Fragment{
 		
 		String estado = Environment.getExternalStorageState();
 		
+		Boolean sdAccesoEscritura = false;
+		Boolean sdDisponible = false;
+
 		/**
 		 * Two "if" to check availabilities SD memory  
 		 */
-		
+
 		if (estado.equals(Environment.MEDIA_MOUNTED))
 		{
 		    sdDisponible = true;
