@@ -242,7 +242,7 @@ public class ExportBill extends Fragment{
 	 * This method receives as parameters an ArrayList of bill data.
 	 */
 	
-	public void showBillAmount(/*ArrayList<Bill> BillData*/)
+	public void showBillAmount(/*ArrayList<Bill> billData*/)
 	{
 		totalAmount = 0;
 		Date now =  new Date();
