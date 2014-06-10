@@ -12,6 +12,7 @@ import java.util.Locale;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ public class ExportBill extends Fragment{
 	TextView AddressCompany;
 	TextView EmployerBussinesName;
 	TextView NitNumber;
+	TextView Email;
 	TextView Show_TotalAmount;
 	TextView Show_payment_on_account;
 	
@@ -62,6 +64,7 @@ public class ExportBill extends Fragment{
 		EmployerBussinesName  = (TextView)view.findViewById(R.id.textView12);
 		NitNumber = (TextView)view.findViewById(R.id.textView13);
 		AddressCompany = (TextView)view.findViewById(R.id.textView14);
+		Email = (TextView)view.findViewById(R.id.textView20);
 		Show_TotalAmount = (TextView)view.findViewById(R.id.textView16);
 		Show_payment_on_account = (TextView)view.findViewById(R.id.textView18);
 		
@@ -174,6 +177,7 @@ public class ExportBill extends Fragment{
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> ArrayUser = new ArrayList<String>();
 		
+		ArrayUser.add(rf.getDataTaxpayer().getEmail());
 		ArrayUser.add(rf.getDataTaxpayer().getNameLastname());
 		ArrayUser.add(rf.getDataTaxpayer().getAddress());
 		ArrayUser.add(Integer.toString(rf.getDataTaxpayer().getIdentityNumber()));
@@ -214,16 +218,29 @@ public class ExportBill extends Fragment{
 		return ArrayBill;
 	}
 	
+	/**
+	 * This method show user data.
+	 * This method receives as parameters an ArrayList of user data
+	 * @param UserData
+	 */
+	
 	public void ShowUserData(ArrayList<String> UserData)
 	{
-		NameAndLastName.setText(UserData.get(0));
-		Address.setText(UserData.get(1));
-		IdentityNumber.setText(UserData.get(2));
-		ExpeditionPlace.setText(UserData.get(3));
-		EmployerBussinesName.setText(UserData.get(4));
-		NitNumber.setText(UserData.get(5));
-		AddressCompany.setText(UserData.get(6));
+		NameAndLastName.setText(UserData.get(1));
+		Address.setText(UserData.get(2));
+		IdentityNumber.setText(UserData.get(3));
+		ExpeditionPlace.setText(UserData.get(4));
+		EmployerBussinesName.setText(UserData.get(5));
+		NitNumber.setText(UserData.get(6));
+		AddressCompany.setText(UserData.get(7));
+		Email.setText(UserData.get(0));
+	
 	}
+	
+	/**
+	 * This method show total amount and payment on account.
+	 * This method receives as parameters an ArrayList of bill data.
+	 */
 	
 	public void ShowBillAmount(/*ArrayList<Bill> BillData*/)
 	{
