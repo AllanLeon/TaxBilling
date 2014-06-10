@@ -127,7 +127,47 @@ public class BillTableFragment extends Fragment {
 
 			}
 		});
+    }
+    
+    /**
+     * Adds a new bill to the bill table.
+     * @param view
+     */
+    public void runElectronicBill(final View view) {
+ 
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
+    	Bill b1 = newElectronicBill();
+		electronicBills.add(b1);
+		BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b1);
+		contentTable.addView(row);
+    }
+    
+    /**
+     * Creates a defined manual bill.
+     * @return a user created manual bill with only the electronic parameters.
+     */
+    public Bill newManualBill() {
+    	Bill manu1 = new Bill(1008565022,9032,3904001124321L);    	
+    	return manu1;
+    }
 
+    /**
+     * Creates a defined electronic bill.
+     * @return a user defined electronic bill with all fields filled.
+     */
+    public Bill newElectronicBill() {
+    	String dateString = "31/05/2014";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
+        Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	Bill elec1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
+    	return elec1;
     }
 
     /**
@@ -146,34 +186,7 @@ public class BillTableFragment extends Fragment {
     	}
     	return number;
     }
-    
-    /**
-     * Creates a defined electronic bill.
-     * @return a user defined electronic bill with all fields filled.
-     */
-    public Bill newElectronicBill() {
-    	String dateString = "31/05/2014";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
-        Date convertedDate = null;
-		try {
-			convertedDate = dateFormat.parse(dateString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	Bill elec1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
-    	return elec1;
-    }
-    
-    /**
-     * Creates a defined manual bill.
-     * @return a user created manual bill with only the electronic parameters.
-     */
-    public Bill newManualBill() {
-    	Bill manu1 = new Bill(1008565022,9032,3904001124321L);    	
-    	return manu1;
-    }
-    
+        
     /**
      * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
      * @param view 
