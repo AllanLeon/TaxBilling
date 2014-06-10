@@ -6,12 +6,18 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.InputType;
+import android.view.Gravity;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
+import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
+import com.upb.taxbilling.view.billtable.events.RowClickedListener;
 
 /**
  * The TableRow where a bill is stored.
@@ -21,6 +27,7 @@ public class BillRow extends TableRow {
 
 	private Bill bill;
 	private int rowNumber;
+	private boolean isHighlighted;
 	
 	/**
 	 * Default constructor of a TableRow, receives a context as a parameter.
@@ -29,6 +36,7 @@ public class BillRow extends TableRow {
 	public BillRow(Context context) {
 		super(context);
 		this.rowNumber = 0;
+		this.isHighlighted = false;
 		initializeComponents();
 	}
 
@@ -41,6 +49,7 @@ public class BillRow extends TableRow {
 	public BillRow(Context context, int rowNumber) {
 		super(context);
 		this.rowNumber = rowNumber;
+		this.isHighlighted = false;
 		initializeComponents();
 	}
 
@@ -56,6 +65,7 @@ public class BillRow extends TableRow {
 		super(context);
 		this.rowNumber = rowNumber;
 		this.bill = bill;
+		this.isHighlighted = false;
 		initializeComponents();
 		try {
 			updateRowInfo();
@@ -83,6 +93,8 @@ public class BillRow extends TableRow {
 	 */
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
+		TextView t1 = (TextView) this.getChildAt(0);
+		t1.setText(Integer.toString(rowNumber));
 	}
 	
 	/**
@@ -91,15 +103,33 @@ public class BillRow extends TableRow {
 	public int getRowNumber() {
 		return rowNumber;
 	}
+	
+	/**
+	 * @return true if the row is highlighted else returns false.
+	 */
+	public boolean isHighlighted() {
+		return isHighlighted;
+	}
+	
+	/**
+	 * Updates the row's highlight, if the row is already highlighted the highlight
+	 * is removed, else the row is highlighted.
+	 */
+	public void updateHighlight() {
+		if (isHighlighted) {
+			isHighlighted = false;
+		} else {
+			isHighlighted = true;
+		}
+	}
 
 	/**
 	 * Initializes the seven EditText fields in this row.
 	 */
 	private void initializeComponents() {
-		EditText t1 = new EditText(this.getContext());
-    	t1.setInputType(InputType.TYPE_CLASS_NUMBER);
+		TextView t1 = new TextView(this.getContext());
     	t1.setText(Integer.toString(rowNumber));
-    	t1.setEnabled(false);
+    	t1.setOnClickListener(new RowClickedListener());
     	
     	EditText t2 = new EditText(this.getContext());
     	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -170,9 +200,20 @@ public class BillRow extends TableRow {
      * Sets the text style of the fields of this row.
      */
     private void setFieldsStyle() {
-    	for(int i = 0; i < 7; i++) {
+    	TextView tv = (TextView) this.getChildAt(0);
+    	tv.setTextColor(Color.rgb(1, 3, 38));
+    	tv.setTextSize(20);
+    	tv.setTypeface(null, Typeface.BOLD);
+    	tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+    	for(int i = 1; i < 7; i++) {
     		EditText view = (EditText) this.getChildAt(i);
         	view.setTextColor(Color.rgb(1, 3, 38));
     	}
+    	setBackgroundColor(getResources().getColor(R.color.RowNormalColor));
+    	TableLayout.LayoutParams tableRowParams =
+    			  new TableLayout.LayoutParams
+    			  (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
+    	tableRowParams.setMargins(0, 0, 0, 1);
+    	setLayoutParams(tableRowParams);
     }
 }

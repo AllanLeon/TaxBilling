@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.model.data.Bill;
@@ -44,12 +46,18 @@ public class BillTableFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_bill_table,
 				container, false);
-		final Button button = (Button) view.findViewById(R.id.ButtonAdd);
-	        button.setOnClickListener(new View.OnClickListener() {
+		final Button buttonAdd = (Button) view.findViewById(R.id.ButtonAdd);
+	        buttonAdd.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
 	                	onClickAddButton(v);
 	            }
 	        });
+        final Button buttonRemove = (Button) view.findViewById(R.id.ButtonRemove);
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                	onClickRemoveButton(v);
+            }
+        });
 	    return view;
 	}
 
@@ -74,10 +82,21 @@ public class BillTableFragment extends Fragment {
      * @param view
      */
     public void onClickAddButton(View view) {
-    	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-    	final TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
-		BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
-		contentTable.addView(row);
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
+    	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(lastRow));
+    	contentTable.addView(row);
+   	}
+    
+    /**
+     * This method executes when the removeButton is pressed.
+     * Removes all the highlighted rows in the table and updates the remaining 
+     * rows' numbers.
+     * @param view
+     */
+    public void onClickRemoveButton(View view) {
+    	removeHighlightedRows();
+    	updateRowNumbers();
    	}
     
     /**
@@ -112,7 +131,7 @@ public class BillTableFragment extends Fragment {
 						dateValue = value;
 						Date convertedDate = null;
 						try {
-							convertedDate = new SimpleDateFormat("dd/mm/yyyy").parse(dateValue);
+							convertedDate = new SimpleDateFormat("dd/mm/yyyy", Locale.US).parse(dateValue);
 							b2.setEmissionDate(convertedDate);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
@@ -120,25 +139,24 @@ public class BillTableFragment extends Fragment {
 						}
 						b2.setEmissionDate(convertedDate);
 						manualBills.add(b2);
-						BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(newRow), b2);
+						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(newRow), b2);
 						contentTable.addView(row);
 					}
 				});
 
 			}
 		});
-
     }
 
     /**
-     * Returns the next bill number of a given row, if the row is empty it return zero.
+     * Returns the next row number of a given row, if the row is empty it return zero.
      * @param lastRow the row of which the next number is calculated
-     * @return the next bill number
+     * @return the next row number
      */
-    private int getNextBillNumber(TableRow lastRow) {
+    private int getNextRowNumber(TableRow lastRow) {
     	int number = 0;
     	try {
-    		EditText lastNumber = (EditText) lastRow.getChildAt(0);
+    		TextView lastNumber = (TextView) lastRow.getChildAt(0);
     		String text = lastNumber.getText().toString();
     		number = Integer.parseInt(text) + 1;
     	} catch (Exception e) {
@@ -153,7 +171,7 @@ public class BillTableFragment extends Fragment {
      */
     public Bill newElectronicBill() {
     	String dateString = "31/05/2014";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy", Locale.US); 
         Date convertedDate = null;
 		try {
 			convertedDate = dateFormat.parse(dateString);
@@ -206,5 +224,30 @@ public class BillTableFragment extends Fragment {
     		}
     	});
     	alert.show();
+    }
+    
+    /**
+     * Updates the row number of all the rows in the contentTable.
+     */
+    public void updateRowNumbers() {
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	for(int i = 1; i < contentTable.getChildCount(); i++) {
+    		BillRow row = (BillRow) contentTable.getChildAt(i);
+    		row.setRowNumber(i);
+    	}
+    }
+    
+    /**
+     * Removes the highlighted rows of the content table.
+     */
+    public void removeHighlightedRows() {
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	for (int i = 1; i < contentTable.getChildCount(); i++) {
+    		BillRow row = (BillRow) contentTable.getChildAt(i);
+    		if (row.isHighlighted()) {
+    			contentTable.removeViewAt(i);
+    			i--;
+    		}
+    	}
     }
 }
