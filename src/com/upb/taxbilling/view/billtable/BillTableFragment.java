@@ -75,10 +75,13 @@ public class BillTableFragment extends Fragment {
      * @param view
      */
     public void onClickAddButton(View view) {
+    	/*
     	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
 		BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
 		contentTable.addView(row);
+		*/
+    	runManualBill(view);
    	}
     
     /**
@@ -236,6 +239,7 @@ public class BillTableFragment extends Fragment {
 			alert.setMessage(customMessage);
 			
 			final DatePicker dp = new DatePicker(view.getContext());
+			dp.setCalendarViewShown(false);
 			alert.setView(dp);
 			
 			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
