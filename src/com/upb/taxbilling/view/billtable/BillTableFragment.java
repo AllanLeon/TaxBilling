@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -91,7 +92,7 @@ public class BillTableFragment extends Fragment {
     	final Bill b2 = newManualBill();
 
     	//Launches first pop-up message and waits for the user to type a value.
-		popUpMessage(view, "Importe faltante", "Introduzca el importe correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
+		cashPopUpMessage(view, "Importe faltante", "Introduzca el importe correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
 			/**
 			 * Saves the typed value into the Bill object at the Amount attribute.
 			 * At user confirmation, launches the second pop-up message.
@@ -101,7 +102,7 @@ public class BillTableFragment extends Fragment {
 				impValue = value;
 				Double convertedImp = Double.parseDouble(impValue);
 				b2.setAmount(convertedImp);
-				popUpMessage(view, "Fecha faltante", "Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
+				datePopUpMessage(view, "Fecha faltante", "Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
 					/**
 					 * Saves the typed value into the Bill object at the Date attribute.
 					 * At user confirmation, prints the Bill object with the inserted data
@@ -186,7 +187,7 @@ public class BillTableFragment extends Fragment {
     	}
     	return number;
     }
-        
+
     /**
      * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
      * @param view 
@@ -195,7 +196,7 @@ public class BillTableFragment extends Fragment {
      * @param postrun Functional class that waits for the user input, validation
      * 				  and then executes the next command. 
      */
-    public void popUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
+    public void cashPopUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
     	alert.setTitle(customTitle);
     	alert.setMessage(customMessage);
@@ -220,4 +221,41 @@ public class BillTableFragment extends Fragment {
     	});
     	alert.show();
     }
-}
+
+		/**
+		 * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
+		 * @param view 
+		 * @param title Sets a Title for the pop-up message.
+		 * @param mess Sets an Information Message for the user input. 
+		 * @param postrun Functional class that waits for the user input, validation
+		 * 				  and then executes the next command. 
+		 */
+		public void datePopUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
+			AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+			alert.setTitle(customTitle);
+			alert.setMessage(customMessage);
+			
+			final DatePicker dp = new DatePicker(view.getContext());
+			alert.setView(dp);
+			
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					int day = dp.getDayOfMonth();
+					int month = dp.getMonth();
+					int year = dp.getYear();
+					value = day + "/" + month + "/" + year;
+					dialog.dismiss();
+					postrun.setValue(value);
+					postrun.run();
+					return;
+				}
+			});	
+
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+			alert.show();
+		}
+	}
