@@ -14,6 +14,8 @@
     <string name="TableColumn6">Importe</string>
     <string name="TableColumn7">Codigo de Control</string>
     <string name="ButtonAdd">Agregar</string>
+    <string name="ButtonRemove">Eliminar</string>
+    <string name="ButtonClean">Limpiar</string>
     
     <!-- Styles used in the table -->
     <style name="HeaderStyle" parent="@android:style/TextAppearance">
@@ -28,5 +30,8 @@
         <item name="android:textSize">15sp</item>
         <item name="android:background">#F2F1DF</item>
     </style>
+    
+    <color name="RowSelectedColor">#6377C5</color>
+    <color name="RowNormalColor">#F2F1DF</color>
     
 </resources>
