@@ -8,7 +8,12 @@ import android.widget.Toast;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
 import com.upb.taxbilling.view.RegisterFragment;
-
+/**
+ * 
+ * @author Kevin Aguilar
+ * @author Alejandra Navarro
+ *
+ */
 public class UserDataException {
 		
 		/**
@@ -22,6 +27,7 @@ public class UserDataException {
 		 */
 		public UserDataException()
 		{
+			this.message = "";
 		}
 		
 		/**
