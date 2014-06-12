@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Bill;
 
 /**
@@ -69,18 +70,28 @@ public class ExportBill extends Fragment{
 		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
 		
 		export = (Button)view.findViewById(R.id.button1);
-		export.setOnClickListener(new View.OnClickListener() {	
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				clickExport(v);
-			}
-		});
 		
-		this.showUserData(this.userData());
-		this.showBillAmount();
-		
+		RegisterFragment rf = new RegisterFragment();
+		if(rf.getCheck())
+		{
+			
+			this.showUserData(this.userData());
+			this.showBillAmount();
+			export.setOnClickListener(new View.OnClickListener() {	
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					clickExport(v);
+				}
+			});
+			
+		}
+		else
+		{
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+		}
 	    return view;
+	    
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
 
@@ -23,6 +24,7 @@ public class RegisterFragment extends Fragment {
 	 *EditText attributes to get user information
 	 *Taxpayer and Company attributes to save user information  
 	 */
+	private static boolean check = false;
 	Button saveButton;
 	EditText nameLastname;
 	EditText address;
@@ -73,11 +75,29 @@ public class RegisterFragment extends Fragment {
 	
 	public void clickSaveData(View v)
 	{
+		UserDataException usde = new UserDataException();
+		if(usde.userData(nameLastname, address, expeditionPlace, identityNumber, employerBussinesName, nitNumber, addressCompany, email).equals(""))
+		{
 		taxpayer = new Taxpayer(nameLastname.getText().toString(), address.getText().toString(), expeditionPlace.getText().toString(), email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
 		company = new Company(addressCompany.getText().toString(), employerBussinesName.getText().toString(), Integer.parseInt(nitNumber.getText().toString()));
-		Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			check = true;
+		}
+		else
+		{
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+			check = false;
+		}
 	}
 	
+	public boolean getCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean comprobar) {
+		this.check = comprobar;
+	}
+
 	/**
 	 * Method to return information saved in Taxpayer
 	 * This return an Taxpayer
