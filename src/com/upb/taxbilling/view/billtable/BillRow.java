@@ -37,6 +37,7 @@ public class BillRow extends TableRow {
 		super(context);
 		this.rowNumber = 0;
 		this.isHighlighted = false;
+		this.bill = new Bill();
 		initializeComponents();
 	}
 
@@ -50,6 +51,7 @@ public class BillRow extends TableRow {
 		super(context);
 		this.rowNumber = rowNumber;
 		this.isHighlighted = false;
+		this.bill = new Bill();
 		initializeComponents();
 	}
 
