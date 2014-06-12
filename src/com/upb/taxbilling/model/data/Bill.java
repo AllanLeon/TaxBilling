@@ -176,24 +176,46 @@ public class Bill {
 	}
 	
 	/**
-	 * Constructor with only the parameters of the bills' table of an manual bill.
+	 * Constructor with only the parameters of the bills' table of a manual bill.
 	 * @param nit
 	 * @param billNumber
 	 * @param autorizationNumber
 	 */
 	public Bill(int nit, int billNumber, long autorizationNumber) {
 		this.nit = nit;
-		this.name = null;
+		this.name = "";
 		this.billNumber = billNumber;
 		this.autorizationNumber = autorizationNumber;
-		this.emissionDate = null;
-		this.amount = null;
-		this.controlCode = null;
+		this.emissionDate = new Date();
+		this.amount = 0.0;
+		this.controlCode = "";
 		this.limitEmissionDate = new Date();
-		this.iceAmount = null;
-		this.noTaxSaleAmount = null;
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = "";
 		this.taxpayerName = "";
+		this.economicActivity = 0;
+		this.subsidiary = 0;
+	}
+	
+	/**
+	 * Constructor that doesn't receive parameters.
+	 */
+	public Bill() {
+		this.nit = 0;
+		this.name = "";
+		this.billNumber = 0;
+		this.autorizationNumber = 0;
+		this.emissionDate = new Date();
+		this.amount = 0.0;
+		this.controlCode = "";
+		this.limitEmissionDate = new Date();
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = "";
+		this.taxpayerName = "";
+		this.economicActivity = 0;
+		this.subsidiary = 0;
 	}
 
 	/**
