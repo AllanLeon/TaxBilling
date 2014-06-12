@@ -7,7 +7,9 @@ import java.util.Locale;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -136,6 +138,27 @@ public class BillRow extends TableRow {
     	EditText t2 = new EditText(this.getContext());
     	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
     	t2.setText("");
+    	t2.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
     	
     	EditText t3 = new EditText(this.getContext());
     	t3.setInputType(InputType.TYPE_CLASS_NUMBER);
