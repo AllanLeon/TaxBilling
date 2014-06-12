@@ -36,8 +36,6 @@ public class BillTableFragment extends Fragment {
 	private String dateValue;
 	ArrayList<Bill> electronicBills = new ArrayList<Bill>();
 	ArrayList<Bill> manualBills = new ArrayList<Bill>();
-	public static TableLayout contentTable;
-
 	
 	/**
      * {@inheritDoc}
@@ -65,7 +63,6 @@ public class BillTableFragment extends Fragment {
                 	onClickCleanButton(v);
             }
         });
-        contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
 	    return view;
 	}
 
@@ -274,12 +271,5 @@ public class BillTableFragment extends Fragment {
     public void cleanTable() {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	contentTable.removeViews(1, contentTable.getChildCount() - 1);
-    }
-    
-    /**
-     * @return the table that contains the bills.
-     */
-    public static TableLayout getContentTable() {
-    	return contentTable;
     }
 }
