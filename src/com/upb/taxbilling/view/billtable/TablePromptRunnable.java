@@ -1,6 +1,6 @@
 package com.upb.taxbilling.view.billtable;
 
-public class PromptRunnable implements Runnable {
+public class TablePromptRunnable implements Runnable {
 	private String v;
 		
 		void setValue(String inV) {

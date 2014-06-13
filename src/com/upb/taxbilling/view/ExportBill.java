@@ -12,19 +12,16 @@ import java.util.Locale;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
-import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Bill;
 
 /**
@@ -32,15 +29,11 @@ import com.upb.taxbilling.model.data.Bill;
  * @author Kevin Aguilar
  */
 public class ExportBill extends Fragment{
-	
-	/**
-	 *Boolean attributes to check availabilities SD memory
-	 *Button attribute to run the data export 
-	 */
-	
+		
 	private double totalAmount;
 	private boolean sdAvailable = false;
 	private boolean sdWriteAccess = false;
+
 	Button export;
 	TextView nameAndLastName;
 	TextView address;
@@ -127,53 +120,44 @@ public class ExportBill extends Fragment{
 		
 		String status = Environment.getExternalStorageState();
 		
+		Boolean sdAccesoEscritura = false;
+		Boolean sdDisponible = false;
+
 		/**
 		 * Two "if" to check availabilities SD memory  
-		 */
-		
-		if (status.equals(Environment.MEDIA_MOUNTED))
-		{
+		 */		
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
 		    sdWriteAccess = true;
-		}
-		else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
-		{
+		} else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
 		    sdAvailable = true;
 		    sdWriteAccess = false;
-		}
-		else
-		{
+		} else {
 		    sdAvailable = false;
 		    sdWriteAccess = false;
 		}
-		try
-		{
+		
+		try	{
 		    File ruta_sd = Environment.getExternalStorageDirectory();
-		 
 		    File f = new File(ruta_sd.getAbsolutePath(), "Factura.txt");
-		 
 		    OutputStreamWriter fout =  new OutputStreamWriter(new FileOutputStream(f));
 		
-		fout.write("DiCaprio");
-		fout.write("\n");
-		for(int i=0; i < arrayUser.size(); i++)
-		{
-		    	fout.write(arrayUser.get(i));
-		    	fout.write("\n");
-		}
-		Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
-		fout.write("\n");
-		for(int i=0; i < arrayBill.size(); i++)
-		{
+		    fout.write("DiCaprio");
+		    fout.write("\n");
+		    for(int i=0; i < arrayUser.size(); i++) {
+		   		fout.write(arrayUser.get(i));
+		   		fout.write("\n");
+		    }
+		    Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
+		    fout.write("\n");
+		    for(int i=0; i < arrayBill.size(); i++) {
 		    	fout.write(arrayBill.get(i));
 		    	fout.write("\n");
+		    }
+		    Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
+		    fout.close();
 		}
-		Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
-		fout.close();
-		    
-		}
-		catch (Exception ex)
-		{
+		catch (Exception ex) {
 		    Log.e("Ficheros", "Error al escribir fichero a tarjeta SD");
 		}		
 	}
@@ -182,9 +166,7 @@ public class ExportBill extends Fragment{
 	 * This method returns an ArrayList of user data sorted  
 	 * @return
 	 */
-	
-	public ArrayList<String> userData()
-	{		
+	public ArrayList<String> userData() {		
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayUser = new ArrayList<String>();
 		
@@ -204,9 +186,7 @@ public class ExportBill extends Fragment{
 	 * This method returns an ArrayList of bill data sorted
 	 * @return
 	 */
-	
-	public ArrayList<String> billData()
-	{
+	public ArrayList<String> billData() {
 		Date now =  new Date();
 		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
 		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
@@ -217,8 +197,7 @@ public class ExportBill extends Fragment{
 		arrayBillData.add(bill2);
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-		for(int i=0; i < arrayBillData.size() ; i++)
-		{
+		for(int i=0; i < arrayBillData.size() ; i++) {
 			arrayBill.add(Integer.toString(arrayBillData.get(i).getNit())+"|"
 		              +Integer.toString(arrayBillData.get(i).getBillNumber())+"|"
 		              +Long.toString(arrayBillData.get(i).getAutorizationNumber())+"|"
@@ -234,9 +213,7 @@ public class ExportBill extends Fragment{
 	 * This method receives as parameters an ArrayList of user data
 	 * @param UserData
 	 */
-	
-	public void showUserData(ArrayList<String> userData)
-	{
+	public void showUserData(ArrayList<String> userData) {
 		nameAndLastName.setText(userData.get(1));
 		address.setText(userData.get(2));
 		identityNumber.setText(userData.get(3));
@@ -245,16 +222,13 @@ public class ExportBill extends Fragment{
 		nitNumber.setText(userData.get(6));
 		addressCompany.setText(userData.get(7));
 		email.setText(userData.get(0));
-	
 	}
 	
 	/**
 	 * This method show total amount and payment on account.
 	 * This method receives as parameters an ArrayList of bill data.
 	 */
-	
-	public void showBillAmount(/*ArrayList<Bill> billData*/)
-	{
+	public void showBillAmount(/*ArrayList<Bill> billData*/) {
 		totalAmount = 0;
 		Date now =  new Date();
 		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
@@ -263,14 +237,11 @@ public class ExportBill extends Fragment{
 		ArrayBillData.add(bill1);
 		ArrayBillData.add(bill2);
 		
-		for(int i = 0; i < ArrayBillData.size(); i++)
-		{
-			
+		for(int i = 0; i < ArrayBillData.size(); i++) {	
 			totalAmount = (totalAmount + ArrayBillData.get(i).getAmount());
 		}
 		
 		showTotalAmount.setText(Double.toString(totalAmount));
 		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
 	}
-	
 }
