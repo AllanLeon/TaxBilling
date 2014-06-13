@@ -5,16 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -75,13 +72,11 @@ public class BillTableFragment extends Fragment {
      * @param view
      */
     public void onClickAddButton(View view) {
-    	/*
+    	
     	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
 		BillRow row = new BillRow(contentTable.getContext(), getNextBillNumber(lastRow));
 		contentTable.addView(row);
-		*/
-    	runManualBill(view);
    	}
     
     /**
@@ -93,9 +88,10 @@ public class BillTableFragment extends Fragment {
     	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     	final Bill b2 = newManualBill();
+    	final TableAlertDialog tad = new TableAlertDialog();
 
     	//Launches first pop-up message and waits for the user to type a value.
-		cashPopUpMessage(view, "Importe faltante", "Introduzca el importe correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
+		tad.cashPopUpMessage(view, new TablePromptRunnable(){
 			/**
 			 * Saves the typed value into the Bill object at the Amount attribute.
 			 * At user confirmation, launches the second pop-up message.
@@ -105,7 +101,7 @@ public class BillTableFragment extends Fragment {
 				impValue = value;
 				Double convertedImp = Double.parseDouble(impValue);
 				b2.setAmount(convertedImp);
-				datePopUpMessage(view, "Fecha faltante", "Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:", new PromptRunnable(){
+				tad.datePopUpMessage(view, new TablePromptRunnable(){
 					/**
 					 * Saves the typed value into the Bill object at the Date attribute.
 					 * At user confirmation, prints the Bill object with the inserted data
@@ -119,7 +115,6 @@ public class BillTableFragment extends Fragment {
 							convertedDate = new SimpleDateFormat("dd/mm/yyyy").parse(dateValue);
 							b2.setEmissionDate(convertedDate);
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						b2.setEmissionDate(convertedDate);
@@ -167,7 +162,6 @@ public class BillTableFragment extends Fragment {
 		try {
 			convertedDate = dateFormat.parse(dateString);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	Bill elec1 = new Bill(1008565022,9032,3904001124321L, convertedDate, 5.80, "F8-27-08-0B-70");
@@ -191,75 +185,4 @@ public class BillTableFragment extends Fragment {
     	return number;
     }
 
-    /**
-     * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
-     * @param view 
-     * @param title Sets a Title for the pop-up message.
-     * @param mess Sets an Information Message for the user input. 
-     * @param postrun Functional class that waits for the user input, validation
-     * 				  and then executes the next command. 
-     */
-    public void cashPopUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
-    	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-    	alert.setTitle(customTitle);
-    	alert.setMessage(customMessage);
-
-    	final EditText input = new EditText(view.getContext());
-    	alert.setView(input);
-
-    	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int whichButton) {
-    			value = input.getText().toString();
-    			dialog.dismiss();
-    			postrun.setValue(value);
-    			postrun.run();
-    			return;
-    		}
-    	});
-
-    	alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int whichButton) {
-    	    // Canceled.
-    		}
-    	});
-    	alert.show();
-    }
-
-		/**
-		 * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
-		 * @param view 
-		 * @param title Sets a Title for the pop-up message.
-		 * @param mess Sets an Information Message for the user input. 
-		 * @param postrun Functional class that waits for the user input, validation
-		 * 				  and then executes the next command. 
-		 */
-		public void datePopUpMessage(View view, String customTitle, String customMessage, final PromptRunnable postrun) {
-			AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-			alert.setTitle(customTitle);
-			alert.setMessage(customMessage);
-			
-			final DatePicker dp = new DatePicker(view.getContext());
-			dp.setCalendarViewShown(false);
-			alert.setView(dp);
-			
-			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					int day = dp.getDayOfMonth();
-					int month = dp.getMonth();
-					int year = dp.getYear();
-					value = day + "/" + month + "/" + year;
-					dialog.dismiss();
-					postrun.setValue(value);
-					postrun.run();
-					return;
-				}
-			});	
-
-			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
-			alert.show();
-		}
-	}
+}
