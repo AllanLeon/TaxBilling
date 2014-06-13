@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
 
@@ -23,14 +24,16 @@ public class RegisterFragment extends Fragment {
 	 *EditText attributes to get user information
 	 *Taxpayer and Company attributes to save user information  
 	 */
-	Button SaveButton;
-	EditText NameLastname;
-	EditText Address;
-	EditText ExpeditionPlace;
-	EditText IdentityNumber;
-	EditText EmployerBussinesName;
-	EditText NitNumber;
-	EditText AddressCompany;
+	private static boolean check = false;
+	Button saveButton;
+	EditText nameLastname;
+	EditText address;
+	EditText expeditionPlace;
+	EditText identityNumber;
+	EditText employerBussinesName;
+	EditText nitNumber;
+	EditText addressCompany;
+	EditText email;
 	static Taxpayer taxpayer;
 	static Company company;
 	
@@ -44,20 +47,21 @@ public class RegisterFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_register,
 				container, false);
 		
-		NameLastname = (EditText)view.findViewById(R.id.editText1);
-		Address = (EditText)view.findViewById(R.id.editText2);
-		ExpeditionPlace = (EditText)view.findViewById(R.id.editText4);
-		IdentityNumber = (EditText)view.findViewById(R.id.editText3);
-		EmployerBussinesName  = (EditText)view.findViewById(R.id.editText5);
-		NitNumber = (EditText)view.findViewById(R.id.editText6);
-		AddressCompany = (EditText)view.findViewById(R.id.editText7);
-		SaveButton = (Button)view.findViewById(R.id.button1);
+		nameLastname = (EditText)view.findViewById(R.id.editText1);
+		address = (EditText)view.findViewById(R.id.editText2);
+		expeditionPlace = (EditText)view.findViewById(R.id.editText4);
+		identityNumber = (EditText)view.findViewById(R.id.editText3);
+		employerBussinesName  = (EditText)view.findViewById(R.id.editText5);
+		nitNumber = (EditText)view.findViewById(R.id.editText6);
+		addressCompany = (EditText)view.findViewById(R.id.editText7);
+		email = (EditText)view.findViewById(R.id.editText10);
+		saveButton = (Button)view.findViewById(R.id.button1);
 		
-		SaveButton.setOnClickListener(new View.OnClickListener() {
+		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ClickSaveData(v);
+				clickSaveData(v);
 			}
 		});
 		
@@ -69,13 +73,31 @@ public class RegisterFragment extends Fragment {
 	 * @param v
 	 */
 	
-	public void ClickSaveData(View v)
+	public void clickSaveData(View v)
 	{
-		taxpayer = new Taxpayer(NameLastname.getText().toString(), Address.getText().toString(), ExpeditionPlace.getText().toString(), Integer.parseInt(IdentityNumber.getText().toString()));
-		company = new Company(AddressCompany.getText().toString(), EmployerBussinesName.getText().toString(), Integer.parseInt(NitNumber.getText().toString()));
-		Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+		UserDataException usde = new UserDataException();
+		if(usde.userData(nameLastname, address, expeditionPlace, identityNumber, employerBussinesName, nitNumber, addressCompany, email).equals(""))
+		{
+		taxpayer = new Taxpayer(nameLastname.getText().toString(), address.getText().toString(), expeditionPlace.getText().toString(), email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
+		company = new Company(addressCompany.getText().toString(), employerBussinesName.getText().toString(), Integer.parseInt(nitNumber.getText().toString()));
+			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			check = true;
+		}
+		else
+		{
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+			check = false;
+		}
 	}
 	
+	public boolean getCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean comprobar) {
+		this.check = comprobar;
+	}
+
 	/**
 	 * Method to return information saved in Taxpayer
 	 * This return an Taxpayer

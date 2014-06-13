@@ -12,9 +12,9 @@ public class Company {
 	 * Attributes to save the information about Company
 	 */
 	
-	private String Address;
-	private String EmployerBussinesName;
-	private Integer NitNumber;
+	private String address;
+	private String employerBussinesName;
+	private Integer nitNumber;
 	
 	/**
 	 * Constructor method with parameters
@@ -23,11 +23,11 @@ public class Company {
 	 * @param NitNumber
 	 */
 	
-	public Company(String Address,String EmployerBussinesName,Integer NitNumber)
+	public Company(String address,String employerBussinesName,Integer nitNumber)
 	{		
-		this.Address = Address;
-		this.EmployerBussinesName = EmployerBussinesName;
-		this.NitNumber = NitNumber;
+		this.address = address;
+		this.employerBussinesName = employerBussinesName;
+		this.nitNumber = nitNumber;
 	}
 	
 	/**
@@ -37,32 +37,32 @@ public class Company {
 	
 	public String getAddress() 
 	{
-		return Address;
+		return address;
 	}
 
 	public String getEmployerBussinesName() 
 	{
-		return EmployerBussinesName;
+		return employerBussinesName;
 	}
 
 	public Integer getNitNumber() 
 	{
-		return NitNumber;
+		return nitNumber;
 	}
 
 	public void setAddress(String address) 
 	{
-		Address = address;
+		this.address = address;
 	}
 
 	public void setEmployerBussinesName(String employerBussinesName) 
 	{
-		EmployerBussinesName = employerBussinesName;
+		this.employerBussinesName = employerBussinesName;
 	}
 
 	public void setNitNumber(Integer nitNumber) 
 	{
-		NitNumber = nitNumber;
+		this.nitNumber = nitNumber;
 	}
 	
 }
