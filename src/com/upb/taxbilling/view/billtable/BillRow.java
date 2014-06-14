@@ -1,7 +1,9 @@
 package com.upb.taxbilling.view.billtable;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Context;
@@ -30,6 +32,7 @@ public class BillRow extends TableRow {
 	private Bill bill;
 	private int rowNumber;
 	private boolean isHighlighted;
+	private DateFormat dateFormat;
 	
 	/**
 	 * Default constructor of a TableRow, receives a context as a parameter.
@@ -40,6 +43,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = 0;
 		this.isHighlighted = false;
 		this.bill = new Bill();
+		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
 
@@ -54,6 +58,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.isHighlighted = false;
 		this.bill = new Bill();
+		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
 
@@ -70,6 +75,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.bill = bill;
 		this.isHighlighted = false;
+		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 		try {
 			updateRowInfo();
@@ -135,58 +141,13 @@ public class BillRow extends TableRow {
     	t1.setText(Integer.toString(rowNumber));
     	t1.setOnClickListener(new RowClickedListener());
     	
-    	EditText t2 = new EditText(this.getContext());
-    	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t2.setText("");
-    	t2.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-    	
-    	EditText t3 = new EditText(this.getContext());
-    	t3.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t3.setText("");
-    	
-    	EditText t4 = new EditText(this.getContext());
-    	t4.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t4.setText("");
-    	
-    	EditText t5 = new EditText(this.getContext());
-    	t5.setInputType(InputType.TYPE_CLASS_DATETIME);
-    	t5.setText("");
-    	
-    	EditText t6 = new EditText(this.getContext());
-    	t6.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t6.setText("");
-    	
-    	EditText t7 = new EditText(this.getContext());
-    	t7.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t7.setText("");
-    	
     	this.addView(t1);
-    	this.addView(t2);
-    	this.addView(t3);
-    	this.addView(t4);
-    	this.addView(t5);
-    	this.addView(t6);
-    	this.addView(t7);
+    	this.addView(createNitEditText());
+    	this.addView(createBillNumberEditText());
+    	this.addView(createAuthorizationNumberEditText());
+    	this.addView(createDateEditText());
+    	this.addView(createAmountEditText());
+    	this.addView(createControlCodeEditText());
     	
     	setFieldsStyle();
 	}
@@ -198,8 +159,6 @@ public class BillRow extends TableRow {
      */
     public void updateRowInfo() throws BillException {
         if (bill != null) {
-        	DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        	
         	EditText t1 = (EditText) this.getChildAt(1);
         	t1.setText(Integer.toString(bill.getNit()));
         	
@@ -207,10 +166,10 @@ public class BillRow extends TableRow {
         	t2.setText(Integer.toString(bill.getBillNumber()));
         	
         	EditText t3 = (EditText) this.getChildAt(3);
-        	t3.setText(Long.toString(bill.getAutorizationNumber()));
+        	t3.setText(Long.toString(bill.getAuthorizationNumber()));
         	
         	EditText t4 = (EditText) this.getChildAt(4);
-        	t4.setText(df.format(bill.getEmissionDate()));
+        	t4.setText(dateFormat.format(bill.getEmissionDate()));
         	        	
         	EditText t5 = (EditText) this.getChildAt(5);
         	t5.setText(Double.toString(bill.getAmount()));
@@ -240,5 +199,260 @@ public class BillRow extends TableRow {
     			  (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
     	tableRowParams.setMargins(0, 0, 0, 1);
     	setLayoutParams(tableRowParams);
+    }
+    
+    /**
+     * @return new edit text that contains the nit.
+     */
+    private EditText createNitEditText() {
+    	final EditText t2 = new EditText(this.getContext());
+    	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t2.setText("");
+    	t2.addTextChangedListener(new TextWatcher() {
+			
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the bill's nit with the nit's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				bill.setNit(Integer.parseInt(t2.getText().toString()));
+			}
+		});
+    	return t2;
+    }
+    
+    /**
+     * @return new edit text that contains the bill number.
+     */
+    private EditText createBillNumberEditText() {
+    	final EditText t3 = new EditText(this.getContext());
+    	t3.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t3.setText("");
+    	t3.addTextChangedListener(new TextWatcher() {
+			
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the bill's bill number with the
+    		 * bill number's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
+			}
+		});
+    	return t3;
+    }
+    
+    /**
+     * @return new edit text that contains the authorization number.
+     */
+    private EditText createAuthorizationNumberEditText() {
+    	final EditText t4 = new EditText(this.getContext());
+    	t4.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t4.setText("");
+    	t4.addTextChangedListener(new TextWatcher() {
+			
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the bill's authorization number with the 
+    		 * authorization number's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
+			}
+		});
+    	return t4;
+    }
+
+    /**
+     * @return new edit text that contains the date.
+     */
+    private EditText createDateEditText() {
+    	final EditText t5 = new EditText(this.getContext());
+    	t5.setInputType(InputType.TYPE_CLASS_DATETIME);
+    	t5.setText("");
+    	t5.addTextChangedListener(new TextWatcher() {
+    		private String current = "";
+    	    private String ddmmyyyy = "DDMMYYYY";
+    	    private Calendar cal = Calendar.getInstance();
+    	    
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				 if (!s.toString().equals(current)) {
+			            String clean = s.toString().replaceAll("[^\\d.]", "");
+			            String cleanC = current.replaceAll("[^\\d.]", "");
+
+			            int cl = clean.length();
+			            int sel = cl;
+			            for (int i = 2; i <= cl && i < 6; i += 2) {
+			                sel++;
+			            }
+			            //Fix for pressing delete next to a forward slash
+			            if (clean.equals(cleanC)) sel--;
+
+			            if (clean.length() < 8){
+			               clean = clean + ddmmyyyy.substring(clean.length());
+			            }else{
+			               //This part makes sure that when we finish entering numbers
+			               //the date is correct, fixing it otherways
+			               int day  = Integer.parseInt(clean.substring(0,2));
+			               int mon  = Integer.parseInt(clean.substring(2,4));
+			               int year = Integer.parseInt(clean.substring(4,8));
+
+			               if(mon > 12) mon = 12;
+			               cal.set(Calendar.MONTH, mon-1);
+			               day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
+			               year = (year<1900)?1900:(year>2100)?2100:year;
+			               clean = String.format("%02d%02d%02d",day, mon, year);
+			            }
+
+			            clean = String.format("%s/%s/%s", clean.substring(0, 2),
+			                clean.substring(2, 4),
+			                clean.substring(4, 8));
+			            current = clean;
+			            t5.setText(current);
+			            t5.setSelection(sel < current.length() ? sel : current.length());
+			        }
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the bill's date with the date's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				try {
+					bill.setEmissionDate(dateFormat.parse(t5.getText().toString()));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+    	return t5;
+    }
+
+    /**
+     * @return new edit text that contains the amount.
+     */
+    private EditText createAmountEditText() {
+    	final EditText t6 = new EditText(this.getContext());
+    	t6.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t6.setText("");
+    	t6.addTextChangedListener(new TextWatcher() {
+			
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the bill's amount with the amount's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				bill.setAmount(Double.parseDouble(t6.getText().toString()));
+			}
+		});
+    	return t6;
+    }
+
+    /**
+     * @return new edit text that contains the control code.
+     */
+    private EditText createControlCodeEditText() {
+    	final EditText t7 = new EditText(this.getContext());
+    	t7.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t7.setText("");
+    	t7.addTextChangedListener(new TextWatcher() {
+			
+    		/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			/**
+    		 * {@inheritDoc}
+    		 */
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			
+			/**
+    		 * Updates the control code's amount with the 
+    		 * control code's edit text info.
+    		 */
+			@Override
+			public void afterTextChanged(Editable s) {
+				bill.setControlCode(t7.getText().toString());
+			}
+		});
+    	return t7;
     }
 }
