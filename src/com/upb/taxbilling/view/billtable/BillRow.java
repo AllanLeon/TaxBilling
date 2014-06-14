@@ -5,14 +5,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -315,71 +321,48 @@ public class BillRow extends TableRow {
     	final EditText t5 = new EditText(this.getContext());
     	t5.setInputType(InputType.TYPE_CLASS_DATETIME);
     	t5.setText("");
-    	t5.addTextChangedListener(new TextWatcher() {
-    		private String current = "";
-    	    private String ddmmyyyy = "DDMMYYYY";
-    	    private Calendar cal = Calendar.getInstance();
-    	    
+    	t5.setFocusableInTouchMode(false);
+    	
+    	final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int selectedYear,
+                    int selectedMonth, int selectedDay) {
+                try {
+                	DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                	String year = String.valueOf(selectedYear);
+                    String month = String.valueOf(selectedMonth + 1);
+                    String day = String.valueOf(selectedDay);
+                    String date = day + "/" + month + "/" + year;
+                    t5.setText(date);
+                	bill.setEmissionDate(df.parse(date));
+				} catch (ParseException e) {
+					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+		            alertDialog.setTitle("Problema con la fecha");
+		            alertDialog.setMessage("Hubo un error al registrar la fecha\n\n"
+		            		+ "Detalles del error:\n" + e.toString());
+		            alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		        		public void onClick(DialogInterface dialog, int whichButton) {
+		        			dialog.dismiss();
+		        		}
+		        	});
+		            alertDialog.show();
+				}
+            }
+        };
+    	
+    	t5.setOnClickListener(new OnClickListener() {
+			
     		/**
     		 * {@inheritDoc}
     		 */
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				 if (!s.toString().equals(current)) {
-			            String clean = s.toString().replaceAll("[^\\d.]", "");
-			            String cleanC = current.replaceAll("[^\\d.]", "");
-
-			            int cl = clean.length();
-			            int sel = cl;
-			            for (int i = 2; i <= cl && i < 6; i += 2) {
-			                sel++;
-			            }
-			            //Fix for pressing delete next to a forward slash
-			            if (clean.equals(cleanC)) sel--;
-
-			            if (clean.length() < 8){
-			               clean = clean + ddmmyyyy.substring(clean.length());
-			            }else{
-			               //This part makes sure that when we finish entering numbers
-			               //the date is correct, fixing it otherways
-			               int day  = Integer.parseInt(clean.substring(0,2));
-			               int mon  = Integer.parseInt(clean.substring(2,4));
-			               int year = Integer.parseInt(clean.substring(4,8));
-
-			               if(mon > 12) mon = 12;
-			               cal.set(Calendar.MONTH, mon-1);
-			               day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
-			               year = (year<1900)?1900:(year>2100)?2100:year;
-			               clean = String.format("%02d%02d%02d",day, mon, year);
-			            }
-
-			            clean = String.format("%s/%s/%s", clean.substring(0, 2),
-			                clean.substring(2, 4),
-			                clean.substring(4, 8));
-			            current = clean;
-			            t5.setText(current);
-			            t5.setSelection(sel < current.length() ? sel : current.length());
-			        }
-			}
-			
-			/**
-    		 * {@inheritDoc}
-    		 */
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-			
-			/**
-    		 * Updates the bill's date with the date's edit text info.
-    		 */
-			@Override
-			public void afterTextChanged(Editable s) {
-				try {
-					bill.setEmissionDate(dateFormat.parse(t5.getText().toString()));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+			public void onClick(View v) {
+				Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+                DatePickerDialog datePicker = new DatePickerDialog(getContext(),
+                		datePickerListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH));
+                datePicker.setCancelable(false);
+                datePicker.setTitle("Selecciona la fecha");
+                datePicker.show();
 			}
 		});
     	return t5;
