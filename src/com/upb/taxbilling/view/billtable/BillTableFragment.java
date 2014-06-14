@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.OnHierarchyChangeListener;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -63,21 +62,7 @@ public class BillTableFragment extends Fragment {
             public void onClick(View v) {
                 	onClickCleanButton(v);
             }
-        });
-        final TableLayout table = (TableLayout) view.findViewById(R.id.ContentTable);
-        table.setOnHierarchyChangeListener(new OnHierarchyChangeListener() {
-			
-			@Override
-			public void onChildViewRemoved(View parent, View child) {
-				updateBillList(parent);
-			}
-			
-			@Override
-			public void onChildViewAdded(View parent, View child) {
-				updateBillList(parent);
-			}
-		});
-        
+        });        
         updateRowsByList(view);
 	    return view;
 	}
