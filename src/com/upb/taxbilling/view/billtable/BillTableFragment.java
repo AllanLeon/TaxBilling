@@ -31,8 +31,11 @@ public class BillTableFragment extends Fragment {
 	private String value;
 	private String impValue;
 	private String dateValue;
-	ArrayList<Bill> electronicBills = new ArrayList<Bill>();
-	ArrayList<Bill> manualBills = new ArrayList<Bill>();
+	private static ArrayList<Bill> bills;
+	
+	{
+		bills = new ArrayList<Bill>();
+	}
 	
 	/**
      * {@inheritDoc}
@@ -86,6 +89,7 @@ public class BillTableFragment extends Fragment {
     	TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(lastRow));
     	contentTable.addView(row);
+    	updateBillList();
    	}
     
     /**
@@ -97,6 +101,7 @@ public class BillTableFragment extends Fragment {
     public void onClickRemoveButton(View view) {
     	removeHighlightedRows();
     	updateRowNumbers();
+    	updateBillList();
    	}
     
     /**
@@ -106,6 +111,7 @@ public class BillTableFragment extends Fragment {
      */
     public void onClickCleanButton(View view) {
     	cleanTable();
+    	updateBillList();
    	}
     
     /**
@@ -146,9 +152,9 @@ public class BillTableFragment extends Fragment {
 							e.printStackTrace();
 						}
 						b2.setEmissionDate(convertedDate);
-						manualBills.add(b2);
 						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(newRow), b2);
 						contentTable.addView(row);
+						updateBillList();
 					}
 				});
 			}
@@ -163,9 +169,9 @@ public class BillTableFragment extends Fragment {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	TableRow newRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     	Bill b1 = newElectronicBill();
-		electronicBills.add(b1);
 		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(newRow), b1);
 		contentTable.addView(row);
+		updateBillList();
     }
     
     /**
@@ -242,5 +248,17 @@ public class BillTableFragment extends Fragment {
     public void cleanTable() {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	contentTable.removeViews(1, contentTable.getChildCount() - 1);
+    }
+    
+    /**
+     * Updates the list of bills based on the rows of the table.
+     */
+    public void updateBillList() {
+    	bills.clear();
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	for(int i = 1; i < contentTable.getChildCount(); i++) {
+    		BillRow row = (BillRow) contentTable.getChildAt(i);
+    		bills.add(row.getBill());
+    	}
     }
 }
