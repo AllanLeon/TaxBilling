@@ -221,7 +221,7 @@ public class ExportBill extends Fragment{
 		{
 			arrayBill.add(Integer.toString(arrayBillData.get(i).getNit())+"|"
 		              +Integer.toString(arrayBillData.get(i).getBillNumber())+"|"
-		              +Long.toString(arrayBillData.get(i).getAutorizationNumber())+"|"
+		              +Long.toString(arrayBillData.get(i).getAuthorizationNumber())+"|"
 		              +df.format(arrayBillData.get(i).getEmissionDate())+"|"
 				      +Double.toString(arrayBillData.get(i).getAmount())+"|"
 				      +arrayBillData.get(i).getControlCode());
