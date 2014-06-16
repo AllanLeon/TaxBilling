@@ -64,6 +64,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.isHighlighted = false;
 		this.bill = new Bill();
+		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
@@ -81,6 +82,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.bill = bill;
 		this.isHighlighted = false;
+		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 		try {
@@ -237,6 +239,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setNit(Integer.parseInt(t2.getText().toString()));
+				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
     	return t2;
@@ -273,6 +276,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
+				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
     	return t3;
@@ -309,6 +313,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
+				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
     	return t4;
@@ -334,6 +339,7 @@ public class BillRow extends TableRow {
                     String date = day + "/" + month + "/" + year;
                     t5.setText(date);
                 	bill.setEmissionDate(df.parse(date));
+                	BillTableFragment.getBillList().put(rowNumber, bill);
 				} catch (ParseException e) {
 					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
 		            alertDialog.setTitle("Problema con la fecha");
@@ -398,6 +404,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setAmount(Double.parseDouble(t6.getText().toString()));
+				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
     	return t6;
@@ -434,6 +441,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setControlCode(t7.getText().toString());
+				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
     	return t7;
