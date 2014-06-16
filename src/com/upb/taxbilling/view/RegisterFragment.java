@@ -25,22 +25,21 @@ public class RegisterFragment extends Fragment {
 	 *Taxpayer and Company attributes to save user information  
 	 */
 	private static boolean check = false;
-	Button saveButton;
-	EditText nameLastname;
-	EditText address;
-	EditText expeditionPlace;
-	EditText identityNumber;
-	EditText employerBussinesName;
-	EditText nitNumber;
-	EditText addressCompany;
-	EditText email;
+	private Button saveButton;
+	private EditText nameLastname;
+	private EditText address;
+	private EditText expeditionPlace;
+	private EditText identityNumber;
+	private EditText employerBussinesName;
+	private EditText nitNumber;
+	private EditText addressCompany;
+	private EditText email;
 	static Taxpayer taxpayer;
 	static Company company;
 	
 	/**
      * {@inheritDoc}
      */
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -58,13 +57,16 @@ public class RegisterFragment extends Fragment {
 		saveButton = (Button)view.findViewById(R.id.button1);
 		
 		saveButton.setOnClickListener(new View.OnClickListener() {
+			
+			/**
+			 * {@inheritDoc}
+			 */
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				clickSaveData(v);
 			}
 		});
-		
 	    return view;
 	}
 	
@@ -72,30 +74,30 @@ public class RegisterFragment extends Fragment {
 	 * Method to save user data in taxpayer and company
 	 * @param v
 	 */
-	
-	public void clickSaveData(View v)
-	{
+	public void clickSaveData(View v) {
 		UserDataException usde = new UserDataException();
-		if(usde.userData(nameLastname, address, expeditionPlace, identityNumber, employerBussinesName, nitNumber, addressCompany, email).equals(""))
-		{
-		taxpayer = new Taxpayer(nameLastname.getText().toString(), address.getText().toString(), expeditionPlace.getText().toString(), email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
-		company = new Company(addressCompany.getText().toString(), employerBussinesName.getText().toString(), Integer.parseInt(nitNumber.getText().toString()));
+		if(usde.userData(nameLastname, address, expeditionPlace,
+				identityNumber, employerBussinesName, nitNumber,
+				addressCompany, email).equals("")) {
+		taxpayer = new Taxpayer(nameLastname.getText().toString(),
+				address.getText().toString(), expeditionPlace.getText().toString(),
+				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
+		company = new Company(addressCompany.getText().toString(),
+				employerBussinesName.getText().toString(),
+				Integer.parseInt(nitNumber.getText().toString()));
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			check = true;
-		}
-		else
-		{
+		} else {
 			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
 			check = false;
 		}
 	}
 	
+	/**
+	 * @return true if it's checked else it returns false.
+	 */
 	public boolean getCheck() {
 		return check;
-	}
-
-	public void setCheck(boolean comprobar) {
-		this.check = comprobar;
 	}
 
 	/**
@@ -103,9 +105,7 @@ public class RegisterFragment extends Fragment {
 	 * This return an Taxpayer
 	 * @return
 	 */
-	
-    public Taxpayer getDataTaxpayer()
-    {	
+    public Taxpayer getDataTaxpayer() {	
 		return taxpayer;		
     }
     
@@ -114,9 +114,7 @@ public class RegisterFragment extends Fragment {
      * This return an Company
      * @return
      */
-    
-    public Company getDataCompany()
-    {  	
+    public Company getDataCompany() {  	
 		return company;		
     }
     
@@ -134,5 +132,4 @@ public class RegisterFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-    
 }
