@@ -4,8 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -32,11 +35,7 @@ public class BillTableFragment extends Fragment {
 	private String value;
 	private String impValue;
 	private String dateValue;
-	static List<Bill> bills;
-	
-	/*{
-		bills = new ArrayList<Bill>();
-	}*/
+	private static Map<Integer, Bill> bills;
 	
 	/**
      * {@inheritDoc}
@@ -62,8 +61,12 @@ public class BillTableFragment extends Fragment {
             public void onClick(View v) {
                 	onClickCleanButton(v);
             }
-        });        
-        updateRowsByList(view);
+        });
+        if (bills == null) {
+        	bills = new HashMap<Integer, Bill>();
+        }
+        final TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
+        updateRowsByList(contentTable);
 	    return view;
 	}
 
@@ -90,7 +93,7 @@ public class BillTableFragment extends Fragment {
 		TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber());
     	contentTable.addView(row);
-    	updateBillList(view);
+    	//updateBillList();
    	}
     
     /**
@@ -102,7 +105,7 @@ public class BillTableFragment extends Fragment {
     public void onClickRemoveButton(View view) {
     	removeHighlightedRows();
     	updateRowNumbers();
-    	updateBillList(view);
+    	updateBillList();
    	}
     
     /**
@@ -112,7 +115,7 @@ public class BillTableFragment extends Fragment {
      */
     public void onClickCleanButton(View view) {
     	cleanTable();
-    	updateBillList(view);
+    	updateBillList();
    	}
     
     /**
@@ -154,7 +157,7 @@ public class BillTableFragment extends Fragment {
 						b2.setEmissionDate(convertedDate);
 						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b2);
 						contentTable.addView(row);
-						updateBillList(view);
+						//updateBillList();
 					}
 				});
 			}
@@ -170,7 +173,7 @@ public class BillTableFragment extends Fragment {
     	Bill b1 = newElectronicBill();
 		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b1);
 		contentTable.addView(row);
-		updateBillList(view);
+		//updateBillList();
     }
     
     /**
@@ -253,25 +256,29 @@ public class BillTableFragment extends Fragment {
     /**
      * Updates the list of bills based on the rows of the table.
      */
-    public void updateBillList(View view) {
-    	bills = new ArrayList<Bill>();
-    	TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
+    public void updateBillList() {
+    	bills = new HashMap<Integer, Bill>();
+    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	for(int i = 1; i < contentTable.getChildCount(); i++) {
     		BillRow row = (BillRow) contentTable.getChildAt(i);
-    		bills.add(row.getBill());
+    		bills.put(row.getRowNumber(), row.getBill());
     	}
     }
     
     /**
      * Updates the rows of the table based on the list of bills.
      */
-    public void updateRowsByList(View view) {
-    	if (bills != null) {
-	    	TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
-	    	for(int i = 0; i < bills.size(); i++) {
-	    		BillRow row = new BillRow(contentTable.getContext(), i + 1, bills.get(i));
-	        	contentTable.addView(row);
-	    	}
+    public void updateRowsByList(TableLayout contentTable) {
+    	for(int i : bills.keySet()) {
+    		BillRow row = new BillRow(contentTable.getContext(), i, bills.get(i));
+        	contentTable.addView(row);
     	}
+    }
+    
+    /**
+     * @return the list of bills of the table.
+     */
+    public static Map<Integer, Bill> getBillList() {
+    	return bills;
     }
 }
