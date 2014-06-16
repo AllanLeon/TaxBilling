@@ -2,13 +2,10 @@ package com.upb.taxbilling.view.billtable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -63,7 +60,7 @@ public class BillTableFragment extends Fragment {
             }
         });
         if (bills == null) {
-        	bills = new HashMap<Integer, Bill>();
+        	bills = new TreeMap<Integer, Bill>();
         }
         final TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
         updateRowsByList(contentTable);
@@ -93,7 +90,6 @@ public class BillTableFragment extends Fragment {
 		TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber());
     	contentTable.addView(row);
-    	//updateBillList();
    	}
     
     /**
@@ -157,7 +153,6 @@ public class BillTableFragment extends Fragment {
 						b2.setEmissionDate(convertedDate);
 						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b2);
 						contentTable.addView(row);
-						//updateBillList();
 					}
 				});
 			}
@@ -173,7 +168,6 @@ public class BillTableFragment extends Fragment {
     	Bill b1 = newElectronicBill();
 		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b1);
 		contentTable.addView(row);
-		//updateBillList();
     }
     
     /**
@@ -257,7 +251,7 @@ public class BillTableFragment extends Fragment {
      * Updates the list of bills based on the rows of the table.
      */
     public void updateBillList() {
-    	bills = new HashMap<Integer, Bill>();
+    	bills = new TreeMap<Integer, Bill>();
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	for(int i = 1; i < contentTable.getChildCount(); i++) {
     		BillRow row = (BillRow) contentTable.getChildAt(i);

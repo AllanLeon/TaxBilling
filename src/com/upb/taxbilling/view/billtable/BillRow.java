@@ -49,6 +49,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = 0;
 		this.isHighlighted = false;
 		this.bill = new Bill();
+		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
@@ -97,6 +98,7 @@ public class BillRow extends TableRow {
 	 */
 	public void setBill(Bill bill) {
 		this.bill = bill;
+		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
 	}
 	
 	/**
@@ -113,6 +115,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		TextView t1 = (TextView) this.getChildAt(0);
 		t1.setText(Integer.toString(rowNumber));
+		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
 	}
 	
 	/**
