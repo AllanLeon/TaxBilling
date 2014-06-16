@@ -13,7 +13,7 @@ public class Bill {
 	private int nit;
 	private String name;
 	private int billNumber;
-	private long autorizationNumber;
+	private long authorizationNumber;
 	private Date emissionDate;
 	private Double amount;
 	private String controlCode;
@@ -30,7 +30,7 @@ public class Bill {
 	 * @param nit
 	 * @param name
 	 * @param billNumber
-	 * @param autorizationNumber
+	 * @param authorizationNumber
 	 * @param emissionDate
 	 * @param amount
 	 * @param controlCode
@@ -40,14 +40,14 @@ public class Bill {
 	 * @param taxpayerNIT
 	 * @param taxpayerName
 	 */
-	public Bill(int nit, String name, int billNumber, long autorizationNumber,
+	public Bill(int nit, String name, int billNumber, long authorizationNumber,
 			Date emissionDate, Double amount, String controlCode,
 			Date limitEmissionDate, Double iceAmount, Double noTaxSaleAmount,
 			String taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
-		this.autorizationNumber = autorizationNumber;
+		this.authorizationNumber = authorizationNumber;
 		this.emissionDate = emissionDate;
 		this.amount = amount;
 		this.controlCode = controlCode;
@@ -65,7 +65,7 @@ public class Bill {
 	 * @param nit
 	 * @param name
 	 * @param billNumber
-	 * @param autorizationNumber
+	 * @param authorizationNumber
 	 * @param emissionDate
 	 * @param amount
 	 * @param controlCode
@@ -73,13 +73,13 @@ public class Bill {
 	 * @param taxpayerNIT
 	 * @param taxpayerName
 	 */
-	public Bill(int nit, String name, int billNumber, long autorizationNumber,
+	public Bill(int nit, String name, int billNumber, long authorizationNumber,
 			Date emissionDate, Double amount, String controlCode,
 			Date limitEmissionDate, String taxpayerNIT, String taxpayerName) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = billNumber;
-		this.autorizationNumber = autorizationNumber;
+		this.authorizationNumber = authorizationNumber;
 		this.emissionDate = new Date();
 		this.amount = amount;
 		this.controlCode = controlCode;
@@ -96,18 +96,18 @@ public class Bill {
 	 * Constructor with only the parameters of the bills' table.
 	 * @param nit
 	 * @param billNumber
-	 * @param autorizationNumber
+	 * @param authorizationNumber
 	 * @param emissionDate
 	 * @param amount
 	 * @param controlCode
 	 * @param limitEmissionDate 
 	 */
-	public Bill(int nit, int billNumber, long autorizationNumber,
+	public Bill(int nit, int billNumber, long authorizationNumber,
 			Date emissionDate, Double amount, String controlCode) {
 		this.nit = nit;
 		this.name = "";
 		this.billNumber = billNumber;
-		this.autorizationNumber = autorizationNumber;
+		this.authorizationNumber = authorizationNumber;
 		this.emissionDate = emissionDate;
 		this.amount = amount;
 		this.controlCode = controlCode;
@@ -135,7 +135,7 @@ public class Bill {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = 0;
-		this.autorizationNumber = autorizationNumber;
+		this.authorizationNumber = autorizationNumber;
 		this.emissionDate = new Date();
 		this.amount = amount;
 		this.controlCode = "";
@@ -152,17 +152,17 @@ public class Bill {
 	 * Constructor of a manual bill without the optional parameters.
 	 * @param nit
 	 * @param name
-	 * @param autorizationNumber
+	 * @param authorizationNumber
 	 * @param limitEmissionDate
 	 * @param economicActivity
 	 * @param subsidiary
 	 */
-	public Bill(int nit, String name, int autorizationNumber,
+	public Bill(int nit, String name, int authorizationNumber,
 			Date limitEmissionDate, int economicActivity, int subsidiary) {
 		this.nit = nit;
 		this.name = name;
 		this.billNumber = 0;
-		this.autorizationNumber = autorizationNumber;
+		this.authorizationNumber = authorizationNumber;
 		this.emissionDate = new Date();
 		this.amount = 0.0;
 		this.controlCode = "";
@@ -176,24 +176,46 @@ public class Bill {
 	}
 	
 	/**
-	 * Constructor with only the parameters of the bills' table of an manual bill.
+	 * Constructor with only the parameters of the bills' table of a manual bill.
 	 * @param nit
 	 * @param billNumber
-	 * @param autorizationNumber
+	 * @param authorizationNumber
 	 */
-	public Bill(int nit, int billNumber, long autorizationNumber) {
+	public Bill(int nit, int billNumber, long authorizationNumber) {
 		this.nit = nit;
-		this.name = null;
+		this.name = "";
 		this.billNumber = billNumber;
-		this.autorizationNumber = autorizationNumber;
-		this.emissionDate = null;
-		this.amount = null;
-		this.controlCode = null;
+		this.authorizationNumber = authorizationNumber;
+		this.emissionDate = new Date();
+		this.amount = 0.0;
+		this.controlCode = "";
 		this.limitEmissionDate = new Date();
-		this.iceAmount = null;
-		this.noTaxSaleAmount = null;
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
 		this.taxpayerNIT = "";
 		this.taxpayerName = "";
+		this.economicActivity = 0;
+		this.subsidiary = 0;
+	}
+	
+	/**
+	 * Constructor that doesn't receive parameters.
+	 */
+	public Bill() {
+		this.nit = 0;
+		this.name = "";
+		this.billNumber = 0;
+		this.authorizationNumber = 0;
+		this.emissionDate = new Date();
+		this.amount = 0.0;
+		this.controlCode = "";
+		this.limitEmissionDate = new Date();
+		this.iceAmount = 0.0;
+		this.noTaxSaleAmount = 0.0;
+		this.taxpayerNIT = "";
+		this.taxpayerName = "";
+		this.economicActivity = 0;
+		this.subsidiary = 0;
 	}
 
 	/**
@@ -218,10 +240,10 @@ public class Bill {
 	}
 
 	/**
-	 * @return the autorizationNumber
+	 * @return the authorizationNumber
 	 */
-	public long getAutorizationNumber() {
-		return autorizationNumber;
+	public long getAuthorizationNumber() {
+		return authorizationNumber;
 	}
 
 	/**
@@ -316,10 +338,10 @@ public class Bill {
 	}
 
 	/**
-	 * @param autorizationNumber the autorizationNumber to set
+	 * @param authorizationNumber the authorizationNumber to set
 	 */
-	public void setAutorizationNumber(long autorizationNumber) {
-		this.autorizationNumber = autorizationNumber;
+	public void setAuthorizationNumber(long authorizationNumber) {
+		this.authorizationNumber = authorizationNumber;
 	}
 
 	/**
