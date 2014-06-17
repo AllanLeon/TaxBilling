@@ -19,8 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.upb.taxbilling.MainMenu;
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.MainMenu.PlaceholderFragment;
 import com.upb.taxbilling.qr.QRDecoder;
+import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
  * Fragment that decodes a hard-coded qr image.
@@ -77,7 +80,14 @@ public class LQ1Fragment extends Fragment {
 		});
 		btn2.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
+				MainMenu main = (MainMenu) getActivity();
+				main.getActionBar().setSelectedNavigationItem(2);
 				
+				//BillTableFragment btf = new BillTableFragment();
+				//btf.runManualBill(btf.getView());
+				//main.getFragmentManager().beginTransaction()
+                //.replace(R.id.container, btf)
+                //.commit();
 			}
 		});
 
