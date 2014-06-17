@@ -82,7 +82,7 @@ public class LQ1Fragment extends Fragment {
 			public void onClick(View arg0) {
 				MainMenu main = (MainMenu) getActivity();
 				main.getActionBar().setSelectedNavigationItem(2);
-				
+				BillTableFragment.runManualBill();
 				//BillTableFragment btf = new BillTableFragment();
 				//btf.runManualBill(btf.getView());
 				//main.getFragmentManager().beginTransaction()

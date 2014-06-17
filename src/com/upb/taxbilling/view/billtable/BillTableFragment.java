@@ -30,10 +30,11 @@ import com.upb.taxbilling.model.data.Bill;
 public class BillTableFragment extends Fragment {
 	
 	private static Map<Integer, Bill> bills;
+	private static TableLayout contentTable;
 	
-	private String value;
-	private String impValue;
-	private String dateValue;
+	private static String value;
+	private static String impValue;
+	private static String dateValue;
 	
 	/**
      * {@inheritDoc}
@@ -63,8 +64,12 @@ public class BillTableFragment extends Fragment {
         if (bills == null) {
         	bills = new TreeMap<Integer, Bill>();
         }
-        final TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
-        updateRowsByList(contentTable);
+        //final TableLayout contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
+        //if (contentTable == null) {
+        	contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
+        //}
+        //updateRowsByList(contentTable);
+        updateRowsByList();
 	    return view;
 	}
 
@@ -88,7 +93,7 @@ public class BillTableFragment extends Fragment {
      * @param view
      */
     public void onClickAddButton(View view) {
-		TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+		//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber());
     	contentTable.addView(row);
    	}
@@ -119,10 +124,11 @@ public class BillTableFragment extends Fragment {
      * Adds a new bill to the bill table.
      * @param view
      */
-    public void runManualBill(final View view) {
-    	final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    public static void runManualBill(/*final View view*/) {
+    	//final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	final Bill b2 = newManualBill();
     	final TableAlertDialog tad = new TableAlertDialog();
+    	final View view = contentTable;
 
     	//Launches first pop-up message and waits for the user to type a value.
 		tad.cashPopUpMessage(view, new TablePromptRunnable(){
@@ -175,10 +181,10 @@ public class BillTableFragment extends Fragment {
      * Returns the next row number of the table, if the table is empty it return zero.
      * @return the next row number
      */
-    private int getNextRowNumber() {
+    private static int getNextRowNumber() {
     	int number = 0;
     	try {
-    		TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    		//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     		TableRow lastRow = (TableRow) contentTable.getChildAt(contentTable.getChildCount()-1);
     		TextView lastNumber = (TextView) lastRow.getChildAt(0);
     		String text = lastNumber.getText().toString();
@@ -193,7 +199,7 @@ public class BillTableFragment extends Fragment {
      * Creates a defined manual bill.
      * @return a user created manual bill with only the electronic parameters.
      */
-    public Bill newManualBill() {
+    public static Bill newManualBill() {
     	Bill manu1 = new Bill(1008565022,9032,3904001124321L);    	
     	return manu1;
     }
@@ -230,7 +236,7 @@ public class BillTableFragment extends Fragment {
      * Removes the highlighted rows of the content table.
      */
     public void removeHighlightedRows() {
-    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	for (int i = 1; i < contentTable.getChildCount(); i++) {
     		BillRow row = (BillRow) contentTable.getChildAt(i);
     		if (row.isHighlighted()) {
@@ -244,7 +250,7 @@ public class BillTableFragment extends Fragment {
      * Cleans all the rows in the table.
      */
     public void cleanTable() {
-    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	contentTable.removeViews(1, contentTable.getChildCount() - 1);
     	bills = new TreeMap<Integer, Bill>();
     }
@@ -254,7 +260,7 @@ public class BillTableFragment extends Fragment {
      */
     public void updateBillList() {
     	bills = new TreeMap<Integer, Bill>();
-    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+    	//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	for(int i = 1; i < contentTable.getChildCount(); i++) {
     		BillRow row = (BillRow) contentTable.getChildAt(i);
     		bills.put(row.getRowNumber(), row.getBill());
@@ -264,7 +270,7 @@ public class BillTableFragment extends Fragment {
     /**
      * Updates the rows of the table based on the list of bills.
      */
-    public void updateRowsByList(TableLayout contentTable) {
+    public void updateRowsByList(/*TableLayout contentTable*/) {
     	for(int i : bills.keySet()) {
     		BillRow row = new BillRow(contentTable.getContext(), i, bills.get(i));
         	contentTable.addView(row);
