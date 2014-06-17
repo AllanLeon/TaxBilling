@@ -241,7 +241,11 @@ public class BillRow extends TableRow {
     		 */
 			@Override
 			public void afterTextChanged(Editable s) {
-				bill.setNit(Integer.parseInt(t2.getText().toString()));
+				try {
+					bill.setNit(Integer.parseInt(t2.getText().toString()));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
@@ -278,7 +282,11 @@ public class BillRow extends TableRow {
     		 */
 			@Override
 			public void afterTextChanged(Editable s) {
-				bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
+				try {
+					bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
@@ -315,7 +323,11 @@ public class BillRow extends TableRow {
     		 */
 			@Override
 			public void afterTextChanged(Editable s) {
-				bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
+				try {
+					bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
@@ -330,6 +342,7 @@ public class BillRow extends TableRow {
     	t5.setInputType(InputType.TYPE_CLASS_DATETIME);
     	t5.setText("");
     	t5.setFocusableInTouchMode(false);
+    	t5.setKeyListener(null);
     	
     	final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int selectedYear,
@@ -406,7 +419,11 @@ public class BillRow extends TableRow {
     		 */
 			@Override
 			public void afterTextChanged(Editable s) {
-				bill.setAmount(Double.parseDouble(t6.getText().toString()));
+				try {
+					bill.setAmount(Double.parseDouble(t6.getText().toString()));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
 			}
 		});
