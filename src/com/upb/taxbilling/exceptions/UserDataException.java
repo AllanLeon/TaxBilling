@@ -1,6 +1,7 @@
 package com.upb.taxbilling.exceptions;
 
 import android.widget.EditText;
+
 /**
  * Verifies that all the fields on the user register fragment aren't empty.
  * @author Kevin Aguilar
