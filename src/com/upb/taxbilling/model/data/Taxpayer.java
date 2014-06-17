@@ -5,13 +5,8 @@ package com.upb.taxbilling.model.data;
  * @author Vanessa Sanjinez
  * @author Gina Cardozo
  */
-
 public class Taxpayer {
-	
-	/**
-	 * Attributes to save the information about Taxpayer
-	 */
-	
+
 	private String nameLastname;
 	private String address;
 	private String expeditionPlace;
@@ -21,61 +16,82 @@ public class Taxpayer {
 	/**
 	 * Constructor method with parameters
 	 */
-	 
-	public Taxpayer(String nameLastname, String address, String expeditionPlace, String email, int identityNumber)
-	{
+	public Taxpayer(String nameLastname, String address, String expeditionPlace,
+			String email, int identityNumber) {
 		this.nameLastname = nameLastname;
 		this.address = address;
 		this.expeditionPlace = expeditionPlace;
 		this.email = email;
 		this.identityNumber = identityNumber;
 	}
-	
+
 	/**
-	 * Getters and Setters
-	 * @return
+	 * @return the nameLastname
 	 */
-	
 	public String getNameLastname() {
 		return nameLastname;
 	}
 
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @return the expeditionPlace
+	 */
 	public String getExpeditionPlace() {
 		return expeditionPlace;
 	}
 
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @return the identityNumber
+	 */
 	public int getIdentityNumber() {
 		return identityNumber;
 	}
-	
-	public String getEmail() 
-	{
-		return email;
-	}
-	
+
+	/**
+	 * @param nameLastname the nameLastname to set
+	 */
 	public void setNameLastname(String nameLastname) {
 		this.nameLastname = nameLastname;
 	}
 
+	/**
+	 * @param address the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
+	/**
+	 * @param expeditionPlace the expeditionPlace to set
+	 */
 	public void setExpeditionPlace(String expeditionPlace) {
 		this.expeditionPlace = expeditionPlace;
 	}
 
-	public void setIdentityNumber(int identityNumber) {
-		this.identityNumber = identityNumber;
-	}
-
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
+	/**
+	 * @param identityNumber the identityNumber to set
+	 */
+	public void setIdentityNumber(int identityNumber) {
+		this.identityNumber = identityNumber;
+	}
 }
