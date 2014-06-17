@@ -208,8 +208,13 @@ public class ExportBill extends Fragment{
 	 */
 	public void showBillAmount() {
 		totalAmount = 0;
-		for(int i : BillTableFragment.getBillList().keySet()) {	
-			totalAmount = (totalAmount + BillTableFragment.getBillList().get(i).getAmount());
+		try {
+			for(int i : BillTableFragment.getBillList().keySet()) {	
+				totalAmount = (totalAmount + BillTableFragment.getBillList().get(i).getAmount());
+			}
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), "No tiene facturas registradas",
+					Toast.LENGTH_SHORT).show();
 		}
 		showTotalAmount.setText(Double.toString(totalAmount));
 		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
