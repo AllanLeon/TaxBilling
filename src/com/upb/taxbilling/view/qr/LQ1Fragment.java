@@ -32,9 +32,7 @@ import com.upb.taxbilling.qr.QRDecoder;
  * @author Carlos Abasto
  */
 public class LQ1Fragment extends Fragment {
-	/*
-	 * Declaration of a textview object
-	 */
+
 	private TextView textbox;
 
 	/**
