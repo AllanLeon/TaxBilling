@@ -77,32 +77,7 @@ public class LQ1Fragment extends Fragment {
 		});
 		btn2.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				String str = textbox.getText().toString();
-				try {
-					arg0.getContext();
-					FileOutputStream fos = arg0.getContext().openFileOutput("textFile.txt",
-							Context.MODE_PRIVATE);
-					OutputStreamWriter osw = new OutputStreamWriter(fos);
-
-					/**
-					 * Writes the String on the .txt file
-					 */
-					osw.write(str);
-					osw.flush();
-					osw.close();
-					/**
-					 * Shows that the file has been saved
-					 */
-					Toast.makeText(arg0.getContext(), "Guardado",
-							Toast.LENGTH_SHORT).show();
-					/**
-					 * Clear the textView
-					 */
-					textbox.setText(" ");
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-
+				
 			}
 		});
 
@@ -124,5 +99,37 @@ public class LQ1Fragment extends Fragment {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	/**
+	 * Saves the bill's text into a text file.
+	 * @param arg0
+	 */
+	public void saveQRBillText(View arg0) {
+		String str = textbox.getText().toString();
+		try {
+			arg0.getContext();
+			FileOutputStream fos = arg0.getContext().openFileOutput("textFile.txt",
+					Context.MODE_PRIVATE);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+			/**
+			 * Writes the String on the .txt file
+			 */
+			osw.write(str);
+			osw.flush();
+			osw.close();
+			/**
+			 * Shows that the file has been saved
+			 */
+			Toast.makeText(arg0.getContext(), "Guardado",
+					Toast.LENGTH_SHORT).show();
+			/**
+			 * Clear the textView
+			 */
+			textbox.setText(" ");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 }
