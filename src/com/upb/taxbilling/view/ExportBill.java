@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
@@ -104,7 +105,11 @@ public class ExportBill extends Fragment{
 	 */
 	
 	public void clickExport(View v)	{
-		exportData(getUserData(), convertBillsMapToStringArray());
+		try {
+			exportData(getUserData(), convertBillsMapToStringArray());
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	/**
@@ -223,12 +228,18 @@ public class ExportBill extends Fragment{
 	/**
 	 * Converts the bills' map in BillTableFragment into an array of strings.
 	 * @return ArrayList of string of the bills 
+	 * @throws BillException when there are no bills
 	 */
-	private List<String> convertBillsMapToStringArray() {
-		List<String> billsInfo = new ArrayList<String>();
-		for(int i : BillTableFragment.getBillList().keySet()) {
-			billsInfo.add(getBillInfoString(BillTableFragment.getBillList().get(i)));
+	private List<String> convertBillsMapToStringArray() throws BillException {
+		try {
+			List<String> billsInfo = new ArrayList<String>();
+			for(int i : BillTableFragment.getBillList().keySet()) {
+				billsInfo.add(getBillInfoString(BillTableFragment.getBillList().get(i)));
+			}
+			return billsInfo;
+		} catch (Exception ex) {
+			throw new BillException("Problema al exportar facturas, no tiene"
+					+ " facturas registradas.\n\nDetalles:\n" + ex.getMessage());
 		}
-		return billsInfo;
 	}
 }
