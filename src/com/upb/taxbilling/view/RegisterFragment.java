@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
 
@@ -19,26 +20,28 @@ import com.upb.taxbilling.model.data.Taxpayer;
  * @author Alejandra Navarro
  */
 public class RegisterFragment extends Fragment {
+	
 	/**
 	 *EditText attributes to get user information
 	 *Taxpayer and Company attributes to save user information  
 	 */
-	Button saveButton;
-	EditText nameLastname;
-	EditText address;
-	EditText expeditionPlace;
-	EditText identityNumber;
-	EditText employerBussinesName;
-	EditText nitNumber;
-	EditText addressCompany;
-	EditText email;
-	static Taxpayer taxpayer;
-	static Company company;
+	private static boolean isChecked = false;
+	private static Taxpayer taxpayer;
+	private static Company company;
+	
+	private Button saveButton;
+	private EditText nameLastname;
+	private EditText address;
+	private EditText expeditionPlace;
+	private EditText identityNumber;
+	private EditText employerBussinesName;
+	private EditText nitNumber;
+	private EditText addressCompany;
+	private EditText email;
 	
 	/**
      * {@inheritDoc}
      */
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -56,13 +59,16 @@ public class RegisterFragment extends Fragment {
 		saveButton = (Button)view.findViewById(R.id.button1);
 		
 		saveButton.setOnClickListener(new View.OnClickListener() {
+			
+			/**
+			 * {@inheritDoc}
+			 */
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				clickSaveData(v);
 			}
 		});
-		
 	    return view;
 	}
 	
@@ -70,22 +76,38 @@ public class RegisterFragment extends Fragment {
 	 * Method to save user data in taxpayer and company
 	 * @param v
 	 */
-	
-	public void clickSaveData(View v)
-	{
-		taxpayer = new Taxpayer(nameLastname.getText().toString(), address.getText().toString(), expeditionPlace.getText().toString(), email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
-		company = new Company(addressCompany.getText().toString(), employerBussinesName.getText().toString(), Integer.parseInt(nitNumber.getText().toString()));
-		Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+	public void clickSaveData(View v) {
+		UserDataException usde = new UserDataException();
+		if(usde.userData(nameLastname, address, expeditionPlace,
+				identityNumber, employerBussinesName, nitNumber,
+				addressCompany, email).equals("")) {
+		taxpayer = new Taxpayer(nameLastname.getText().toString(),
+				address.getText().toString(), expeditionPlace.getText().toString(),
+				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
+		company = new Company(addressCompany.getText().toString(),
+				employerBussinesName.getText().toString(),
+				Integer.parseInt(nitNumber.getText().toString()));
+			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			isChecked = true;
+		} else {
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+			isChecked = false;
+		}
 	}
 	
+	/**
+	 * @return true if it's checked else it returns false.
+	 */
+	public boolean isChecked() {
+		return isChecked;
+	}
+
 	/**
 	 * Method to return information saved in Taxpayer
 	 * This return an Taxpayer
 	 * @return
 	 */
-	
-    public Taxpayer getDataTaxpayer()
-    {	
+    public Taxpayer getDataTaxpayer() {	
 		return taxpayer;		
     }
     
@@ -94,9 +116,7 @@ public class RegisterFragment extends Fragment {
      * This return an Company
      * @return
      */
-    
-    public Company getDataCompany()
-    {  	
+    public Company getDataCompany() {  	
 		return company;		
     }
     
@@ -114,5 +134,4 @@ public class RegisterFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-    
 }

@@ -6,52 +6,51 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
+import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
  * The fragment where the information about a User and Bill is export to a file
  * @author Kevin Aguilar
  */
 public class ExportBill extends Fragment{
+		
+	private double totalAmount;
+	private boolean sdAvailable;
+	private boolean sdWriteAccess;
+	private Button export;
+	private TextView nameAndLastName;
+	private TextView address;
+	private TextView expeditionPlace;
+	private TextView identityNumber;
+	private TextView addressCompany;
+	private TextView employerBussinesName;
+	private TextView nitNumber;
+	private TextView email;
+	private TextView showTotalAmount;
+	private TextView showPaymentOnAccount;
 	
 	/**
-	 *Boolean attributes to check availabilities SD memory
-	 *Button attribute to run the data export 
+	 * {@inheritDoc}
 	 */
-	
-	private double totalAmount;
-	private boolean sdAvailable = false;
-	private boolean sdWriteAccess = false;
-	Button export;
-	TextView nameAndLastName;
-	TextView address;
-	TextView expeditionPlace;
-	TextView identityNumber;
-	TextView addressCompany;
-	TextView employerBussinesName;
-	TextView nitNumber;
-	TextView email;
-	TextView showTotalAmount;
-	TextView showPaymentOnAccount;
-	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
@@ -67,26 +66,31 @@ public class ExportBill extends Fragment{
 		email = (TextView)view.findViewById(R.id.textView20);
 		showTotalAmount = (TextView)view.findViewById(R.id.textView16);
 		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
-		
 		export = (Button)view.findViewById(R.id.button1);
-		export.setOnClickListener(new View.OnClickListener() {	
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				clickExport(v);
-			}
-		});
 		
-		this.showUserData(this.userData());
-		this.showBillAmount();
-		
+		RegisterFragment rf = new RegisterFragment();
+		if(rf.isChecked()) {	
+			this.showUserData(this.getUserData());
+			this.showBillAmount();
+			export.setOnClickListener(new View.OnClickListener() {	
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					clickExport(v);
+				}
+			});
+		}
+		else {
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+		}
 	    return view;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -100,9 +104,12 @@ public class ExportBill extends Fragment{
 	 * @param v
 	 */
 	
-	public void clickExport(View v)
-	{
-		this.exportDataRegister(this.userData(),this.billData());
+	public void clickExport(View v)	{
+		try {
+			exportData(getUserData(), convertBillsMapToStringArray());
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	/**
@@ -111,58 +118,42 @@ public class ExportBill extends Fragment{
 	 * @param ArrayUser
 	 * @param ArrayBill
 	 */
-	
-	public void exportDataRegister(ArrayList<String> arrayUser, ArrayList<String> arrayBill){
-		
+	public void exportData(List<String> arrayUser, List<String> arrayBill) {
 		String status = Environment.getExternalStorageState();
-		
-		/**
-		 * Two "if" to check availabilities SD memory  
-		 */
-		
-		if (status.equals(Environment.MEDIA_MOUNTED))
-		{
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
 		    sdWriteAccess = true;
-		}
-		else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
-		{
+		} else if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
 		    sdAvailable = true;
 		    sdWriteAccess = false;
-		}
-		else
-		{
+		} else {
 		    sdAvailable = false;
 		    sdWriteAccess = false;
 		}
-		try
-		{
-		    File ruta_sd = Environment.getExternalStorageDirectory();
-		 
-		    File f = new File(ruta_sd.getAbsolutePath(), "Factura.txt");
-		 
-		    OutputStreamWriter fout =  new OutputStreamWriter(new FileOutputStream(f));
 		
-		fout.write("DiCaprio");
-		fout.write("\n");
-		for(int i=0; i < arrayUser.size(); i++)
-		{
-		    	fout.write(arrayUser.get(i));
-		    	fout.write("\n");
+		try	{
+			if (sdAvailable && sdWriteAccess) {
+			    File ruta_sd = Environment.getExternalStorageDirectory();
+			    File f = new File(ruta_sd.getAbsolutePath(), "Factura.txt");
+			    OutputStreamWriter fout =  new OutputStreamWriter(new FileOutputStream(f));
+			
+			    fout.write("DiCaprio");
+			    fout.write("\n");
+			    for(int i=0; i < arrayUser.size(); i++) {
+			   		fout.write(arrayUser.get(i));
+			   		fout.write("\n");
+			    }
+			    Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
+			    fout.write("\n");
+			    for(int i=0; i < arrayBill.size(); i++) {
+			    	fout.write(arrayBill.get(i));
+			    	fout.write("\n");
+			    }
+			    Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
+			    fout.close();
+			}
 		}
-		Toast.makeText(getActivity(), "Exportando Datos de Usuario", Toast.LENGTH_SHORT).show();
-		fout.write("\n");
-		for(int i=0; i < arrayBill.size(); i++)
-		{
-		    	fout.write(arrayBill.get(i));
-		    	fout.write("\n");
-		}
-		Toast.makeText(getActivity(), "Exportando Facturas", Toast.LENGTH_SHORT).show();
-		fout.close();
-		    
-		}
-		catch (Exception ex)
-		{
+		catch (Exception ex) {
 		    Log.e("Ficheros", "Error al escribir fichero a tarjeta SD");
 		}		
 	}
@@ -171,9 +162,7 @@ public class ExportBill extends Fragment{
 	 * This method returns an ArrayList of user data sorted  
 	 * @return
 	 */
-	
-	public ArrayList<String> userData()
-	{		
+	public ArrayList<String> getUserData() {		
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayUser = new ArrayList<String>();
 		
@@ -190,32 +179,17 @@ public class ExportBill extends Fragment{
 	}
 	
 	/**
-	 * This method returns an ArrayList of bill data sorted
-	 * @return
+	 * @return the information of a bill in the form of a string.
 	 */
-	
-	public ArrayList<String> billData()
-	{
-		Date now =  new Date();
-		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
-		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
-
-		ArrayList<String> arrayBill = new ArrayList<String>();
-		ArrayList<Bill> arrayBillData = new ArrayList<Bill>();
-		arrayBillData.add(bill1);
-		arrayBillData.add(bill2);
-		
+	public String getBillInfoString(Bill bill) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-		for(int i=0; i < arrayBillData.size() ; i++)
-		{
-			arrayBill.add(Integer.toString(arrayBillData.get(i).getNit())+"|"
-		              +Integer.toString(arrayBillData.get(i).getBillNumber())+"|"
-		              +Long.toString(arrayBillData.get(i).getAutorizationNumber())+"|"
-		              +df.format(arrayBillData.get(i).getEmissionDate())+"|"
-				      +Double.toString(arrayBillData.get(i).getAmount())+"|"
-				      +arrayBillData.get(i).getControlCode());
-		}
-		return arrayBill;
+		String info = Integer.toString(bill.getNit())+"|"
+		              +Integer.toString(bill.getBillNumber())+"|"
+		              +Long.toString(bill.getAuthorizationNumber())+"|"
+		              +df.format(bill.getEmissionDate())+"|"
+				      +Double.toString(bill.getAmount())+"|"
+				      +bill.getControlCode();
+		return info;
 	}
 	
 	/**
@@ -223,9 +197,7 @@ public class ExportBill extends Fragment{
 	 * This method receives as parameters an ArrayList of user data
 	 * @param UserData
 	 */
-	
-	public void showUserData(ArrayList<String> userData)
-	{
+	public void showUserData(ArrayList<String> userData) {
 		nameAndLastName.setText(userData.get(1));
 		address.setText(userData.get(2));
 		identityNumber.setText(userData.get(3));
@@ -234,32 +206,40 @@ public class ExportBill extends Fragment{
 		nitNumber.setText(userData.get(6));
 		addressCompany.setText(userData.get(7));
 		email.setText(userData.get(0));
-	
 	}
 	
 	/**
 	 * This method show total amount and payment on account.
-	 * This method receives as parameters an ArrayList of bill data.
 	 */
-	
-	public void showBillAmount(/*ArrayList<Bill> billData*/)
-	{
+	public void showBillAmount() {
 		totalAmount = 0;
-		Date now =  new Date();
-		Bill bill1 = new Bill(1, 1, 1, now, 10.45, "asd123");
-		Bill bill2 = new Bill(1, 2, 1, now, 10.45, "asd123");
-		ArrayList<Bill> ArrayBillData = new ArrayList<Bill>();
-		ArrayBillData.add(bill1);
-		ArrayBillData.add(bill2);
-		
-		for(int i = 0; i < ArrayBillData.size(); i++)
-		{
-			
-			totalAmount = (totalAmount + ArrayBillData.get(i).getAmount());
+		try {
+			for(int i : BillTableFragment.getBillList().keySet()) {	
+				totalAmount = (totalAmount + BillTableFragment.getBillList().get(i).getAmount());
+			}
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), "No tiene facturas registradas",
+					Toast.LENGTH_SHORT).show();
 		}
-		
 		showTotalAmount.setText(Double.toString(totalAmount));
 		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
 	}
 	
+	/**
+	 * Converts the bills' map in BillTableFragment into an array of strings.
+	 * @return ArrayList of string of the bills 
+	 * @throws BillException when there are no bills
+	 */
+	private List<String> convertBillsMapToStringArray() throws BillException {
+		try {
+			List<String> billsInfo = new ArrayList<String>();
+			for(int i : BillTableFragment.getBillList().keySet()) {
+				billsInfo.add(getBillInfoString(BillTableFragment.getBillList().get(i)));
+			}
+			return billsInfo;
+		} catch (Exception ex) {
+			throw new BillException("Problema al exportar facturas, no tiene"
+					+ " facturas registradas.\n\nDetalles:\n" + ex.getMessage());
+		}
+	}
 }
