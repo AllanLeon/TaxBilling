@@ -20,11 +20,15 @@ import com.upb.taxbilling.model.data.Taxpayer;
  * @author Alejandra Navarro
  */
 public class RegisterFragment extends Fragment {
+	
 	/**
 	 *EditText attributes to get user information
 	 *Taxpayer and Company attributes to save user information  
 	 */
-	private static boolean check = false;
+	private static boolean isChecked = false;
+	private static Taxpayer taxpayer;
+	private static Company company;
+	
 	private Button saveButton;
 	private EditText nameLastname;
 	private EditText address;
@@ -34,8 +38,6 @@ public class RegisterFragment extends Fragment {
 	private EditText nitNumber;
 	private EditText addressCompany;
 	private EditText email;
-	static Taxpayer taxpayer;
-	static Company company;
 	
 	/**
      * {@inheritDoc}
@@ -86,18 +88,18 @@ public class RegisterFragment extends Fragment {
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
-			check = true;
+			isChecked = true;
 		} else {
 			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
-			check = false;
+			isChecked = false;
 		}
 	}
 	
 	/**
 	 * @return true if it's checked else it returns false.
 	 */
-	public boolean getCheck() {
-		return check;
+	public boolean isChecked() {
+		return isChecked;
 	}
 
 	/**

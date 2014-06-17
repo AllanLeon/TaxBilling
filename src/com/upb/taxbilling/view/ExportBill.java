@@ -68,7 +68,7 @@ public class ExportBill extends Fragment{
 		export = (Button)view.findViewById(R.id.button1);
 		
 		RegisterFragment rf = new RegisterFragment();
-		if(rf.getCheck()) {	
+		if(rf.isChecked()) {	
 			this.showUserData(this.getUserData());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
