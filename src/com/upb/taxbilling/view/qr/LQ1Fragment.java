@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
-import com.upb.taxbilling.qr.DecodeQRCode;
+import com.upb.taxbilling.qr.QRDecoder;
 
 /**
  * Fragment that decodes a hard-coded qr image.
@@ -69,7 +69,7 @@ public class LQ1Fragment extends Fragment {
 				Bitmap qrCodeBitmap = BitmapFactory.decodeResource(
 						getResources(), R.drawable.qr_code);
 				try {
-					String msg = DecodeQRCode.decodeQRCode(qrCodeBitmap);
+					String msg = QRDecoder.decodeQRCode(qrCodeBitmap);
 					text1.setText(msg);
 				} catch (Exception e) {
 					e.printStackTrace();
