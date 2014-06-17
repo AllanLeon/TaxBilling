@@ -29,10 +29,11 @@ import com.upb.taxbilling.model.data.Bill;
  */
 public class BillTableFragment extends Fragment {
 	
+	private static Map<Integer, Bill> bills;
+	
 	private String value;
 	private String impValue;
 	private String dateValue;
-	private static Map<Integer, Bill> bills;
 	
 	/**
      * {@inheritDoc}
