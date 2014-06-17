@@ -3,6 +3,7 @@ package com.upb.taxbilling;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.upb.taxbilling.view.ExportBill;
 import com.upb.taxbilling.view.RegisterFragment;
@@ -29,6 +33,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
      */
+	
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     /**
@@ -38,7 +43,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    
         // Set up the action bar to show a dropdown list.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -81,6 +86,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         // Serialize the current dropdown position.
         outState.putInt(STATE_SELECTED_NAVIGATION_ITEM,
                 getActionBar().getSelectedNavigationIndex());
+      
     }
 
 
@@ -92,6 +98,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        
         return true;
     }
 

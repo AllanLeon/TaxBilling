@@ -56,7 +56,7 @@
                 tools:ignore="UselessParent" >
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/menuTitle"
                     style="@style/HeaderStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

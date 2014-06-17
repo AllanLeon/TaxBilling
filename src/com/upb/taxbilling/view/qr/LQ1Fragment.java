@@ -48,7 +48,7 @@ public class LQ1Fragment extends Fragment {
 		/**
 		 * Declaration of interface entities
 		 */
-		textbox = (TextView) view.findViewById(R.id.textView1);
+		textbox = (TextView) view.findViewById(R.id.menuTitle);
 		final Button btn1 = (Button) view.findViewById(R.id.button1);
 		final Button btn2 = (Button) view.findViewById(R.id.button2);
 		final TextView text1 = textbox;

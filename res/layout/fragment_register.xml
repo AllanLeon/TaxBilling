@@ -86,7 +86,7 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/menuTitle"
                         style="@style/text_register_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
