@@ -69,7 +69,7 @@ public class ExportBill extends Fragment{
 		
 		RegisterFragment rf = new RegisterFragment();
 		if(rf.getCheck()) {	
-			this.showUserData(this.userData());
+			this.showUserData(this.getUserData());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
 				@Override
@@ -104,7 +104,7 @@ public class ExportBill extends Fragment{
 	 */
 	
 	public void clickExport(View v)	{
-		this.exportDataRegister(this.userData(), convertBillsMapToStringArray());
+		exportData(getUserData(), convertBillsMapToStringArray());
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class ExportBill extends Fragment{
 	 * @param ArrayUser
 	 * @param ArrayBill
 	 */
-	public void exportDataRegister(List<String> arrayUser, List<String> arrayBill) {
+	public void exportData(List<String> arrayUser, List<String> arrayBill) {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
@@ -157,7 +157,7 @@ public class ExportBill extends Fragment{
 	 * This method returns an ArrayList of user data sorted  
 	 * @return
 	 */
-	public ArrayList<String> userData() {		
+	public ArrayList<String> getUserData() {		
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayUser = new ArrayList<String>();
 		
