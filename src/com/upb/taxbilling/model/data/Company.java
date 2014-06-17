@@ -5,12 +5,7 @@ package com.upb.taxbilling.model.data;
  * @author Kevin Aguilar
  * @author Alejandra Navarro
  */
-
 public class Company {
-	
-	/**
-	 * Attributes to save the information about Company
-	 */
 	
 	private String address;
 	private String employerBussinesName;
@@ -22,47 +17,51 @@ public class Company {
 	 * @param EmployerBussinesName
 	 * @param NitNumber
 	 */
-	
-	public Company(String address,String employerBussinesName,Integer nitNumber)
-	{		
+	public Company(String address,String employerBussinesName,Integer nitNumber) {		
 		this.address = address;
 		this.employerBussinesName = employerBussinesName;
 		this.nitNumber = nitNumber;
 	}
-	
+
 	/**
-	 * Getters And Setters
-	 * @return
+	 * @return the address
 	 */
-	
-	public String getAddress() 
-	{
+	public String getAddress() {
 		return address;
 	}
 
-	public String getEmployerBussinesName() 
-	{
+	/**
+	 * @return the employerBussinesName
+	 */
+	public String getEmployerBussinesName() {
 		return employerBussinesName;
 	}
 
-	public Integer getNitNumber() 
-	{
+	/**
+	 * @return the nitNumber
+	 */
+	public Integer getNitNumber() {
 		return nitNumber;
 	}
 
-	public void setAddress(String address) 
-	{
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public void setEmployerBussinesName(String employerBussinesName) 
-	{
+	/**
+	 * @param employerBussinesName the employerBussinesName to set
+	 */
+	public void setEmployerBussinesName(String employerBussinesName) {
 		this.employerBussinesName = employerBussinesName;
 	}
 
-	public void setNitNumber(Integer nitNumber) 
-	{
+	/**
+	 * @param nitNumber the nitNumber to set
+	 */
+	public void setNitNumber(Integer nitNumber) {
 		this.nitNumber = nitNumber;
 	}
-	
 }

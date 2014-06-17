@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
@@ -68,8 +69,8 @@ public class ExportBill extends Fragment{
 		export = (Button)view.findViewById(R.id.button1);
 		
 		RegisterFragment rf = new RegisterFragment();
-		if(rf.getCheck()) {	
-			this.showUserData(this.userData());
+		if(rf.isChecked()) {	
+			this.showUserData(this.getUserData());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
 				@Override
@@ -104,7 +105,11 @@ public class ExportBill extends Fragment{
 	 */
 	
 	public void clickExport(View v)	{
-		this.exportDataRegister(this.userData(), convertBillsMapToStringArray());
+		try {
+			exportData(getUserData(), convertBillsMapToStringArray());
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	/**
@@ -113,7 +118,7 @@ public class ExportBill extends Fragment{
 	 * @param ArrayUser
 	 * @param ArrayBill
 	 */
-	public void exportDataRegister(List<String> arrayUser, List<String> arrayBill) {
+	public void exportData(List<String> arrayUser, List<String> arrayBill) {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
@@ -157,7 +162,7 @@ public class ExportBill extends Fragment{
 	 * This method returns an ArrayList of user data sorted  
 	 * @return
 	 */
-	public ArrayList<String> userData() {		
+	public ArrayList<String> getUserData() {		
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayUser = new ArrayList<String>();
 		
@@ -208,8 +213,13 @@ public class ExportBill extends Fragment{
 	 */
 	public void showBillAmount() {
 		totalAmount = 0;
-		for(int i : BillTableFragment.getBillList().keySet()) {	
-			totalAmount = (totalAmount + BillTableFragment.getBillList().get(i).getAmount());
+		try {
+			for(int i : BillTableFragment.getBillList().keySet()) {	
+				totalAmount = (totalAmount + BillTableFragment.getBillList().get(i).getAmount());
+			}
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), "No tiene facturas registradas",
+					Toast.LENGTH_SHORT).show();
 		}
 		showTotalAmount.setText(Double.toString(totalAmount));
 		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
@@ -218,12 +228,18 @@ public class ExportBill extends Fragment{
 	/**
 	 * Converts the bills' map in BillTableFragment into an array of strings.
 	 * @return ArrayList of string of the bills 
+	 * @throws BillException when there are no bills
 	 */
-	private List<String> convertBillsMapToStringArray() {
-		List<String> billsInfo = new ArrayList<String>();
-		for(int i : BillTableFragment.getBillList().keySet()) {
-			billsInfo.add(getBillInfoString(BillTableFragment.getBillList().get(i)));
+	private List<String> convertBillsMapToStringArray() throws BillException {
+		try {
+			List<String> billsInfo = new ArrayList<String>();
+			for(int i : BillTableFragment.getBillList().keySet()) {
+				billsInfo.add(getBillInfoString(BillTableFragment.getBillList().get(i)));
+			}
+			return billsInfo;
+		} catch (Exception ex) {
+			throw new BillException("Problema al exportar facturas, no tiene"
+					+ " facturas registradas.\n\nDetalles:\n" + ex.getMessage());
 		}
-		return billsInfo;
 	}
 }

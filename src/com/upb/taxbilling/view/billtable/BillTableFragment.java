@@ -29,10 +29,11 @@ import com.upb.taxbilling.model.data.Bill;
  */
 public class BillTableFragment extends Fragment {
 	
+	private static Map<Integer, Bill> bills;
+	
 	private String value;
 	private String impValue;
 	private String dateValue;
-	private static Map<Integer, Bill> bills;
 	
 	/**
      * {@inheritDoc}
@@ -245,6 +246,7 @@ public class BillTableFragment extends Fragment {
     public void cleanTable() {
     	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
     	contentTable.removeViews(1, contentTable.getChildCount() - 1);
+    	bills = new TreeMap<Integer, Bill>();
     }
     
     /**

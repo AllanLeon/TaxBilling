@@ -10,7 +10,6 @@ import android.widget.EditText;
  * The alert dialog that pops up when asking for additional data for the manual bill registration.
  * @author Franco Montiel
  * @author Guillermo Torrez
- *
  */	
 public class TableAlertDialog {
 	
@@ -48,39 +47,39 @@ public class TableAlertDialog {
     	alert.show();
     }
 
-		/**
-		 * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
-		 * @param view 
-		 * @param postrun Functional class that waits for the user input, validation
-		 * 				  and then executes the next command. 
-		 */
-		public void datePopUpMessage(View view, final TablePromptRunnable postrun) {
-			AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-			alert.setTitle("Fecha faltante");
-			alert.setMessage("Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:");
-			
-			final DatePicker dp = new DatePicker(view.getContext());
-			dp.setCalendarViewShown(false);
-			alert.setView(dp);
-			
-			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					int day = dp.getDayOfMonth();
-					int month = dp.getMonth();
-					int year = dp.getYear();
-					value = day + "/" + month + "/" + year;
-					dialog.dismiss();
-					postrun.setValue(value);
-					postrun.run();
-					return;
-				}
-			});	
+	/**
+	 * Launches a pop up message with a EditText component and OK/Cancel buttons for user input.
+	 * @param view 
+	 * @param postrun Functional class that waits for the user input, validation
+	 * 				  and then executes the next command. 
+	 */
+	public void datePopUpMessage(View view, final TablePromptRunnable postrun) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+		alert.setTitle("Fecha faltante");
+		alert.setMessage("Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:");
+		
+		final DatePicker dp = new DatePicker(view.getContext());
+		dp.setCalendarViewShown(false);
+		alert.setView(dp);
+		
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				int day = dp.getDayOfMonth();
+				int month = dp.getMonth();
+				int year = dp.getYear();
+				value = day + "/" + month + "/" + year;
+				dialog.dismiss();
+				postrun.setValue(value);
+				postrun.run();
+				return;
+			}
+		});	
 
-			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
-			alert.show();
-		}
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+		alert.show();
+	}
 }

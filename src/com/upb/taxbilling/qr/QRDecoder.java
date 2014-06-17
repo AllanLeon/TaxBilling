@@ -19,7 +19,8 @@ import com.google.zxing.qrcode.QRCodeReader;
  * @author Guillermo Torrez
  * @author Carlos Abasto
  */
-public class DecodeQRCode {
+public class QRDecoder {
+	
 	/**
 	 * Method to decode the QR code of a given image
 	 * @param img to be decoded
