@@ -122,11 +122,10 @@ public class BillTableFragment extends Fragment {
     
     /**
      * Adds a new bill to the bill table.
-     * @param view
+     * @param manualBill to be added to the table
      */
-    public static void runManualBill(/*final View view*/) {
+    public static void runManualBill(final Bill manualBill/*final View view*/) {
     	//final TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-    	final Bill b2 = newManualBill();
     	final TableAlertDialog tad = new TableAlertDialog();
     	final View view = contentTable;
 
@@ -140,7 +139,7 @@ public class BillTableFragment extends Fragment {
 				value = this.getValue();
 				impValue = value;
 				Double convertedImp = Double.parseDouble(impValue);
-				b2.setAmount(convertedImp);
+				manualBill.setAmount(convertedImp);
 				tad.datePopUpMessage(view, new TablePromptRunnable() {
 					/**
 					 * Saves the typed value into the Bill object at the Date attribute.
@@ -153,12 +152,12 @@ public class BillTableFragment extends Fragment {
 						Date convertedDate = null;
 						try {
 							convertedDate = new SimpleDateFormat("dd/mm/yyyy", Locale.US).parse(dateValue);
-							b2.setEmissionDate(convertedDate);
+							manualBill.setEmissionDate(convertedDate);
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
-						b2.setEmissionDate(convertedDate);
-						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b2);
+						manualBill.setEmissionDate(convertedDate);
+						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), manualBill);
 						contentTable.addView(row);
 					}
 				});
@@ -168,12 +167,11 @@ public class BillTableFragment extends Fragment {
     
     /**
      * Adds a new bill to the bill table.
-     * @param view
+     * @param electronicBill to be added
      */
-    public void runElectronicBill(final View view) {
-    	TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
-    	Bill b1 = newElectronicBill();
-		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), b1);
+    public static void runElectronicBill(final Bill electronicBill/* View view*/) {
+    	//TableLayout contentTable = (TableLayout) getActivity().findViewById(R.id.ContentTable);
+		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), electronicBill);
 		contentTable.addView(row);
     }
     
