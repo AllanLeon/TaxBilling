@@ -194,10 +194,9 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            TextView title = (TextView) rootView.findViewById(R.id.menuTitle);
+            TextView title = (TextView) rootView.findViewById(R.id.textView1);
         	Typeface font = Typeface.createFromAsset(rootView.getContext().getAssets(), "Woodstamp.otf");
         	title.setTypeface(font);
-            //title.setText("HOLA");
             return rootView;
         }
     }
