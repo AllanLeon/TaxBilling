@@ -15,22 +15,22 @@
 
     <!-- Welcome message -->
 
+    <TextView
+        android:id="@+id/menuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="93dp"
+        android:layout_x="13dp"
+        android:layout_y="92dp"
+        android:text="@string/welcome"
+        android:textSize="100sp" />
+
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="418dp"
-        android:layout_x="16dp"
-        android:layout_y="136dp"
+        android:layout_x="35dp"
+        android:layout_y="165dp"
         android:contentDescription="@string/receipt_desc"
         android:src="@drawable/ff" />
-
-    <TextView
-        android:id="@+id/menuTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="68dp"
-        android:layout_x="13dp"
-        android:layout_y="92dp"
-        android:text="@string/welcome"
-        android:textSize="50sp" />
 
 </AbsoluteLayout>

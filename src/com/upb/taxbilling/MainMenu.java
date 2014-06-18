@@ -34,7 +34,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
      * current dropdown position.
      */
 	
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     /**
      * {@inheritDoc}
@@ -66,6 +66,11 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                 this);        
     }
 
+    public void onStart(){
+    	super.onStart();
+    	
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -85,8 +90,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
     public void onSaveInstanceState(Bundle outState) {
         // Serialize the current dropdown position.
         outState.putInt(STATE_SELECTED_NAVIGATION_ITEM,
-                getActionBar().getSelectedNavigationIndex());
-      
+                getActionBar().getSelectedNavigationIndex());     
     }
 
 
@@ -98,7 +102,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        
+      
         return true;
     }
 
@@ -190,6 +194,10 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            TextView title = (TextView) rootView.findViewById(R.id.menuTitle);
+        	Typeface font = Typeface.createFromAsset(rootView.getContext().getAssets(), "Woodstamp.otf");
+        	title.setTypeface(font);
+            //title.setText("HOLA");
             return rootView;
         }
     }
