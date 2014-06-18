@@ -123,7 +123,7 @@ public class BillTableFragment extends Fragment {
     	final View view = contentTable;
 
     	//Launches first pop-up message and waits for the user to type a value.
-		tad.cashPopUpMessage(view, new TablePromptRunnable(){
+		tad.controlCodePopUpMessage(view, new TablePromptRunnable(){
 			/**
 			 * Saves the typed value into the Bill object at the Amount attribute.
 			 * At user confirmation, launches the second pop-up message.
