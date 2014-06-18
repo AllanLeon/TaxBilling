@@ -21,9 +21,8 @@ import android.widget.Toast;
 
 import com.upb.taxbilling.MainMenu;
 import com.upb.taxbilling.R;
-import com.upb.taxbilling.MainMenu.PlaceholderFragment;
+import com.upb.taxbilling.controller.billanalyzer.BillAnalyzer;
 import com.upb.taxbilling.qr.QRDecoder;
-import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
  * Fragment that decodes a hard-coded qr image.
@@ -36,7 +35,7 @@ import com.upb.taxbilling.view.billtable.BillTableFragment;
  */
 public class LQ1Fragment extends Fragment {
 
-	private TextView textbox;
+	private TextView billText;
 
 	/**
      * {@inheritDoc}
@@ -49,10 +48,9 @@ public class LQ1Fragment extends Fragment {
 		/**
 		 * Declaration of interface entities
 		 */
-		textbox = (TextView) view.findViewById(R.id.textView1);
+		billText = (TextView) view.findViewById(R.id.textView1);
 		final Button btn1 = (Button) view.findViewById(R.id.button1);
 		final Button btn2 = (Button) view.findViewById(R.id.button2);
-		final TextView text1 = textbox;
 		final ImageView imgv = (ImageView) view.findViewById(R.id.imageView1);
 		/**
 		 * Shows the QR code(saved in resources) on a Imageview
@@ -71,7 +69,7 @@ public class LQ1Fragment extends Fragment {
 						getResources(), R.drawable.qr_code);
 				try {
 					String msg = QRDecoder.decodeQRCode(qrCodeBitmap);
-					text1.setText(msg);
+					billText.setText(msg);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,14 +78,7 @@ public class LQ1Fragment extends Fragment {
 		});
 		btn2.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				MainMenu main = (MainMenu) getActivity();
-				main.getActionBar().setSelectedNavigationItem(2);
-				BillTableFragment.runManualBill();
-				//BillTableFragment btf = new BillTableFragment();
-				//btf.runManualBill(btf.getView());
-				//main.getFragmentManager().beginTransaction()
-                //.replace(R.id.container, btf)
-                //.commit();
+				saveBillIntoTable();
 			}
 		});
 
@@ -116,7 +107,7 @@ public class LQ1Fragment extends Fragment {
 	 * @param arg0
 	 */
 	public void saveQRBillText(View arg0) {
-		String str = textbox.getText().toString();
+		String str = billText.getText().toString();
 		try {
 			arg0.getContext();
 			FileOutputStream fos = arg0.getContext().openFileOutput("textFile.txt",
@@ -137,9 +128,23 @@ public class LQ1Fragment extends Fragment {
 			/**
 			 * Clear the textView
 			 */
-			textbox.setText(" ");
+			billText.setText(" ");
 		} catch (IOException ex) {
 			ex.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Decodes the bill text and saves it's respective bill into the table.
+	 */
+	private void saveBillIntoTable() {
+		try {
+			MainMenu main = (MainMenu) getActivity();
+			main.getActionBar().setSelectedNavigationItem(2);
+			BillAnalyzer.parseBill(billText.getText().toString());
+		} catch (Exception ex) {
+			Toast.makeText(getActivity(), "Error al agregar factura a la tabla",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 }
