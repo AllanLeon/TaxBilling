@@ -23,8 +23,8 @@ public class TableAlertDialog {
      */
     public void cashPopUpMessage(View view, final TablePromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-    	alert.setTitle("Importe faltante");
-    	alert.setMessage("Introduzca el importe correspondiente a la factura anteriormente registrada:");
+    	alert.setTitle("Codigo de Control faltante");
+    	alert.setMessage("Introduzca el codigo de control correspondiente a la factura anteriormente registrada:");
 
     	final EditText input = new EditText(view.getContext());
     	alert.setView(input);
