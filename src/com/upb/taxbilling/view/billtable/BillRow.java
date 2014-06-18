@@ -398,7 +398,7 @@ public class BillRow extends TableRow {
      */
     private EditText createAmountEditText() {
     	final EditText t6 = new EditText(this.getContext());
-    	t6.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t6.setInputType(0x00002002);
     	t6.setText("");
     	t6.addTextChangedListener(new TextWatcher() {
 			
