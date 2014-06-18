@@ -244,6 +244,7 @@ public class BillRow extends TableRow {
 				try {
 					bill.setNit(Integer.parseInt(t2.getText().toString()));
 				} catch (Exception ex) {
+					bill.setNit(0);
 					ex.printStackTrace();
 				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
@@ -285,6 +286,7 @@ public class BillRow extends TableRow {
 				try {
 					bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
 				} catch (Exception ex) {
+					bill.setBillNumber(0);
 					ex.printStackTrace();
 				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
@@ -326,6 +328,7 @@ public class BillRow extends TableRow {
 				try {
 					bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
 				} catch (Exception ex) {
+					bill.setAuthorizationNumber(0);
 					ex.printStackTrace();
 				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
@@ -422,6 +425,7 @@ public class BillRow extends TableRow {
 				try {
 					bill.setAmount(Double.parseDouble(t6.getText().toString()));
 				} catch (Exception ex) {
+					bill.setAmount(0.0);
 					ex.printStackTrace();
 				}
 				BillTableFragment.getBillList().put(rowNumber, bill);
