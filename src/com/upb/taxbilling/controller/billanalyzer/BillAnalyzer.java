@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
+import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
  * Analyzes and creates a bill based on a text and it's information.
@@ -23,13 +24,15 @@ public class BillAnalyzer {
 	 * @return a new bill with billText's info
 	 * @throws BillException if the bill couldn't be created
 	 */
-	public Bill parseBill(String billText) throws BillException {
+	public static Bill parseBill(String billText) throws BillException {
 		List<String> billInfo = tokenizeBillText(billText);
-		Bill bill;
+		final Bill bill;
 		if (billInfo.size() < 8) {
 			bill = createManualBill(billInfo);
+			BillTableFragment.runManualBill(bill);
 		} else {
 			bill = createElectronicBill(billInfo);
+			BillTableFragment.runElectronicBill(bill);
 		}
 		return bill;
 	}
@@ -40,7 +43,7 @@ public class BillAnalyzer {
 	 * @param billText string to be divided in tokens
 	 * @return a list of the tokens obtained
 	 */
-	public List<String> tokenizeBillText(String billText) {
+	private static List<String> tokenizeBillText(String billText) {
 		List<String> billInfo = Arrays.asList(billText.split(DIVIDER));
 		return billInfo;
 	}
@@ -51,13 +54,13 @@ public class BillAnalyzer {
 	 * @return a new manual bill
 	 * @throws BillException if the bill couldn't be created
 	 */
-	private Bill createManualBill(List<String> billInfo) throws BillException {
+	private static Bill createManualBill(List<String> billInfo) throws BillException {
 		try {
 			int nit = Integer.parseInt(billInfo.get(0));
 			String name = billInfo.get(1);
 			int autorizationNumber = Integer.parseInt(billInfo.get(2));
 			Date limitEmissionDate = new SimpleDateFormat(
-					"dd/MM/yyyy", Locale.ENGLISH).parse(billInfo.get(3));
+					"dd.MM.yyyy", Locale.ENGLISH).parse(billInfo.get(3));
 			int aux = 4;
 			Double ammount = 0.0;
 			if (billInfo.size() == 7) {
@@ -81,18 +84,18 @@ public class BillAnalyzer {
 	 * @return a new electronic bill
 	 * @throws BillException if the bill couldn't be created
 	 */
-	private Bill createElectronicBill(List<String> billInfo) throws BillException {
+	private static Bill createElectronicBill(List<String> billInfo) throws BillException {
 		try {
 		int nit = Integer.parseInt(billInfo.get(0));
 		String name = billInfo.get(1);
 		int billNumber = Integer.parseInt(billInfo.get(2));
 		int autorizationNumber = Integer.parseInt(billInfo.get(3));
 		Date emissionDate = new SimpleDateFormat(
-				"dd/MM/yyyy", Locale.ENGLISH).parse(billInfo.get(4));
+				"dd.MM.yyyy", Locale.ENGLISH).parse(billInfo.get(4));
 		Double amount = Double.parseDouble(billInfo.get(5));
 		String controlCode = billInfo.get(6);
 		Date limitEmissionDate = new SimpleDateFormat(
-				"dd/MM/yyyy", Locale.ENGLISH).parse(billInfo.get(7));
+				"dd.MM.yyyy", Locale.ENGLISH).parse(billInfo.get(7));
 		int aux = 8;
 		Double iceAmount = 0.0;
 		Double noTaxSaleAmount = 0.0;

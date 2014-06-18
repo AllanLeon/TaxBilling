@@ -118,8 +118,8 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         // When the given dropdown item is selected, show its contents in the
         // container view.
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+        .commit();
         //Updates the fragment view with the chosen fragment when a given 
         //dropdown item is selected.
         switch (position) {

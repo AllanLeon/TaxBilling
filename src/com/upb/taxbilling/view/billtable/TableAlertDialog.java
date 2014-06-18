@@ -23,8 +23,8 @@ public class TableAlertDialog {
      */
     public void cashPopUpMessage(View view, final TablePromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-    	alert.setTitle("Importe faltante");
-    	alert.setMessage("Introduzca el importe correspondiente a la factura anteriormente registrada:");
+    	alert.setTitle("Codigo de Control faltante");
+    	alert.setMessage("Introduzca el codigo de control correspondiente a la factura anteriormente registrada:");
 
     	final EditText input = new EditText(view.getContext());
     	alert.setView(input);
@@ -65,9 +65,10 @@ public class TableAlertDialog {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				int day = dp.getDayOfMonth();
-				int month = dp.getMonth();
+				int month = dp.getMonth() + 1;
 				int year = dp.getYear();
 				value = day + "/" + month + "/" + year;
+				System.out.println(value);
 				dialog.dismiss();
 				postrun.setValue(value);
 				postrun.run();
