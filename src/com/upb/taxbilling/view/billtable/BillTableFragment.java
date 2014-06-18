@@ -33,7 +33,6 @@ public class BillTableFragment extends Fragment {
 	private static TableLayout contentTable;
 	
 	private static String controlCodeValue;
-	//private static String impValue;
 	private static String dateValue;
 	
 	/**
@@ -131,8 +130,6 @@ public class BillTableFragment extends Fragment {
 			 */
 			public void run() {
 				controlCodeValue = this.getValue();
-				//impValue = controlCodeValue;
-				//Double convertedImp = Double.parseDouble(impValue);
 				manualBill.setControlCode(controlCodeValue);
 				tad.datePopUpMessage(view, new TablePromptRunnable() {
 					/**
@@ -141,11 +138,10 @@ public class BillTableFragment extends Fragment {
 					 * into the table. Also aggregates the bill to an independent ManualBill Array.
 					 */
 					public void run() {
-						controlCodeValue = this.getValue();
-						dateValue = controlCodeValue;
+						dateValue = this.getValue();
 						Date convertedDate = null;
 						try {
-							convertedDate = new SimpleDateFormat("dd/mm/yyyy", Locale.US).parse(dateValue);
+							convertedDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dateValue);
 							manualBill.setEmissionDate(convertedDate);
 						} catch (ParseException e) {
 							e.printStackTrace();
