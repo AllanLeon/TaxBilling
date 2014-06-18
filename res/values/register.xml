@@ -16,6 +16,10 @@
     <string name="save">Guardar</string>
     <string name="email">Email</string>
     <color name="registerBackgroundColor">#F2F1DF</color>
+    <color name="Floating">#BED9BA</color>
+    <color name="Black">#000000</color>
+    <color name="White">#FFFFFF</color>
+    <color name="turquoise">#03A688</color>
     
     <!-- Style used in the textviews of the register fragment. -->
     <style name="text_register_style" parent="@android:style/TextAppearance">

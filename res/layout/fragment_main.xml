@@ -1,6 +1,7 @@
 <!-- Main Fragment of the project -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AbsoluteLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bill"
@@ -11,25 +12,25 @@
     tools:context="com.upb.taxbilling.MainActivity$PlaceholderFragment" >
 
     <!-- Receipt image -->
-    <ImageView
-        android:id="@+id/imageView1"
-        android:contentDescription="@string/receipt_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/receipt" />
 
     <!-- Welcome message -->
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:textColor="#010326"
+        android:layout_height="93dp"
+        android:layout_x="16dp"
+        android:layout_y="61dp"
         android:text="@string/welcome"
-        android:textAppearance="@style/AppTheme"
-        android:textSize="@android:dimen/app_icon_size" />
+        android:textSize="100sp" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="271dp"
+        android:layout_height="233dp"
+        android:layout_x="60dp"
+        android:layout_y="240dp"
+        android:contentDescription="@string/receipt_desc"
+        android:src="@drawable/ff" />
+
+</AbsoluteLayout>
