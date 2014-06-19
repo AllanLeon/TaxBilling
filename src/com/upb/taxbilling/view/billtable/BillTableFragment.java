@@ -63,6 +63,8 @@ public class BillTableFragment extends Fragment {
         if (bills == null) {
         	bills = new TreeMap<Integer, Bill>();
         }
+        final TextView headerNit = (TextView) view.findViewById(R.id.headerNit);
+        
     	contentTable = (TableLayout) view.findViewById(R.id.ContentTable);
         updateRowsByList();
 	    return view;
@@ -252,7 +254,8 @@ public class BillTableFragment extends Fragment {
     /**
      * Updates the rows of the table based on the list of bills.
      */
-    public void updateRowsByList() {
+    public static void updateRowsByList() {
+    	contentTable.removeViews(1, contentTable.getChildCount() - 1);
     	for(int i : bills.keySet()) {
     		BillRow row = new BillRow(contentTable.getContext(), i, bills.get(i));
         	contentTable.addView(row);
@@ -262,7 +265,7 @@ public class BillTableFragment extends Fragment {
     /**
      * @return the list of bills of the table.
      */
-    public static Map<Integer, Bill> getBillList() {
+    public static Map<Integer, Bill> getBills() {
     	return bills;
     }
 }
