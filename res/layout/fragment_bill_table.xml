@@ -154,6 +154,7 @@
                         android:text="@string/TableColumn1" />
 
                     <TextView
+                        android:id="@+id/headerNit"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,6 +164,7 @@
                         android:text="@string/TableColumn2" />
 
                     <TextView
+                        android:id="@+id/headerBillNumber"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -172,6 +174,7 @@
                         android:text="@string/TableColumn3" />
 
                     <TextView
+                        android:id="@+id/headerAuthorizationNumber"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -181,6 +184,7 @@
                         android:text="@string/TableColumn4" />
 
                     <TextView
+                        android:id="@+id/headerDate"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -190,6 +194,7 @@
                         android:text="@string/TableColumn5" />
 
                     <TextView
+                        android:id="@+id/headerAmount"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -199,6 +204,7 @@
                         android:text="@string/TableColumn6" />
 
                     <TextView
+                        android:id="@+id/headerControlCode"
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
