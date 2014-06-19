@@ -158,6 +158,16 @@ public class ExportBill extends Fragment{
 		}		
 	}
 	
+	public ArrayList<String> getDate(){
+		RegisterFragment rf =  new RegisterFragment();
+		ArrayList<String> arrayDate = new ArrayList<String>();
+		
+		arrayDate.add(Integer.toString(rf.getDate().getDay()));
+		arrayDate.add(Integer.toString(rf.getDate().getMonth()));
+		arrayDate.add(Integer.toString(rf.getDate().getYear()));
+		
+		return arrayDate;
+	}
 	/**
 	 * This method returns an ArrayList of user data sorted  
 	 * @return

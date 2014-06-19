@@ -1,5 +1,7 @@
 package com.upb.taxbilling.view;
 
+import android.R.integer;
+import android.R.string;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.*;
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
+import com.upb.taxbilling.model.data.Date;
 import com.upb.taxbilling.model.data.Taxpayer;
 
 /**
@@ -28,6 +31,7 @@ public class RegisterFragment extends Fragment {
 	private static boolean isChecked = false;
 	private static Taxpayer taxpayer;
 	private static Company company;
+	private static Date date;
 	
 	private Button saveButton;
 	private EditText nameLastname;
@@ -38,6 +42,9 @@ public class RegisterFragment extends Fragment {
 	private EditText nitNumber;
 	private EditText addressCompany;
 	private EditText email;
+	private EditText year;
+	private Spinner day;
+	private Spinner month;
 	
 	/**
      * {@inheritDoc}
@@ -56,7 +63,10 @@ public class RegisterFragment extends Fragment {
 		nitNumber = (EditText)view.findViewById(R.id.editText6);
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
+		year = (EditText)view.findViewById(R.id.editText9);
 		saveButton = (Button)view.findViewById(R.id.button1);
+		day = (Spinner)view.findViewById(R.id.spinner2);
+		month = (Spinner)view.findViewById(R.id.spinner1);
 		
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -80,13 +90,16 @@ public class RegisterFragment extends Fragment {
 		UserDataException usde = new UserDataException();
 		if(usde.userData(nameLastname, address, expeditionPlace,
 				identityNumber, employerBussinesName, nitNumber,
-				addressCompany, email).equals("")) {
+				addressCompany, email, year).equals("")) {
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
 				address.getText().toString(), expeditionPlace.getText().toString(),
 				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
 		company = new Company(addressCompany.getText().toString(),
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
+		date = new Date(Integer.parseInt(day.getSelectedItem().toString()),
+						Integer.parseInt(month.getSelectedItem().toString()),
+						Integer.parseInt(year.getText().toString()));
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
@@ -112,12 +125,16 @@ public class RegisterFragment extends Fragment {
     }
     
     /**
-     * Method to return information saved in Taxpayer
+     * Method to return information saved in Company
      * This return an Company
      * @return
      */
     public Company getDataCompany() {  	
 		return company;		
+    }
+    
+    public Date getDate(){
+    	return date;
     }
     
     /**
