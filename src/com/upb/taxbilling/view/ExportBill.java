@@ -46,6 +46,7 @@ public class ExportBill extends Fragment{
 	private TextView email;
 	private TextView showTotalAmount;
 	private TextView showPaymentOnAccount;
+	private TextView date;
 	
 	/**
 	 * {@inheritDoc}
@@ -66,11 +67,13 @@ public class ExportBill extends Fragment{
 		email = (TextView)view.findViewById(R.id.textView20);
 		showTotalAmount = (TextView)view.findViewById(R.id.textView16);
 		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
+		date = (TextView)view.findViewById(R.id.textView23);	
 		export = (Button)view.findViewById(R.id.button1);
 		
 		RegisterFragment rf = new RegisterFragment();
 		if(rf.isChecked()) {	
 			this.showUserData(this.getUserData());
+			this.showDate(this.getDate());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
 				@Override
@@ -106,7 +109,7 @@ public class ExportBill extends Fragment{
 	
 	public void clickExport(View v)	{
 		try {
-			exportData(getUserData(), convertBillsMapToStringArray());
+			exportData(getUserData(), convertBillsMapToStringArray(), getDate());
 		} catch (Exception ex) {
 			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
 		}
@@ -118,7 +121,7 @@ public class ExportBill extends Fragment{
 	 * @param ArrayUser
 	 * @param ArrayBill
 	 */
-	public void exportData(List<String> arrayUser, List<String> arrayBill) {
+	public void exportData(List<String> arrayUser, List<String> arrayBill, List<String> arrayDate) {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
@@ -139,6 +142,11 @@ public class ExportBill extends Fragment{
 			
 			    fout.write("DiCaprio");
 			    fout.write("\n");
+			    for(int i=0; i < arrayDate.size(); i++) {
+			   		fout.write(arrayDate.get(i));
+			   		fout.write("\n");
+			    }
+			    Toast.makeText(getActivity(), "Exportando Fecha", Toast.LENGTH_SHORT).show();
 			    for(int i=0; i < arrayUser.size(); i++) {
 			   		fout.write(arrayUser.get(i));
 			   		fout.write("\n");
@@ -167,6 +175,14 @@ public class ExportBill extends Fragment{
 		arrayDate.add(Integer.toString(rf.getDate().getYear()));
 		
 		return arrayDate;
+	}
+	
+	public void showDate(ArrayList<String> Date)
+	{
+		date.setText(Date.get(0)+"/"+
+					 Date.get(1)+"/"+
+					 Date.get(2));
+	
 	}
 	/**
 	 * This method returns an ArrayList of user data sorted  
