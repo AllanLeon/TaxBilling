@@ -10,7 +10,7 @@ import com.upb.taxbilling.view.billtable.BillTableFragment;
  * Event that executes when the date header of the bill table is clicked.
  * @author Allan Leon
  */
-public class DateHeaderClickListener implements OnClickListener{
+public class DateHeaderClickListener implements OnClickListener {
 
 	/**
 	 * {@inheritDoc}

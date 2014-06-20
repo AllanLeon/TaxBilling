@@ -10,7 +10,7 @@ import com.upb.taxbilling.view.billtable.BillTableFragment;
  * Event that executes when the amount header of the bill table is clicked.
  * @author Allan Leon
  */
-public class AmountHeaderClickListener implements OnClickListener{
+public class AmountHeaderClickListener implements OnClickListener {
 
 	/**
 	 * {@inheritDoc}
