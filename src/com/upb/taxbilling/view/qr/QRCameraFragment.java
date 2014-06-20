@@ -24,9 +24,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.upb.taxbilling.MainMenu;
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.controller.billanalyzer.BillAnalyzer;
 import com.upb.taxbilling.qr.QRDecoder;
 
+/**
+ * 
+ * @author Bethsy Pinedo
+ * @author Graciela Quiroga
+ */
 public class QRCameraFragment extends Fragment {
 	ImageView imgFavorite;
 	public static File file;
@@ -111,8 +118,6 @@ public class QRCameraFragment extends Fragment {
 					 * Clear the imageView 
 					 */
 					imgFavorite.setImageDrawable(null);
-					
-										
 				} 
 				catch (IOException ex) {
 					ex.printStackTrace();
@@ -143,6 +148,7 @@ public class QRCameraFragment extends Fragment {
 				catch (IOException e) {
 	            }
 		}
+			saveBillIntoTable();
 		}
 	    } ) ;
 	return view;
@@ -201,5 +207,19 @@ public class QRCameraFragment extends Fragment {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	/**
+	* Decodes the bill text and saves it's respective bill into the table.
+	*/
+	private void saveBillIntoTable() {
+		try {
+		MainMenu main = (MainMenu) getActivity();
+		main.getActionBar().setSelectedNavigationItem(2);
+		BillAnalyzer.parseBill(textbox.getText().toString());
+		} catch (Exception ex) {
+		Toast.makeText(getActivity(), "Error al agregar factura a la tabla",
+		Toast.LENGTH_SHORT).show();
+		}
 	}
 }
