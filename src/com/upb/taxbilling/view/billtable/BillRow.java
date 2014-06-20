@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
-import com.upb.taxbilling.view.billtable.events.RowClickedListener;
+import com.upb.taxbilling.view.billtable.events.RowNumberClickListener;
 
 /**
  * The TableRow where a bill is stored.
@@ -150,7 +150,7 @@ public class BillRow extends TableRow {
 	private void initializeComponents() {
 		TextView t1 = new TextView(this.getContext());
     	t1.setText(Integer.toString(rowNumber));
-    	t1.setOnClickListener(new RowClickedListener());
+    	t1.setOnClickListener(new RowNumberClickListener());
     	
     	this.addView(t1);
     	this.addView(createNitEditText());

@@ -7,11 +7,10 @@ import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
- * Event that executes when the authorization number header of the bill table
- *  is clicked.
+ * Event that executes when the nit header of the bill table is clicked.
  * @author Allan Leon
  */
-public class AuthorizationNumberClickedListener implements OnClickListener{
+public class NitHeaderClickListener implements OnClickListener {
 
 	/**
 	 * {@inheritDoc}
@@ -19,7 +18,7 @@ public class AuthorizationNumberClickedListener implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		try {
-			quickSortBillsByAuthorizationNumber(1, BillTableFragment.getBills().keySet().size());
+			quickSortBillsByNit(1, BillTableFragment.getBills().keySet().size());
 			BillTableFragment.updateRowsByList();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -27,18 +26,19 @@ public class AuthorizationNumberClickedListener implements OnClickListener{
 	}
 
 	/**
-	 * Sorts the bills by their authorization number using the quick sort algorithm.
+	 * Sorts the bills by their nit using the quick sort algorithm.
 	 * @param start where the algorithm starts
 	 * @param end where the algorithm ends
 	 */
-	private void quickSortBillsByAuthorizationNumber(int start, int end) {
+	private void quickSortBillsByNit(int start, int end) {
     	int left = start;
     	int right = end;
     	int pos = left;
     	boolean flag = true;
     	while(flag) {
     		flag = false;
-    		while (BillTableFragment.getBills().get(pos).getAuthorizationNumber() <= BillTableFragment.getBills().get(right).getAuthorizationNumber()
+    		while (BillTableFragment.getBills().get(pos).getNit()
+    				<= BillTableFragment.getBills().get(right).getNit()
     				&& pos != right) {
     			right--;
     		}
@@ -47,7 +47,9 @@ public class AuthorizationNumberClickedListener implements OnClickListener{
     			BillTableFragment.getBills().put(pos, BillTableFragment.getBills().get(right));
     			BillTableFragment.getBills().put(right, aux);
     			pos = right;
-    			while (BillTableFragment.getBills().get(pos).getAuthorizationNumber() >= BillTableFragment.getBills().get(left).getAuthorizationNumber() && pos != left) {
+    			while (BillTableFragment.getBills().get(pos).getNit()
+    					>= BillTableFragment.getBills().get(left).getNit()
+    					&& pos != left) {
     				left++;
     			}
     			if (pos != left) {
@@ -60,10 +62,10 @@ public class AuthorizationNumberClickedListener implements OnClickListener{
     		}
     	}
     	if (pos - 1 > start) {
-    		quickSortBillsByAuthorizationNumber(start, pos - 1);
+    		quickSortBillsByNit(start, pos - 1);
     	}
     	if (end > pos + 1) {
-    		quickSortBillsByAuthorizationNumber(pos + 1, end);
+    		quickSortBillsByNit(pos + 1, end);
     	}
     }
 }
