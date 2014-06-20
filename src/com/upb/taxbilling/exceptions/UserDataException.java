@@ -53,6 +53,13 @@ public class UserDataException {
 			return error;
 		}
 		
+		/**
+		 * This method verifies that month was selected
+		 * Receives as parameter a spinner of the months
+		 * @param month
+		 * @return
+		 */
+		
 		public int changeDays(Spinner month){
 			if(Integer.parseInt(month.getSelectedItem().toString())==4 ||
 			   Integer.parseInt(month.getSelectedItem().toString())==6 ||

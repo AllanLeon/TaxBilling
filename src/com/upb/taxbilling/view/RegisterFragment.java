@@ -69,6 +69,9 @@ public class RegisterFragment extends Fragment {
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
 		
+		/**
+		 * Change day according to month
+		 */
 		month.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

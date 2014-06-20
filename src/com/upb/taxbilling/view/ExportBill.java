@@ -166,6 +166,10 @@ public class ExportBill extends Fragment{
 		}		
 	}
 	
+	/**
+	 * This method returns an ArrayList with the date  
+	 * @return
+	 */
 	public ArrayList<String> getDate(){
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayDate = new ArrayList<String>();
@@ -177,6 +181,12 @@ public class ExportBill extends Fragment{
 		return arrayDate;
 	}
 	
+	/**
+	 * This method show the date.
+	 * This method receives as parameters an ArrayList with the date
+	 * @param Date
+	 */
+
 	public void showDate(ArrayList<String> Date)
 	{
 		date.setText(Date.get(0)+"/"+
@@ -184,6 +194,7 @@ public class ExportBill extends Fragment{
 					 Date.get(2));
 	
 	}
+	
 	/**
 	 * This method returns an ArrayList of user data sorted  
 	 * @return
