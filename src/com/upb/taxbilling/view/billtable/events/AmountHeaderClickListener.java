@@ -7,10 +7,10 @@ import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
 /**
- * Event that executes when the date header of the bill table is clicked.
+ * Event that executes when the amount header of the bill table is clicked.
  * @author Allan Leon
  */
-public class DateHeaderClickListener implements OnClickListener{
+public class AmountHeaderClickListener implements OnClickListener{
 
 	/**
 	 * {@inheritDoc}
@@ -18,7 +18,7 @@ public class DateHeaderClickListener implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		try {
-			quickSortBillsByDate(1, BillTableFragment.getBills().keySet().size());
+			quickSortBillsByAmount(1, BillTableFragment.getBills().keySet().size());
 			BillTableFragment.updateRowsByList();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -26,19 +26,19 @@ public class DateHeaderClickListener implements OnClickListener{
 	}
 
 	/**
-	 * Sorts the bills by their date using the quick sort algorithm.
+	 * Sorts the bills by their amount using the quick sort algorithm.
 	 * @param start where the algorithm starts
 	 * @param end where the algorithm ends
 	 */
-	private void quickSortBillsByDate(int start, int end) {
+	private void quickSortBillsByAmount(int start, int end) {
     	int left = start;
     	int right = end;
     	int pos = left;
     	boolean flag = true;
     	while(flag) {
     		flag = false;
-    		while (BillTableFragment.getBills().get(pos).getEmissionDate().getTime()
-    				<= BillTableFragment.getBills().get(right).getEmissionDate().getTime()
+    		while (BillTableFragment.getBills().get(pos).getAmount()
+    				<= BillTableFragment.getBills().get(right).getAmount()
     				&& pos != right) {
     			right--;
     		}
@@ -47,8 +47,8 @@ public class DateHeaderClickListener implements OnClickListener{
     			BillTableFragment.getBills().put(pos, BillTableFragment.getBills().get(right));
     			BillTableFragment.getBills().put(right, aux);
     			pos = right;
-    			while (BillTableFragment.getBills().get(pos).getEmissionDate().getTime()
-    					>= BillTableFragment.getBills().get(left).getEmissionDate().getTime()
+    			while (BillTableFragment.getBills().get(pos).getAmount()
+    					>= BillTableFragment.getBills().get(left).getAmount()
     					&& pos != left) {
     				left++;
     			}
@@ -62,10 +62,10 @@ public class DateHeaderClickListener implements OnClickListener{
     		}
     	}
     	if (pos - 1 > start) {
-    		quickSortBillsByDate(start, pos - 1);
+    		quickSortBillsByAmount(start, pos - 1);
     	}
     	if (end > pos + 1) {
-    		quickSortBillsByDate(pos + 1, end);
+    		quickSortBillsByAmount(pos + 1, end);
     	}
     }
 }
