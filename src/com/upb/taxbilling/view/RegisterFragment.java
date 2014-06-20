@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.UserDataException;
@@ -65,9 +66,46 @@ public class RegisterFragment extends Fragment {
 		email = (EditText)view.findViewById(R.id.editText10);
 		year = (EditText)view.findViewById(R.id.editText9);
 		saveButton = (Button)view.findViewById(R.id.button1);
-		day = (Spinner)view.findViewById(R.id.spinner2);
 		month = (Spinner)view.findViewById(R.id.spinner1);
+		day = (Spinner)view.findViewById(R.id.spinner2);
 		
+		month.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> view, View arg1,
+					int arg2, long arg3) {
+				
+				// TODO Auto-generated method stub
+				UserDataException usde = new UserDataException();
+				switch(usde.changeDays(month)){
+					case 0:
+						ArrayAdapter<CharSequence> adapter0 = ArrayAdapter.createFromResource(view.getContext(),R.array.days_30,android.R.layout.simple_spinner_item);
+						adapter0.setDropDownViewResource(android.R.layout.simple_spinner_item);
+						day.setAdapter(adapter0);
+						break;
+					case 1:
+						ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(view.getContext(),R.array.days_28,android.R.layout.simple_spinner_item);
+						adapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
+						day.setAdapter(adapter1);
+						break;
+					case 2:
+						ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(view.getContext(),R.array.days_31,android.R.layout.simple_spinner_item);
+						adapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+						day.setAdapter(adapter2);
+						break;
+						
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}		
+		});
+		
+		
+	
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			/**

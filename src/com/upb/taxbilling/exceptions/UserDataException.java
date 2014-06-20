@@ -1,6 +1,7 @@
 package com.upb.taxbilling.exceptions;
 
 import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * Verifies that all the fields on the user register fragment aren't empty.
@@ -50,5 +51,22 @@ public class UserDataException {
 				error = true;
 			}			
 			return error;
+		}
+		
+		public int changeDays(Spinner month){
+			if(Integer.parseInt(month.getSelectedItem().toString())==4 ||
+			   Integer.parseInt(month.getSelectedItem().toString())==6 ||
+		       Integer.parseInt(month.getSelectedItem().toString())==9 ||
+		       Integer.parseInt(month.getSelectedItem().toString())==11){
+				return 0;
+			}
+			else{
+				if(Integer.parseInt(month.getSelectedItem().toString())==2){
+					return 1;
+				}
+				else{
+					return 2;
+				}
+			}
 		}
 }
