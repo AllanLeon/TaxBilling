@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
-import com.upb.taxbilling.view.billtable.events.RowClickedListener;
+import com.upb.taxbilling.view.billtable.events.RowNumberClickListener;
 
 /**
  * The TableRow where a bill is stored.
@@ -49,7 +49,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = 0;
 		this.isHighlighted = false;
 		this.bill = new Bill();
-		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
+		BillTableFragment.getBills().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
@@ -65,7 +65,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.isHighlighted = false;
 		this.bill = new Bill();
-		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
+		BillTableFragment.getBills().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 	}
@@ -83,7 +83,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		this.bill = bill;
 		this.isHighlighted = false;
-		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
+		BillTableFragment.getBills().put(this.rowNumber, this.bill);
 		this.dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 		initializeComponents();
 		try {
@@ -98,7 +98,7 @@ public class BillRow extends TableRow {
 	 */
 	public void setBill(Bill bill) {
 		this.bill = bill;
-		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
+		BillTableFragment.getBills().put(this.rowNumber, this.bill);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class BillRow extends TableRow {
 		this.rowNumber = rowNumber;
 		TextView t1 = (TextView) this.getChildAt(0);
 		t1.setText(Integer.toString(rowNumber));
-		BillTableFragment.getBillList().put(this.rowNumber, this.bill);
+		BillTableFragment.getBills().put(this.rowNumber, this.bill);
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class BillRow extends TableRow {
 	private void initializeComponents() {
 		TextView t1 = new TextView(this.getContext());
     	t1.setText(Integer.toString(rowNumber));
-    	t1.setOnClickListener(new RowClickedListener());
+    	t1.setOnClickListener(new RowNumberClickListener());
     	
     	this.addView(t1);
     	this.addView(createNitEditText());
@@ -247,7 +247,7 @@ public class BillRow extends TableRow {
 					bill.setNit(0);
 					ex.printStackTrace();
 				}
-				BillTableFragment.getBillList().put(rowNumber, bill);
+				BillTableFragment.getBills().put(rowNumber, bill);
 			}
 		});
     	return t2;
@@ -289,7 +289,7 @@ public class BillRow extends TableRow {
 					bill.setBillNumber(0);
 					ex.printStackTrace();
 				}
-				BillTableFragment.getBillList().put(rowNumber, bill);
+				BillTableFragment.getBills().put(rowNumber, bill);
 			}
 		});
     	return t3;
@@ -331,7 +331,7 @@ public class BillRow extends TableRow {
 					bill.setAuthorizationNumber(0);
 					ex.printStackTrace();
 				}
-				BillTableFragment.getBillList().put(rowNumber, bill);
+				BillTableFragment.getBills().put(rowNumber, bill);
 			}
 		});
     	return t4;
@@ -358,7 +358,7 @@ public class BillRow extends TableRow {
                     String date = day + "/" + month + "/" + year;
                     t5.setText(date);
                 	bill.setEmissionDate(df.parse(date));
-                	BillTableFragment.getBillList().put(rowNumber, bill);
+                	BillTableFragment.getBills().put(rowNumber, bill);
 				} catch (ParseException e) {
 					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
 		            alertDialog.setTitle("Problema con la fecha");
@@ -398,7 +398,7 @@ public class BillRow extends TableRow {
      */
     private EditText createAmountEditText() {
     	final EditText t6 = new EditText(this.getContext());
-    	t6.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t6.setInputType(0x00002002);
     	t6.setText("");
     	t6.addTextChangedListener(new TextWatcher() {
 			
@@ -428,7 +428,7 @@ public class BillRow extends TableRow {
 					bill.setAmount(0.0);
 					ex.printStackTrace();
 				}
-				BillTableFragment.getBillList().put(rowNumber, bill);
+				BillTableFragment.getBills().put(rowNumber, bill);
 			}
 		});
     	return t6;
@@ -439,7 +439,6 @@ public class BillRow extends TableRow {
      */
     private EditText createControlCodeEditText() {
     	final EditText t7 = new EditText(this.getContext());
-    	t7.setInputType(InputType.TYPE_CLASS_NUMBER);
     	t7.setText("");
     	t7.addTextChangedListener(new TextWatcher() {
 			
@@ -465,7 +464,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				bill.setControlCode(t7.getText().toString());
-				BillTableFragment.getBillList().put(rowNumber, bill);
+				BillTableFragment.getBills().put(rowNumber, bill);
 			}
 		});
     	return t7;

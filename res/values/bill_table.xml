@@ -32,6 +32,6 @@
     </style>
     
     <color name="RowSelectedColor">#6377C5</color>
-    <color name="RowNormalColor">#F2F1DF</color>
+    <color name="RowNormalColor">#ECF9F6</color>
     
 </resources>
