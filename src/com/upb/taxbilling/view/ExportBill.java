@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -174,9 +175,9 @@ public class ExportBill extends Fragment{
 		RegisterFragment rf =  new RegisterFragment();
 		ArrayList<String> arrayDate = new ArrayList<String>();
 		
-		arrayDate.add(Integer.toString(rf.getDate().getDay()));
-		arrayDate.add(Integer.toString(rf.getDate().getMonth()));
-		arrayDate.add(Integer.toString(rf.getDate().getYear()));
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.DAY_OF_MONTH)));
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.MONTH)));
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.YEAR)));
 		
 		return arrayDate;
 	}

@@ -14,8 +14,10 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
-import com.upb.taxbilling.model.data.Date;
 import com.upb.taxbilling.model.data.Taxpayer;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * The fragment where the information about a bill is registered.
@@ -32,7 +34,7 @@ public class RegisterFragment extends Fragment {
 	private static boolean isChecked = false;
 	private static Taxpayer taxpayer;
 	private static Company company;
-	private static Date date;
+	private static Calendar date;
 	
 	private Button saveButton;
 	private EditText nameLastname;
@@ -68,6 +70,7 @@ public class RegisterFragment extends Fragment {
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
+		date = Calendar.getInstance();
 		
 		/**
 		 * Change day according to month
@@ -138,9 +141,10 @@ public class RegisterFragment extends Fragment {
 		company = new Company(addressCompany.getText().toString(),
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
-		date = new Date(Integer.parseInt(day.getSelectedItem().toString()),
-						Integer.parseInt(month.getSelectedItem().toString()),
-						Integer.parseInt(year.getText().toString()));
+		date.set(Integer.parseInt(year.getText().toString()), 
+				 Integer.parseInt(month.getSelectedItem().toString()),
+				 Integer.parseInt(day.getSelectedItem().toString()));		 
+		
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
@@ -174,7 +178,7 @@ public class RegisterFragment extends Fragment {
 		return company;		
     }
     
-    public Date getDate(){
+    public Calendar getDate(){
     	return date;
     }
     
