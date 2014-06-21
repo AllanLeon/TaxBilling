@@ -16,6 +16,7 @@
     <string name="year">Año</string>
     <string name="save">Guardar</string>
     <string name="email">Email</string>
+    <string name="placeOfPresentation">Lugar de Presentación</string>
     <string-array name="months">
         <item >01</item>
         <item >02</item>

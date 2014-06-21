@@ -25,7 +25,7 @@ public class UserDataException {
 		public String userData(EditText nameLastname, EditText address,
 				EditText expeditionPlace, EditText identityNumber, 
 				EditText employerBussinesName, EditText nitNumber,
-				EditText addressCompany, EditText email, EditText year) {
+				EditText addressCompany, EditText email, EditText year, EditText place_presentation) {
 			if(fieldEmpty(nameLastname.getText().toString())
 			   || fieldEmpty(address.getText().toString())
 			   || fieldEmpty(expeditionPlace.getText().toString())
@@ -33,7 +33,8 @@ public class UserDataException {
 			   || fieldEmpty(employerBussinesName.getText().toString())
 			   || fieldEmpty(nitNumber.getText().toString())
 			   || fieldEmpty(addressCompany.getText().toString())
-			   || fieldEmpty(year.getText().toString())) {
+			   || fieldEmpty(year.getText().toString())
+			   || fieldEmpty(place_presentation.getText().toString())) {
 				return "Error";
 			} else {
 				return "";

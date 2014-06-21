@@ -143,12 +143,17 @@ public class ExportBill extends Fragment{
 			
 			    fout.write("DiCaprio");
 			    fout.write("\n");
+			    fout.write(arrayUser.get(0));
+		   		fout.write("\n");
+		   		fout.write(RegisterFragment.getPlace());
+		   		fout.write("\n");
+		   		
 			    for(int i=0; i < arrayDate.size(); i++) {
 			   		fout.write(arrayDate.get(i));
 			   		fout.write("\n");
 			    }
 			    Toast.makeText(getActivity(), "Exportando Fecha", Toast.LENGTH_SHORT).show();
-			    for(int i=0; i < arrayUser.size(); i++) {
+			    for(int i=1; i < arrayUser.size(); i++) {
 			   		fout.write(arrayUser.get(i));
 			   		fout.write("\n");
 			    }

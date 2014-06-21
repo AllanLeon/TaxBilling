@@ -35,6 +35,7 @@ public class RegisterFragment extends Fragment {
 	private static Taxpayer taxpayer;
 	private static Company company;
 	private static Calendar date;
+	private static String place;
 	
 	private Button saveButton;
 	private EditText nameLastname;
@@ -46,6 +47,7 @@ public class RegisterFragment extends Fragment {
 	private EditText addressCompany;
 	private EditText email;
 	private EditText year;
+	private EditText place_presentation;
 	private Spinner day;
 	private Spinner month;
 	
@@ -67,6 +69,7 @@ public class RegisterFragment extends Fragment {
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
 		year = (EditText)view.findViewById(R.id.editText9);
+		place_presentation = (EditText)view.findViewById(R.id.editText8);
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
@@ -134,7 +137,7 @@ public class RegisterFragment extends Fragment {
 		UserDataException usde = new UserDataException();
 		if(usde.userData(nameLastname, address, expeditionPlace,
 				identityNumber, employerBussinesName, nitNumber,
-				addressCompany, email, year).equals("")) {
+				addressCompany, email, year, place_presentation).equals("")) {
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
 				address.getText().toString(), expeditionPlace.getText().toString(),
 				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
@@ -144,7 +147,7 @@ public class RegisterFragment extends Fragment {
 		date.set(Integer.parseInt(year.getText().toString()), 
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
-		
+		setPlace(place_presentation.getText().toString());
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
@@ -182,7 +185,15 @@ public class RegisterFragment extends Fragment {
     	return date;
     }
     
-    /**
+    public static String getPlace() {
+		return place;
+	}
+
+	public static void setPlace(String place) {
+		RegisterFragment.place = place;
+	}
+
+	/**
      * {@inheritDoc}
      */
     @Override
