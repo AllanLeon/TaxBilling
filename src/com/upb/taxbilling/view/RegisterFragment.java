@@ -181,14 +181,28 @@ public class RegisterFragment extends Fragment {
 		return company;		
     }
     
+    /**
+     * Method to return the date
+     * @return
+     */
+    
     public Calendar getDate(){
     	return date;
     }
     
+    /**
+     * This method to return the place of presentation
+     * @return
+     */
+    
     public static String getPlace() {
 		return place;
 	}
-
+    
+    /**
+     * This method to change the place of presentation
+     */
+    
 	public static void setPlace(String place) {
 		RegisterFragment.place = place;
 	}
