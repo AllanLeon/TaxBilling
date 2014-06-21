@@ -48,6 +48,7 @@ public class ExportBill extends Fragment{
 	private TextView showTotalAmount;
 	private TextView showPaymentOnAccount;
 	private TextView date;
+	private TextView place_presentation;
 	
 	/**
 	 * {@inheritDoc}
@@ -69,12 +70,14 @@ public class ExportBill extends Fragment{
 		showTotalAmount = (TextView)view.findViewById(R.id.textView16);
 		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
 		date = (TextView)view.findViewById(R.id.textView23);	
+		place_presentation = (TextView)view.findViewById(R.id.textView25);
 		export = (Button)view.findViewById(R.id.button1);
 		
 		RegisterFragment rf = new RegisterFragment();
 		if(rf.isChecked()) {	
 			this.showUserData(this.getUserData());
 			this.showDate(this.getDate());
+			place_presentation.setText(RegisterFragment.getPlace());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
 				@Override
@@ -152,7 +155,6 @@ public class ExportBill extends Fragment{
 			   		fout.write(arrayDate.get(i));
 			   		fout.write("\n");
 			    }
-			    Toast.makeText(getActivity(), "Exportando Fecha", Toast.LENGTH_SHORT).show();
 			    for(int i=1; i < arrayUser.size(); i++) {
 			   		fout.write(arrayUser.get(i));
 			   		fout.write("\n");

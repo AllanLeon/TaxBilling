@@ -68,8 +68,8 @@ public class RegisterFragment extends Fragment {
 		nitNumber = (EditText)view.findViewById(R.id.editText6);
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
-		year = (EditText)view.findViewById(R.id.editText9);
 		place_presentation = (EditText)view.findViewById(R.id.editText8);
+		year = (EditText)view.findViewById(R.id.editText9);
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
