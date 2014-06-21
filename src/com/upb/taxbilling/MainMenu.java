@@ -11,14 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.upb.taxbilling.view.ExportBill;
 import com.upb.taxbilling.view.RegisterFragment;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
-import com.upb.taxbilling.view.qr.LQ1Fragment;
+import com.upb.taxbilling.view.qr.QRCameraFragment;
 
 /**
  * The main menu of the application, this is the first activity that the compiler starts.
@@ -129,8 +127,8 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         // When the given dropdown item is selected, show its contents in the
         // container view.
         getFragmentManager().beginTransaction()
-        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-        .commit();
+	        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+	        .commit();
         //Updates the fragment view with the chosen fragment when a given 
         //dropdown item is selected.
         switch (position) {
@@ -156,7 +154,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            		break;
            	case 4:
            		getFragmentManager().beginTransaction()
-                .replace(R.id.container, new LQ1Fragment())
+                .replace(R.id.container, new QRCameraFragment())
                 .commit();
            		break;
         }

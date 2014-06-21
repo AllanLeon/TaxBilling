@@ -11,7 +11,7 @@ import com.upb.taxbilling.view.billtable.BillRow;
  * Event that executes when the number of a row is clicked.
  * @author Allan Leon
  */
-public class RowClickedListener implements OnClickListener {
+public class RowNumberClickListener implements OnClickListener {
 
 	/**
 	 * {@inheritDoc}

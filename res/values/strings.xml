@@ -13,5 +13,7 @@
     <string name="action_settings">Configuración</string>
     <string name="welcome">Bienvenido!</string>
     <string name="receipt_desc">Factura</string>
+    <string name="tap">Tap the image to open the camera</string>
+    <string name="qr_info">Información código QR</string>
 
 </resources>

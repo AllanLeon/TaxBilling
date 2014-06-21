@@ -21,7 +21,7 @@ public class TableAlertDialog {
      * @param postrun Functional class that waits for the user input, validation
      * 				  and then executes the next command. 
      */
-    public void cashPopUpMessage(View view, final TablePromptRunnable postrun) {
+    public void controlCodePopUpMessage(View view, final TablePromptRunnable postrun) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
     	alert.setTitle("Codigo de Control faltante");
     	alert.setMessage("Introduzca el codigo de control correspondiente a la factura anteriormente registrada:");

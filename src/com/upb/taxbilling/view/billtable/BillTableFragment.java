@@ -20,6 +20,12 @@ import android.widget.TextView;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.model.data.Bill;
+import com.upb.taxbilling.view.billtable.events.AmountHeaderClickListener;
+import com.upb.taxbilling.view.billtable.events.AuthorizationNumberHeaderClickListener;
+import com.upb.taxbilling.view.billtable.events.BillNumberHeaderClickListener;
+import com.upb.taxbilling.view.billtable.events.ControlCodeHeaderClickListener;
+import com.upb.taxbilling.view.billtable.events.DateHeaderClickListener;
+import com.upb.taxbilling.view.billtable.events.NitHeaderClickListener;
 
 /**
  * The fragment where the table (list) of bills is stored.
@@ -60,6 +66,19 @@ public class BillTableFragment extends Fragment {
                 	onClickCleanButton(v);
             }
         });
+        final TextView headerNit = (TextView) view.findViewById(R.id.headerNit);
+        headerNit.setOnClickListener(new NitHeaderClickListener());
+        final TextView headerBillNumber = (TextView) view.findViewById(R.id.headerBillNumber);
+        headerBillNumber.setOnClickListener(new BillNumberHeaderClickListener());
+        final TextView headerAuthorizationNumber = (TextView) view.findViewById(R.id.headerAuthorizationNumber);
+        headerAuthorizationNumber.setOnClickListener(new AuthorizationNumberHeaderClickListener());
+        final TextView headerDate = (TextView) view.findViewById(R.id.headerDate);
+        headerDate.setOnClickListener(new DateHeaderClickListener());
+        final TextView headerAmount = (TextView) view.findViewById(R.id.headerAmount);
+        headerAmount.setOnClickListener(new AmountHeaderClickListener());
+        final TextView headerControlCode = (TextView) view.findViewById(R.id.headerControlCode);
+        headerControlCode.setOnClickListener(new ControlCodeHeaderClickListener());
+        
         if (bills == null) {
         	bills = new TreeMap<Integer, Bill>();
         }
@@ -123,7 +142,7 @@ public class BillTableFragment extends Fragment {
     	final View view = contentTable;
 
     	//Launches first pop-up message and waits for the user to type a value.
-		tad.cashPopUpMessage(view, new TablePromptRunnable(){
+		tad.controlCodePopUpMessage(view, new TablePromptRunnable(){
 			/**
 			 * Saves the typed value into the Bill object at the Amount attribute.
 			 * At user confirmation, launches the second pop-up message.
@@ -252,7 +271,8 @@ public class BillTableFragment extends Fragment {
     /**
      * Updates the rows of the table based on the list of bills.
      */
-    public void updateRowsByList() {
+    public static void updateRowsByList() {
+    	contentTable.removeViews(1, contentTable.getChildCount() - 1);
     	for(int i : bills.keySet()) {
     		BillRow row = new BillRow(contentTable.getContext(), i, bills.get(i));
         	contentTable.addView(row);
@@ -262,7 +282,7 @@ public class BillTableFragment extends Fragment {
     /**
      * @return the list of bills of the table.
      */
-    public static Map<Integer, Bill> getBillList() {
+    public static Map<Integer, Bill> getBills() {
     	return bills;
     }
 }
