@@ -1,6 +1,7 @@
 package com.upb.taxbilling.exceptions;
 
 import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * Verifies that all the fields on the user register fragment aren't empty.
@@ -24,14 +25,16 @@ public class UserDataException {
 		public String userData(EditText nameLastname, EditText address,
 				EditText expeditionPlace, EditText identityNumber, 
 				EditText employerBussinesName, EditText nitNumber,
-				EditText addressCompany, EditText email) {
+				EditText addressCompany, EditText email, EditText year, EditText place_presentation) {
 			if(fieldEmpty(nameLastname.getText().toString())
 			   || fieldEmpty(address.getText().toString())
 			   || fieldEmpty(expeditionPlace.getText().toString())
 			   || fieldEmpty(identityNumber.getText().toString())
 			   || fieldEmpty(employerBussinesName.getText().toString())
 			   || fieldEmpty(nitNumber.getText().toString())
-			   || fieldEmpty(addressCompany.getText().toString())) {
+			   || fieldEmpty(addressCompany.getText().toString())
+			   || fieldEmpty(year.getText().toString())
+			   || fieldEmpty(place_presentation.getText().toString())) {
 				return "Error";
 			} else {
 				return "";
@@ -49,5 +52,29 @@ public class UserDataException {
 				error = true;
 			}			
 			return error;
+		}
+		
+		/**
+		 * This method verifies that month was selected
+		 * Receives as parameter a spinner of the months
+		 * @param month
+		 * @return
+		 */
+		
+		public int changeDays(Spinner month){
+			if(Integer.parseInt(month.getSelectedItem().toString())==4 ||
+			   Integer.parseInt(month.getSelectedItem().toString())==6 ||
+		       Integer.parseInt(month.getSelectedItem().toString())==9 ||
+		       Integer.parseInt(month.getSelectedItem().toString())==11){
+				return 0;
+			}
+			else{
+				if(Integer.parseInt(month.getSelectedItem().toString())==2){
+					return 1;
+				}
+				else{
+					return 2;
+				}
+			}
 		}
 }

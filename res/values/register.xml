@@ -11,10 +11,51 @@
     <string name="dispatch">Lugar de Expedicion</string>
     <string name="employer_name">Nombres y Apellidos o razon social del empleador</string>
     <string name="nit">Nro. de NIT</string>
+    <string name="day">Día</string>
     <string name="month">Mes</string>
     <string name="year">Año</string>
     <string name="save">Guardar</string>
     <string name="email">Email</string>
+    <string name="placeOfPresentation">Lugar de Presentación</string>
+    <string-array name="months">
+        <item >01</item>
+        <item >02</item>
+        <item >03</item>
+        <item >04</item>
+        <item >05</item>
+        <item >06</item>
+        <item >07</item>
+        <item >08</item>
+        <item >09</item>
+        <item >10</item>
+        <item >11</item>
+        <item >12</item>
+    </string-array>
+    <string-array name="days_31">
+        <item >01</item><item >02</item><item >03</item><item >04</item><item >05</item>
+        <item >06</item><item >07</item><item >08</item><item >09</item><item >10</item>
+        <item >11</item><item >12</item><item >13</item><item >14</item><item >15</item>
+        <item >16</item><item >17</item><item >18</item><item >19</item><item >20</item>
+        <item >21</item><item >22</item><item >23</item><item >24</item><item >25</item>
+        <item >26</item><item >27</item><item >28</item><item >29</item><item >30</item>
+ 		<item >31</item>   
+    </string-array>
+    <string-array name="days_30">
+        <item >01</item><item >02</item><item >03</item><item >04</item><item >05</item>
+        <item >06</item><item >07</item><item >08</item><item >09</item><item >10</item>
+        <item >11</item><item >12</item><item >13</item><item >14</item><item >15</item>
+        <item >16</item><item >17</item><item >18</item><item >19</item><item >20</item>
+        <item >21</item><item >22</item><item >23</item><item >24</item><item >25</item>
+        <item >26</item><item >27</item><item >28</item><item >29</item><item >30</item>
+    </string-array>
+    <string-array name="days_28">
+        <item >01</item><item >02</item><item >03</item><item >04</item><item >05</item>
+        <item >06</item><item >07</item><item >08</item><item >09</item><item >10</item>
+        <item >11</item><item >12</item><item >13</item><item >14</item><item >15</item>
+        <item >16</item><item >17</item><item >18</item><item >19</item><item >20</item>
+        <item >21</item><item >22</item><item >23</item><item >24</item><item >25</item>
+        <item >26</item><item >27</item><item >28</item>
+    </string-array>
     <color name="registerBackgroundColor">#F2F1DF</color>
     <color name="Floating">#BED9BA</color>
     <color name="Black">#000000</color>

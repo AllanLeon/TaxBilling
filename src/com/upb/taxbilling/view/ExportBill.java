@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +47,8 @@ public class ExportBill extends Fragment{
 	private TextView email;
 	private TextView showTotalAmount;
 	private TextView showPaymentOnAccount;
+	private TextView date;
+	private TextView place_presentation;
 	
 	/**
 	 * {@inheritDoc}
@@ -66,11 +69,15 @@ public class ExportBill extends Fragment{
 		email = (TextView)view.findViewById(R.id.textView20);
 		showTotalAmount = (TextView)view.findViewById(R.id.textView16);
 		showPaymentOnAccount = (TextView)view.findViewById(R.id.textView18);
+		date = (TextView)view.findViewById(R.id.textView23);	
+		place_presentation = (TextView)view.findViewById(R.id.textView25);
 		export = (Button)view.findViewById(R.id.button1);
 		
 		RegisterFragment rf = new RegisterFragment();
 		if(rf.isChecked()) {	
 			this.showUserData(this.getUserData());
+			this.showDate(this.getDate());
+			place_presentation.setText(RegisterFragment.getPlace());
 			this.showBillAmount();
 			export.setOnClickListener(new View.OnClickListener() {	
 				@Override
@@ -106,7 +113,7 @@ public class ExportBill extends Fragment{
 	
 	public void clickExport(View v)	{
 		try {
-			exportData(getUserData(), convertBillsMapToStringArray());
+			exportData(getUserData(), convertBillsMapToStringArray(), getDate());
 		} catch (Exception ex) {
 			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
 		}
@@ -118,7 +125,7 @@ public class ExportBill extends Fragment{
 	 * @param ArrayUser
 	 * @param ArrayBill
 	 */
-	public void exportData(List<String> arrayUser, List<String> arrayBill) {
+	public void exportData(List<String> arrayUser, List<String> arrayBill, List<String> arrayDate) {
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 		    sdAvailable = true;
@@ -139,7 +146,16 @@ public class ExportBill extends Fragment{
 			
 			    fout.write("DiCaprio");
 			    fout.write("\n");
-			    for(int i=0; i < arrayUser.size(); i++) {
+			    fout.write(arrayUser.get(0));
+		   		fout.write("\n");
+		   		fout.write(RegisterFragment.getPlace());
+		   		fout.write("\n");
+		   		
+			    for(int i=0; i < arrayDate.size(); i++) {
+			   		fout.write(arrayDate.get(i));
+			   		fout.write("\n");
+			    }
+			    for(int i=1; i < arrayUser.size(); i++) {
 			   		fout.write(arrayUser.get(i));
 			   		fout.write("\n");
 			    }
@@ -156,6 +172,35 @@ public class ExportBill extends Fragment{
 		catch (Exception ex) {
 		    Log.e("Ficheros", "Error al escribir fichero a tarjeta SD");
 		}		
+	}
+	
+	/**
+	 * This method returns an ArrayList with the date  
+	 * @return
+	 */
+	public ArrayList<String> getDate(){
+		RegisterFragment rf =  new RegisterFragment();
+		ArrayList<String> arrayDate = new ArrayList<String>();
+		
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.DAY_OF_MONTH)));
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.MONTH)));
+		arrayDate.add(Integer.toString(rf.getDate().get(Calendar.YEAR)));
+		
+		return arrayDate;
+	}
+	
+	/**
+	 * This method show the date.
+	 * This method receives as parameters an ArrayList with the date
+	 * @param Date
+	 */
+
+	public void showDate(ArrayList<String> Date)
+	{
+		date.setText(Date.get(0)+"/"+
+					 Date.get(1)+"/"+
+					 Date.get(2));
+	
 	}
 	
 	/**
