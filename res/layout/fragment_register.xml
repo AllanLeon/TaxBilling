@@ -120,7 +120,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        tools:ignore="TextFields"> 
+                        android:inputType="textCapCharacters"
+                        tools:ignore="TextFields" >
+ 
 					<requestFocus />
                     </EditText>
                     
@@ -198,6 +200,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:inputType="textFilter"
+                        android:maxLength="20"
                         tools:ignore="TextFields" />
 
                     <TextView
@@ -212,7 +216,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="15" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -239,7 +244,7 @@
                         android:id="@+id/editText8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10" 
+                        android:ems="10"
                         tools:ignore="TextFields" />
 
                     <Button

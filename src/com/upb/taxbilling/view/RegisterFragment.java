@@ -19,6 +19,8 @@ import com.upb.taxbilling.model.data.Taxpayer;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 /**
  * The fragment where the information about a bill is registered.
  * @author Kevin Aguilar
@@ -74,6 +76,55 @@ public class RegisterFragment extends Fragment {
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
 		date = Calendar.getInstance();
+		
+		InputFilter filterLetterOrDigitSpace = new InputFilter() {
+			
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isLetterOrDigit(source.charAt(i)) && !Character.isSpace(source.charAt(i))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		
+		InputFilter filterLetterSpace = new InputFilter() {
+			
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isLetter(source.charAt(i)) && !Character.isSpace(source.charAt(i))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		
+		InputFilter filterLetter = new InputFilter() {
+			
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isLetter(source.charAt(i))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		employerBussinesName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20),filterLetterSpace});
+		addressCompany.setFilters(new InputFilter[] { new InputFilter.LengthFilter(30),filterLetterOrDigitSpace});
+		place_presentation.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4),filterLetter});
+		//place_presentation.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
 		
 		/**
 		 * Change day according to month
