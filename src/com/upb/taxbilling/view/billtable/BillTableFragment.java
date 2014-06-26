@@ -7,7 +7,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,8 +19,10 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.events.AmountHeaderClickListener;
 import com.upb.taxbilling.view.billtable.events.AuthorizationNumberHeaderClickListener;
@@ -158,16 +162,29 @@ public class BillTableFragment extends Fragment {
 					 */
 					public void run() {
 						dateValue = this.getValue();
-						Date convertedDate = null;
 						try {
-							convertedDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dateValue);
+							Date convertedDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dateValue);
 							manualBill.setEmissionDate(convertedDate);
+							if (manualBill.verifyBill()) {
+								BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), manualBill);
+								contentTable.addView(row);
+							} else {
+								throw new BillException("Fecha de emision invalida, la factura no puede ser agregada a la tabla.");
+							} 
 						} catch (ParseException e) {
-							e.printStackTrace();
+							AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+				            alertDialog.setTitle("Problema con la fecha");
+				            alertDialog.setMessage("Hubo un error al registrar la fecha\n\n"
+				            		+ "Detalles del error:\n" + e.toString());
+				            alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				        		public void onClick(DialogInterface dialog, int whichButton) {
+				        			dialog.dismiss();
+				        		}
+				        	});
+				            alertDialog.show();
+						} catch (BillException e) {
+							Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 						}
-						manualBill.setEmissionDate(convertedDate);
-						BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), manualBill);
-						contentTable.addView(row);
 					}
 				});
 			}
@@ -179,8 +196,16 @@ public class BillTableFragment extends Fragment {
      * @param electronicBill to be added
      */
     public static void runElectronicBill(final Bill electronicBill) {
-		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), electronicBill);
-		contentTable.addView(row);
+    	try {
+	    	if (electronicBill.verifyBill()) {
+	    		BillRow row = new BillRow(contentTable.getContext(), getNextRowNumber(), electronicBill);
+	    		contentTable.addView(row);
+	    	} else {
+				throw new BillException("Fecha de emision invalida, la factura no puede ser agregada a la tabla.");
+			}
+    	} catch (BillException e) {
+			Toast.makeText(contentTable.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+		}
     }
     
     /**

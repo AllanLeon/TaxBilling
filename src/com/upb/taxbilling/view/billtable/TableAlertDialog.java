@@ -1,19 +1,10 @@
 package com.upb.taxbilling.view.billtable;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import com.upb.taxbilling.controller.billanalyzer.BillAnalyzer;
-import com.upb.taxbilling.exceptions.BillException;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * The alert dialog that pops up when asking for additional data for the manual bill registration.
@@ -62,7 +53,7 @@ public class TableAlertDialog {
 	 * @param postrun Functional class that waits for the user input, validation
 	 * 				  and then executes the next command. 
 	 */
-	public void datePopUpMessage(final View view, final TablePromptRunnable postrun) {
+	public void datePopUpMessage(View view, final TablePromptRunnable postrun) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
 		alert.setTitle("Fecha faltante");
 		alert.setMessage("Introduzca la fecha de emisión correspondiente a la factura anteriormente registrada:");
@@ -77,30 +68,10 @@ public class TableAlertDialog {
 				int month = dp.getMonth() + 1;
 				int year = dp.getYear();
 				value = day + "/" + month + "/" + year;
-				Date eDate;
-				try {
-					eDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(value);
-					if (BillAnalyzer.verifyBillDate(eDate)) {
-	                	dialog.dismiss();
-	    				postrun.setValue(value);
-	    				postrun.run();
-	                } else {
-	            		throw new BillException("Fecha de emision invalida");
-	            	}
-				} catch (ParseException e) {
-					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
-		            alertDialog.setTitle("Problema con la fecha");
-		            alertDialog.setMessage("Hubo un error al registrar la fecha\n\n"
-		            		+ "Detalles del error:\n" + e.toString());
-		            alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		        		public void onClick(DialogInterface dialog, int whichButton) {
-		        			dialog.dismiss();
-		        		}
-		        	});
-		            alertDialog.show();
-				} catch (BillException e) {
-					Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-				}                
+				System.out.println(value);
+				dialog.dismiss();
+				postrun.setValue(value);
+				postrun.run();
 				return;
 			}
 		});	

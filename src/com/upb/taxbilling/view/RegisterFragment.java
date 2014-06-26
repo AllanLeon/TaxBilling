@@ -1,23 +1,25 @@
 package com.upb.taxbilling.view;
 
-import android.R.integer;
-import android.R.string;
+import java.util.Calendar;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * The fragment where the information about a bill is registered.
