@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -266,8 +267,9 @@ public class ExportBill extends Fragment{
 			Toast.makeText(getActivity(), "No tiene facturas registradas",
 					Toast.LENGTH_SHORT).show();
 		}
-		showTotalAmount.setText(Double.toString(totalAmount));
-		showPaymentOnAccount.setText(Double.toString((totalAmount*0.13)));
+		DecimalFormat df =  new DecimalFormat("0.00");
+		showTotalAmount.setText(df.format(totalAmount));
+		showPaymentOnAccount.setText(df.format(totalAmount*0.13));
 	}
 	
 	/**
