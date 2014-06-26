@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.BillException;
+import com.upb.taxbilling.exceptions.ExportException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 
@@ -113,9 +114,17 @@ public class ExportBill extends Fragment{
 	
 	public void clickExport(View v)	{
 		try {
-			exportData(getUserData(), convertBillsMapToStringArray(), getDate());
-		} catch (Exception ex) {
-			Toast.makeText(getActivity(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+			if (totalAmount > 0 && verifyAllBills()) {
+				exportData(getUserData(), convertBillsMapToStringArray(), getDate());
+			} else {
+				throw new ExportException("Problema al exportar facturas:\nEl monto total de las facturas es 0"
+						+ "\n Las facturas no pueden ser exportadas.");
+			}
+		} catch (BillException e) {
+			Toast.makeText(getActivity(), "Problema al exportar facturas:\n" + e.getMessage()
+					, Toast.LENGTH_LONG).show();
+		} catch (ExportException e) {
+			Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -262,8 +271,11 @@ public class ExportBill extends Fragment{
 			for(int i : BillTableFragment.getBills().keySet()) {	
 				totalAmount = (totalAmount + BillTableFragment.getBills().get(i).getAmount());
 			}
-		} catch (Exception ex) {
-			Toast.makeText(getActivity(), "No tiene facturas registradas",
+			if (totalAmount == 0) {
+				throw new ExportException("El monto total de las facturas es 0");
+			}
+		} catch (Exception e) {
+			Toast.makeText(getActivity(), e.getMessage(),
 					Toast.LENGTH_SHORT).show();
 		}
 		showTotalAmount.setText(Double.toString(totalAmount));
@@ -286,5 +298,36 @@ public class ExportBill extends Fragment{
 			throw new BillException("Problema al exportar facturas, no tiene"
 					+ " facturas registradas.\n\nDetalles:\n" + ex.getMessage());
 		}
+	}
+	
+	private boolean verifyAllBills() throws ExportException {
+		boolean ok = true;
+		String message = "";
+		for(int i : BillTableFragment.getBills().keySet()) {
+			if (BillTableFragment.getBills().get(i).getNit() == 0) {
+				ok = false;
+				message = "Nit";
+			}
+			if (BillTableFragment.getBills().get(i).getBillNumber() == 0) {
+				ok = false;
+				message = "Numero de factura";
+			}
+			if (BillTableFragment.getBills().get(i).getAuthorizationNumber() == 0) {
+				ok = false;
+				message = "Numero de autorizacion";
+			}
+			if (BillTableFragment.getBills().get(i).getAmount() == 0) {
+				ok = false;
+				message = "Importe";
+			}
+			if (BillTableFragment.getBills().get(i).getControlCode().trim().equals("")) {
+				ok = false;
+				message = "Codigo de control";
+			}
+			if (!ok) {
+				throw new ExportException("Problema en la factura Nro. " + i + "\n" + message + " invalido.");
+			}
+		}
+		return ok;
 	}
 }
