@@ -42,16 +42,17 @@ public class RegisterFragment extends Fragment {
 	private Button saveButton;
 	private EditText nameLastname;
 	private EditText address;
-	private EditText expeditionPlace;
 	private EditText identityNumber;
 	private EditText employerBussinesName;
 	private EditText nitNumber;
 	private EditText addressCompany;
 	private EditText email;
 	private EditText year;
-	private EditText place_presentation;
+	private Spinner expeditionPlace;
+	private Spinner place_presentation;
 	private Spinner day;
 	private Spinner month;
+	private Spinner domain;
 	
 	/**
      * {@inheritDoc}
@@ -64,18 +65,18 @@ public class RegisterFragment extends Fragment {
 		
 		nameLastname = (EditText)view.findViewById(R.id.editText1);
 		address = (EditText)view.findViewById(R.id.editText2);
-		expeditionPlace = (EditText)view.findViewById(R.id.editText4);
+		expeditionPlace = (Spinner)view.findViewById(R.id.spinner3);
 		identityNumber = (EditText)view.findViewById(R.id.editText3);
 		employerBussinesName  = (EditText)view.findViewById(R.id.editText5);
 		nitNumber = (EditText)view.findViewById(R.id.editText6);
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
-		place_presentation = (EditText)view.findViewById(R.id.editText8);
+		place_presentation = (Spinner)view.findViewById(R.id.spinner4);
 		year = (EditText)view.findViewById(R.id.editText9);
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
-		date = Calendar.getInstance();
+		domain = (Spinner)view.findViewById(R.id.spinner5);
 		
 		InputFilter filterLetterOrDigitSpace = new InputFilter() {
 			
@@ -107,24 +108,26 @@ public class RegisterFragment extends Fragment {
 			}
 		};
 		
-		InputFilter filterLetter = new InputFilter() {
+		InputFilter filterDigit = new InputFilter() {
 			
 			@Override
 			public CharSequence filter(CharSequence source, int start, int end,
 					Spanned dest, int dstart, int dend) {
 				// TODO Auto-generated method stub
 				 for (int i = start; i < end; i++) { 
-                     if (!Character.isLetter(source.charAt(i))) { 
+                     if (!Character.isDigit((source.charAt(i)))) { 
                              return ""; 
                      } 
              } 
 				return null;
 			}
 		};
+		
+		nameLastname.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterSpace});
+		address.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
 		employerBussinesName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20),filterLetterSpace});
-		addressCompany.setFilters(new InputFilter[] { new InputFilter.LengthFilter(30),filterLetterOrDigitSpace});
-		place_presentation.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4),filterLetter});
-		//place_presentation.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+		addressCompany.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
+		nitNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
 		
 		/**
 		 * Change day according to month
@@ -186,19 +189,20 @@ public class RegisterFragment extends Fragment {
 	 */
 	public void clickSaveData(View v) {
 		UserDataException usde = new UserDataException();
-		if(usde.userData(nameLastname, address, expeditionPlace,
+		if(usde.userData(nameLastname, address,
 				identityNumber, employerBussinesName, nitNumber,
-				addressCompany, email, year, place_presentation).equals("")) {
+				addressCompany, email, year).equals("")) {
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
-				address.getText().toString(), expeditionPlace.getText().toString(),
-				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
+				address.getText().toString(), expeditionPlace.getSelectedItem().toString(),
+				email.getText().toString()+domain.getSelectedItem().toString(), Integer.parseInt(identityNumber.getText().toString()));
 		company = new Company(addressCompany.getText().toString(),
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
+		date = Calendar.getInstance();
 		date.set(Integer.parseInt(year.getText().toString()), 
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
-		setPlace(place_presentation.getText().toString());
+		setPlace(place_presentation.getSelectedItem().toString());
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {

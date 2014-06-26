@@ -56,6 +56,18 @@
         <item >21</item><item >22</item><item >23</item><item >24</item><item >25</item>
         <item >26</item><item >27</item><item >28</item>
     </string-array>
+    <string-array name="expeditionPlace">
+        <item >LPZ</item>
+        <item >CBBA</item>
+        <item >SCZ</item>
+        <item >TJA</item>
+        <item >ORU</item>
+        <item >PSO</item>
+        <item >PDA</item>
+        <item >CHQ</item>
+        <item >BNI</item>
+    </string-array>
+   
     <color name="registerBackgroundColor">#F2F1DF</color>
     <color name="Floating">#BED9BA</color>
     <color name="Black">#000000</color>

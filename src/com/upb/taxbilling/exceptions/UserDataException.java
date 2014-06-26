@@ -23,18 +23,16 @@ public class UserDataException {
 		 * @return
 		 */
 		public String userData(EditText nameLastname, EditText address,
-				EditText expeditionPlace, EditText identityNumber, 
+				EditText identityNumber, 
 				EditText employerBussinesName, EditText nitNumber,
-				EditText addressCompany, EditText email, EditText year, EditText place_presentation) {
+				EditText addressCompany, EditText email, EditText year) {
 			if(fieldEmpty(nameLastname.getText().toString())
 			   || fieldEmpty(address.getText().toString())
-			   || fieldEmpty(expeditionPlace.getText().toString())
 			   || fieldEmpty(identityNumber.getText().toString())
 			   || fieldEmpty(employerBussinesName.getText().toString())
 			   || fieldEmpty(nitNumber.getText().toString())
 			   || fieldEmpty(addressCompany.getText().toString())
-			   || fieldEmpty(year.getText().toString())
-			   || fieldEmpty(place_presentation.getText().toString())) {
+			   || fieldEmpty(year.getText().toString())) {
 				return "Error";
 			} else {
 				return "";

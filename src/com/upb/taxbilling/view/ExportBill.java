@@ -197,8 +197,8 @@ public class ExportBill extends Fragment{
 
 	public void showDate(ArrayList<String> Date)
 	{
-		date.setText(Date.get(0)+"/"+
-					 Date.get(1)+"/"+
+		date.setText(Date.get(0)+"-"+
+					 Date.get(1)+"-"+
 					 Date.get(2));
 	
 	}

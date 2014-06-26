@@ -152,7 +152,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="10" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -161,12 +162,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/dispatch" />
 
-                    <EditText
-                        android:id="@+id/editText4"
+                    <Spinner
+                        android:id="@+id/spinner3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        tools:ignore="TextFields" />
+                        android:entries="@array/expeditionPlace" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -175,12 +175,26 @@
                         android:layout_height="wrap_content"
                         android:text="@string/email" />
 
-                    <EditText
-                        android:id="@+id/editText10"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textEmailAddress" />
+                        android:layout_height="wrap_content" >
+
+                        <EditText
+                            android:id="@+id/editText10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textEmailAddress" />
+
+                        <Spinner
+                            android:id="@+id/spinner5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:entries="@array/expeditionPlace" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,9 +229,7 @@
                         android:id="@+id/editText6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:maxLength="15" />
+                        android:ems="10" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -240,12 +252,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/placeOfPresentation" />
 
-                    <EditText
-                        android:id="@+id/editText8"
+                    <Spinner
+                        android:id="@+id/spinner4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        tools:ignore="TextFields" />
+                        android:entries="@array/expeditionPlace" />
 
                     <Button
                         android:id="@+id/button1"
