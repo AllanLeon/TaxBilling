@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -23,8 +24,10 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.controller.billanalyzer.BillAnalyzer;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.events.RowNumberClickListener;
@@ -351,14 +354,18 @@ public class BillRow extends TableRow {
             public void onDateSet(DatePicker view, int selectedYear,
                     int selectedMonth, int selectedDay) {
                 try {
-                	DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                 	String year = String.valueOf(selectedYear);
                     String month = String.valueOf(selectedMonth + 1);
                     String day = String.valueOf(selectedDay);
                     String date = day + "/" + month + "/" + year;
-                    t5.setText(date);
-                	bill.setEmissionDate(df.parse(date));
-                	BillTableFragment.getBills().put(rowNumber, bill);
+                    Date eDate = dateFormat.parse(date);
+                    if (BillAnalyzer.verifyBillDate(eDate)) {
+                    	t5.setText(date);
+                    	bill.setEmissionDate(dateFormat.parse(date));
+                    	BillTableFragment.getBills().put(rowNumber, bill);
+                    } else {
+                		throw new BillException("Fecha de emision invalida");
+                	}
 				} catch (ParseException e) {
 					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
 		            alertDialog.setTitle("Problema con la fecha");
@@ -370,6 +377,8 @@ public class BillRow extends TableRow {
 		        		}
 		        	});
 		            alertDialog.show();
+				} catch (BillException e) {
+					Toast.makeText(t5.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				}
             }
         };

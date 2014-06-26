@@ -415,21 +415,22 @@ public class Bill {
 	}
 	
 	/**
-	 * In this method 120 days has been add to emission date which become limit emission date's bill
+	 * 120 days are added to emission date which become limit emission date's bill
 	 */
 	public Date calculateLimitEmmisionDate() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(emissionDate);
-		c.add(Calendar.DAY_OF_MONTH, +120);  
+		c.add(Calendar.DAY_OF_MONTH, + 120);  
 		return c.getTime();		
 	}
 	
 	/**
-	 * This method compares the update date with the limit emission date's bill
+	 * Compares the update date with the limit emission date's bill
 	 */
-	public boolean VerifyBill(){
+	public boolean verifyBill(){
         Date today = new Date();
-        if (today.getTime() > limitEmissionDate.getTime()) {
+        if (today.getTime() > limitEmissionDate.getTime()
+        		|| emissionDate.getTime() > today.getTime()) {
             return false;
         } else {
             return true;
