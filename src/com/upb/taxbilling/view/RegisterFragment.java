@@ -1,7 +1,6 @@
 package com.upb.taxbilling.view;
 
 import java.util.Calendar;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.text.InputFilter;
+import android.text.Spanned;
 
 import com.upb.taxbilling.R;
 import com.upb.taxbilling.exceptions.UserDataException;
@@ -37,19 +39,20 @@ public class RegisterFragment extends Fragment {
 	private static Taxpayer taxpayer;
 	private static Company company;
 	private static Calendar date;
+	private Calendar actualDate;
 	private static String place;
 	
 	private Button saveButton;
 	private EditText nameLastname;
 	private EditText address;
-	private EditText expeditionPlace;
 	private EditText identityNumber;
 	private EditText employerBussinesName;
 	private EditText nitNumber;
 	private EditText addressCompany;
 	private EditText email;
-	private EditText year;
-	private EditText place_presentation;
+	private TextView year;
+	private Spinner expeditionPlace;
+	private Spinner place_presentation;
 	private Spinner day;
 	private Spinner month;
 	
@@ -64,18 +67,73 @@ public class RegisterFragment extends Fragment {
 		
 		nameLastname = (EditText)view.findViewById(R.id.editText1);
 		address = (EditText)view.findViewById(R.id.editText2);
-		expeditionPlace = (EditText)view.findViewById(R.id.editText4);
+		expeditionPlace = (Spinner)view.findViewById(R.id.spinner3);
 		identityNumber = (EditText)view.findViewById(R.id.editText3);
 		employerBussinesName  = (EditText)view.findViewById(R.id.editText5);
 		nitNumber = (EditText)view.findViewById(R.id.editText6);
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
-		place_presentation = (EditText)view.findViewById(R.id.editText8);
-		year = (EditText)view.findViewById(R.id.editText9);
+		place_presentation = (Spinner)view.findViewById(R.id.spinner4);
+		year = (TextView)view.findViewById(R.id.textView13);
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
-		date = Calendar.getInstance();
+		actualDate = Calendar.getInstance();
+		year.setText(Integer.toString(actualDate.get(Calendar.YEAR)));
+		
+		InputFilter filterLetterOrDigitSpace = new InputFilter() {
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isLetterOrDigit(source.charAt(i)) && !Character.isSpace(source.charAt(i))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		
+		InputFilter filterLetterSpace = new InputFilter() {
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isLetter(source.charAt(i)) && !Character.isSpace(source.charAt(i))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		
+		InputFilter filterDigit = new InputFilter() {
+			
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				// TODO Auto-generated method stub
+				 for (int i = start; i < end; i++) { 
+                     if (!Character.isDigit((source.charAt(i)))) { 
+                             return ""; 
+                     } 
+             } 
+				return null;
+			}
+		};
+		
+		nameLastname.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterSpace});
+		address.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
+		employerBussinesName.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30),filterLetterSpace});
+		addressCompany.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
+		nitNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
+		identityNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
 		
 		/**
 		 * Change day according to month
@@ -137,19 +195,20 @@ public class RegisterFragment extends Fragment {
 	 */
 	public void clickSaveData(View v) {
 		UserDataException usde = new UserDataException();
-		if(usde.userData(nameLastname, address, expeditionPlace,
+		if(usde.userData(nameLastname, address,
 				identityNumber, employerBussinesName, nitNumber,
-				addressCompany, email, year, place_presentation).equals("")) {
+				addressCompany, email).equals("")) {
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
-				address.getText().toString(), expeditionPlace.getText().toString(),
+				address.getText().toString(), expeditionPlace.getSelectedItem().toString(),
 				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
 		company = new Company(addressCompany.getText().toString(),
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
-		date.set(Integer.parseInt(year.getText().toString()), 
+		date = Calendar.getInstance();
+		date.set(date.get(Calendar.YEAR), 
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
-		setPlace(place_presentation.getText().toString());
+		setPlace(place_presentation.getSelectedItem().toString());
 			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
