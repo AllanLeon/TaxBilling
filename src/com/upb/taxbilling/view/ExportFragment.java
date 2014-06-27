@@ -8,8 +8,10 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ public class ExportFragment extends Fragment{
 	private TextView showPaymentOnAccount;
 	private TextView date;
 	private TextView place_presentation;
+	private Map<String, String> places;
 	
 	/**
 	 * {@inheritDoc}
@@ -60,7 +63,7 @@ public class ExportFragment extends Fragment{
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_export_bill,
 				container, false);
-		
+		initializePlacesMap();
 		nameAndLastName = (TextView)view.findViewById(R.id.textView8);
 		address = (TextView)view.findViewById(R.id.textView9);
 		identityNumber = (TextView)view.findViewById(R.id.textView10);
@@ -225,7 +228,7 @@ public class ExportFragment extends Fragment{
 		arrayUser.add(rf.getDataTaxpayer().getNameLastname());
 		arrayUser.add(rf.getDataTaxpayer().getAddress());
 		arrayUser.add(Integer.toString(rf.getDataTaxpayer().getIdentityNumber()));
-		arrayUser.add(rf.getDataTaxpayer().getExpeditionPlace());
+		arrayUser.add(places.get(rf.getDataTaxpayer().getExpeditionPlace()));
 		arrayUser.add(rf.getDataCompany().getEmployerBussinesName());
 		arrayUser.add(Integer.toString(rf.getDataCompany().getNitNumber()));
 		arrayUser.add(rf.getDataCompany().getAddress());
@@ -340,5 +343,21 @@ public class ExportFragment extends Fragment{
 			}
 		}
 		return ok;
+	}
+	
+	/**
+	 * Initialize the places map.
+	 */
+	private void initializePlacesMap() {
+		places = new HashMap<String, String>();
+		places.put("La Paz", "LP");
+		places.put("Cochabamba", "CB");
+		places.put("Santa Cruz", "SC");
+		places.put("Tarija", "TJ");
+		places.put("Oruro", "OR");
+		places.put("Potosi", "PT");
+		places.put("Pando", "PA");
+		places.put("Chuquisaca", "CH");
+		places.put("Beni", "BN");
 	}
 }
