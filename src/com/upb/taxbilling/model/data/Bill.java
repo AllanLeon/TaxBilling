@@ -10,9 +10,9 @@ import java.util.Date;
  */
 public class Bill {
 
-	private int nit;
+	private long nit;
 	private String name;
-	private int billNumber;
+	private long billNumber;
 	private long authorizationNumber;
 	private Date emissionDate;
 	private Double amount;
@@ -221,7 +221,7 @@ public class Bill {
 	/**
 	 * @return the nit
 	 */
-	public int getNit() {
+	public long getNit() {
 		return nit;
 	}
 
@@ -235,7 +235,7 @@ public class Bill {
 	/**
 	 * @return the billNumber
 	 */
-	public int getBillNumber() {
+	public long getBillNumber() {
 		return billNumber;
 	}
 
@@ -319,7 +319,7 @@ public class Bill {
 	/**
 	 * @param nit the nit to set
 	 */
-	public void setNit(int nit) {
+	public void setNit(long nit) {
 		this.nit = nit;
 	}
 
@@ -333,7 +333,7 @@ public class Bill {
 	/**
 	 * @param billNumber the billNumber to set
 	 */
-	public void setBillNumber(int billNumber) {
+	public void setBillNumber(long billNumber) {
 		this.billNumber = billNumber;
 	}
 

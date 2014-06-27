@@ -223,7 +223,7 @@ public class RegisterFragment extends Fragment {
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
 		setPlace(place_presentation.getSelectedItem().toString());
-			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Datos guardados", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
 			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_LONG).show();
