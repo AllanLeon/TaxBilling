@@ -25,6 +25,7 @@ import com.upb.taxbilling.exceptions.RegisterException;
 import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
+
 /**
  * The fragment where the information about a bill is registered.
  * @author Kevin Aguilar
@@ -87,6 +88,7 @@ public class RegisterFragment extends Fragment {
 		
 		InputFilter filterLetterOrDigitSpace = new InputFilter() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public CharSequence filter(CharSequence source, int start, int end,
 					Spanned dest, int dstart, int dend) {
@@ -102,6 +104,7 @@ public class RegisterFragment extends Fragment {
 		
 		InputFilter filterLetterSpace = new InputFilter() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public CharSequence filter(CharSequence source, int start, int end,
 					Spanned dest, int dstart, int dend) {
