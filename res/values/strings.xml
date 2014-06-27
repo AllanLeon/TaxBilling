@@ -11,7 +11,7 @@
     <string name="title_export_bill">Exportar Facturas</string>
     <string name="title_qr_reader">Leer Cod. QR</string>
     <string name="action_settings">Configuración</string>
-    <string name="welcome">Bienvenido!</string>
+    <string name="welcome">Facturación de Impuestos Nacionales</string>
     <string name="receipt_desc">Factura</string>
     <string name="tap">Tap the image to open the camera</string>
     <string name="qr_info">Información código QR</string>
