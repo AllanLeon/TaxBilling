@@ -124,10 +124,10 @@ public class RegisterFragment extends Fragment {
 			}
 		};
 		
-		nameLastname.setFilters(new InputFilter[] {filterLetterSpace});
-		address.setFilters(new InputFilter[] {filterLetterOrDigitSpace});
-		employerBussinesName.setFilters(new InputFilter[] {filterLetterSpace});
-		addressCompany.setFilters(new InputFilter[] {filterLetterOrDigitSpace});
+		nameLastname.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterSpace});
+		address.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
+		employerBussinesName.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30),filterLetterSpace});
+		addressCompany.setFilters(new InputFilter[] {new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
 		nitNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
 		identityNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
 		
