@@ -214,9 +214,9 @@ public class QRCameraFragment extends Fragment {
 	*/
 	private void saveBillIntoTable() {
 		try {
+			BillAnalyzer.parseBill(textbox.getText().toString());
 			MainMenu main = (MainMenu) getActivity();
 			main.getActionBar().setSelectedNavigationItem(2);
-			BillAnalyzer.parseBill(textbox.getText().toString());
 		} catch (Exception ex) {
 			Toast.makeText(getActivity(), "Error al agregar factura a la tabla",
 			Toast.LENGTH_SHORT).show();

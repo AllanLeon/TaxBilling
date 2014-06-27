@@ -116,4 +116,15 @@ public class BillAnalyzer {
 					"el problema puede ser debido a:\n" + ex.getMessage());
 		}
 	}
+	
+	/**
+	 * Verifies that the bill has a valid emission date.
+	 * @param emissionDate of the bill
+	 * @return true if it's valid, else returns false
+	 */
+	public static boolean verifyBillDate(Date emissionDate) {
+		Bill bill = new Bill(0, 0, 0, emissionDate, 0.0, "");
+		bill.calculateLimitEmmisionDate();
+		return bill.verifyBill();
+	}
 }

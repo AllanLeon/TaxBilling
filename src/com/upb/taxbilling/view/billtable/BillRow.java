@@ -1,11 +1,15 @@
 package com.upb.taxbilling.view.billtable;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -14,7 +18,9 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -23,8 +29,10 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.controller.billanalyzer.BillAnalyzer;
 import com.upb.taxbilling.exceptions.BillException;
 import com.upb.taxbilling.model.data.Bill;
 import com.upb.taxbilling.view.billtable.events.RowNumberClickListener;
@@ -35,10 +43,16 @@ import com.upb.taxbilling.view.billtable.events.RowNumberClickListener;
  */
 public class BillRow extends TableRow {
 
+	private final static String DECIMAL_PATTERN = "[0-9]{0," + 7 + "}+((\\.[0-9]{0," + 2 + "})?)||(\\.)?";
+	
 	private Bill bill;
 	private int rowNumber;
 	private boolean isHighlighted;
 	private DateFormat dateFormat;
+	private InputFilter[] inputFiltersSmall;
+	private InputFilter[] inputFiltersLarge;
+	private InputFilter[] inputFiltersDecimal;
+	private Pattern decimalPattern;
 	
 	/**
 	 * Default constructor of a TableRow, receives a context as a parameter.
@@ -143,11 +157,36 @@ public class BillRow extends TableRow {
 			isHighlighted = true;
 		}
 	}
+	
+	private void createInputFilters() {
+		InputFilter maxLengthFilterSmall = new InputFilter.LengthFilter(10);
+		InputFilter maxLengthFilterLarge = new InputFilter.LengthFilter(15);
+		InputFilter decimalDigitsFilter = new InputFilter(){
+
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+				if (!decimalPattern.matcher(new StringBuilder().append(dest.subSequence(0, dstart))
+						.append(source.subSequence(start, end)).append(dest.subSequence(dend, dest.length())))
+					.matches()) {
+					return "";
+				}
+				return null;
+			}
+			
+		};
+		inputFiltersSmall = new InputFilter[]{maxLengthFilterSmall};
+		inputFiltersLarge = new InputFilter[]{maxLengthFilterLarge};
+		inputFiltersDecimal = new InputFilter[]{maxLengthFilterSmall, decimalDigitsFilter};
+	}
 
 	/**
 	 * Initializes the seven EditText fields in this row.
 	 */
 	private void initializeComponents() {
+		decimalPattern = Pattern.compile(DECIMAL_PATTERN);
+		createInputFilters();
+		
 		TextView t1 = new TextView(this.getContext());
     	t1.setText(Integer.toString(rowNumber));
     	t1.setOnClickListener(new RowNumberClickListener());
@@ -171,19 +210,21 @@ public class BillRow extends TableRow {
     public void updateRowInfo() throws BillException {
         if (bill != null) {
         	EditText t1 = (EditText) this.getChildAt(1);
-        	t1.setText(Integer.toString(bill.getNit()));
+        	t1.setText(Long.toString(bill.getNit()));
         	
         	EditText t2 = (EditText) this.getChildAt(2);
-        	t2.setText(Integer.toString(bill.getBillNumber()));
+        	t2.setText(Long.toString(bill.getBillNumber()));
         	
         	EditText t3 = (EditText) this.getChildAt(3);
         	t3.setText(Long.toString(bill.getAuthorizationNumber()));
         	
         	EditText t4 = (EditText) this.getChildAt(4);
         	t4.setText(dateFormat.format(bill.getEmissionDate()));
-        	        	
+        	
+        	BigDecimal bd = new BigDecimal(bill.getAmount());
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
         	EditText t5 = (EditText) this.getChildAt(5);
-        	t5.setText(Double.toString(bill.getAmount()));
+        	t5.setText(Double.toString(bd.doubleValue()));
         	
         	EditText t6 = (EditText) this.getChildAt(6);
         	t6.setText(bill.getControlCode());
@@ -218,6 +259,7 @@ public class BillRow extends TableRow {
     private EditText createNitEditText() {
     	final EditText t2 = new EditText(this.getContext());
     	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t2.setFilters(inputFiltersSmall);
     	t2.setText("");
     	t2.addTextChangedListener(new TextWatcher() {
 			
@@ -242,7 +284,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				try {
-					bill.setNit(Integer.parseInt(t2.getText().toString()));
+					bill.setNit(Long.parseLong(t2.getText().toString()));
 				} catch (Exception ex) {
 					bill.setNit(0);
 					ex.printStackTrace();
@@ -259,6 +301,7 @@ public class BillRow extends TableRow {
     private EditText createBillNumberEditText() {
     	final EditText t3 = new EditText(this.getContext());
     	t3.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t3.setFilters(inputFiltersSmall);
     	t3.setText("");
     	t3.addTextChangedListener(new TextWatcher() {
 			
@@ -284,7 +327,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				try {
-					bill.setBillNumber(Integer.parseInt(t3.getText().toString()));
+					bill.setBillNumber(Long.parseLong(t3.getText().toString()));
 				} catch (Exception ex) {
 					bill.setBillNumber(0);
 					ex.printStackTrace();
@@ -301,6 +344,7 @@ public class BillRow extends TableRow {
     private EditText createAuthorizationNumberEditText() {
     	final EditText t4 = new EditText(this.getContext());
     	t4.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	t4.setFilters(inputFiltersLarge);
     	t4.setText("");
     	t4.addTextChangedListener(new TextWatcher() {
 			
@@ -326,7 +370,7 @@ public class BillRow extends TableRow {
 			@Override
 			public void afterTextChanged(Editable s) {
 				try {
-					bill.setAuthorizationNumber(Integer.parseInt(t4.getText().toString()));
+					bill.setAuthorizationNumber(Long.parseLong(t4.getText().toString()));
 				} catch (Exception ex) {
 					bill.setAuthorizationNumber(0);
 					ex.printStackTrace();
@@ -351,14 +395,18 @@ public class BillRow extends TableRow {
             public void onDateSet(DatePicker view, int selectedYear,
                     int selectedMonth, int selectedDay) {
                 try {
-                	DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                 	String year = String.valueOf(selectedYear);
                     String month = String.valueOf(selectedMonth + 1);
                     String day = String.valueOf(selectedDay);
                     String date = day + "/" + month + "/" + year;
-                    t5.setText(date);
-                	bill.setEmissionDate(df.parse(date));
-                	BillTableFragment.getBills().put(rowNumber, bill);
+                    Date eDate = dateFormat.parse(date);
+                    if (BillAnalyzer.verifyBillDate(eDate)) {
+                    	t5.setText(date);
+                    	bill.setEmissionDate(dateFormat.parse(date));
+                    	BillTableFragment.getBills().put(rowNumber, bill);
+                    } else {
+                		throw new BillException("Fecha de emision invalida");
+                	}
 				} catch (ParseException e) {
 					AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
 		            alertDialog.setTitle("Problema con la fecha");
@@ -370,6 +418,8 @@ public class BillRow extends TableRow {
 		        		}
 		        	});
 		            alertDialog.show();
+				} catch (BillException e) {
+					Toast.makeText(t5.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				}
             }
         };
@@ -398,7 +448,8 @@ public class BillRow extends TableRow {
      */
     private EditText createAmountEditText() {
     	final EditText t6 = new EditText(this.getContext());
-    	t6.setInputType(0x00002002);
+    	t6.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    	t6.setFilters(inputFiltersDecimal);
     	t6.setText("");
     	t6.addTextChangedListener(new TextWatcher() {
 			
@@ -440,6 +491,7 @@ public class BillRow extends TableRow {
     private EditText createControlCodeEditText() {
     	final EditText t7 = new EditText(this.getContext());
     	t7.setText("");
+    	t7.setFilters(inputFiltersLarge);
     	t7.addTextChangedListener(new TextWatcher() {
 			
     		/**

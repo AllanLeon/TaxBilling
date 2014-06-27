@@ -71,8 +71,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="1dp"
-                    android:maxWidth="120dp"
-                    android:minWidth="120dp"
+                    android:maxWidth="130dp"
+                    android:minWidth="130dp"
                     android:text="@string/TableColumn2" />
 
                 <TextView
@@ -91,8 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="1dp"
-                    android:maxWidth="150dp"
-                    android:minWidth="150dp"
+                    android:maxWidth="180dp"
+                    android:minWidth="180dp"
                     android:text="@string/TableColumn4" />
 
                 <TextView
@@ -111,8 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="1dp"
-                    android:maxWidth="110dp"
-                    android:minWidth="110dp"
+                    android:maxWidth="130dp"
+                    android:minWidth="130dp"
                     android:text="@string/TableColumn6" />
 
                 <TextView
@@ -120,8 +120,8 @@
                     style="@style/HeaderStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="130dp"
-                    android:minWidth="130dp"
+                    android:maxWidth="180dp"
+                    android:minWidth="180dp"
                     android:text="@string/TableColumn7" />
             </TableRow>
         </TableLayout>
@@ -157,8 +157,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="1dp"
-                        android:maxWidth="120dp"
-                        android:minWidth="120dp"
+                        android:maxWidth="130dp"
+                        android:minWidth="130dp"
                         android:text="@string/TableColumn2" />
 
                     <TextView
@@ -175,8 +175,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="1dp"
-                        android:maxWidth="150dp"
-                        android:minWidth="150dp"
+                        android:maxWidth="180dp"
+                        android:minWidth="180dp"
                         android:text="@string/TableColumn4" />
 
                     <TextView
@@ -193,16 +193,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginRight="1dp"
-                        android:maxWidth="110dp"
-                        android:minWidth="110dp"
+                        android:maxWidth="130dp"
+                        android:minWidth="130dp"
                         android:text="@string/TableColumn6" />
 
                     <TextView
                         style="@style/HeaderStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:maxWidth="130dp"
-                        android:minWidth="130dp"
+                        android:maxWidth="180dp"
+                        android:minWidth="180dp"
                         android:text="@string/TableColumn7" />
                 </TableRow>
             </TableLayout>
