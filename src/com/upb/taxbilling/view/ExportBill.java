@@ -238,12 +238,16 @@ public class ExportBill extends Fragment{
 	 */
 	public String getBillInfoString(Bill bill) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-		String info = Integer.toString(bill.getNit())+"|"
-		              +Integer.toString(bill.getBillNumber())+"|"
-		              +Long.toString(bill.getAuthorizationNumber())+"|"
-		              +df.format(bill.getEmissionDate())+"|"
-				      +Double.toString(bill.getAmount())+"|"
-				      +bill.getControlCode();
+		String info = Integer.toString(bill.getNit()) + "|"
+		              + Integer.toString(bill.getBillNumber()) + "|"
+		              + Long.toString(bill.getAuthorizationNumber()) + "|"
+		              + df.format(bill.getEmissionDate()) + "|"
+				      + Double.toString(bill.getAmount()) + "|";
+		if (bill.getControlCode().trim().equals("")) {
+			info += " ";
+		} else {
+			info += bill.getControlCode();
+		}
 		return info;
 	}
 	
@@ -302,6 +306,11 @@ public class ExportBill extends Fragment{
 		}
 	}
 	
+	/**
+	 * Verify that all the bills in the table doesn't have empty fields.
+	 * @return true if the aren't empty fields
+	 * @throws ExportException if a field is empty
+	 */
 	private boolean verifyAllBills() throws ExportException {
 		boolean ok = true;
 		String message = "";
