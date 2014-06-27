@@ -168,6 +168,10 @@ public class ExportFragment extends Fragment{
 			   		fout.write(arrayDate.get(i));
 			   		fout.write("\n");
 			    }
+			    for(int i=1; i < arrayDate.size(); i++) {
+			   		fout.write(arrayDate.get(i));
+			   		fout.write("\n");
+			    }
 			    for(int i=1; i < arrayUser.size(); i++) {
 			   		fout.write(arrayUser.get(i));
 			   		fout.write("\n");

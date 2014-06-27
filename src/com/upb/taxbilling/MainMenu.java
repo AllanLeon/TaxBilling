@@ -178,8 +178,8 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                 .commit();
            		break;
            	case 5:
-           		sendTxt();
            		actionBar.setSelectedNavigationItem(0);
+           		sendTxt();
            		break;
         }
          return true;
@@ -272,7 +272,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
     /**
      * Sends factura.txt file to the WebService server. 
      */
-   	private void sendTxt() {
+   	public void sendTxt() {
 
    		Thread thread = new Thread() {
    			//Localizacion del archivo txt en la memoria sd del dispositivo android
@@ -287,7 +287,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
    				
    				// Datos del Servidor Web
    				String NAMESPACE = "http://demo.android.org/";
-   				String URL = "http://192.168.4.133/SumadorWS/DemoWS.asmx";
+   				String URL = "http://192.168.137.223/SumadorWS/DemoWS.asmx";
    				String METHOD_NAME = "UploadFile";
    				String SOAP_ACTION = "http://demo.android.org/UploadFile";
    				String TXTNAME = "factura" + new Date().getTime() + ".txt";
@@ -328,21 +328,28 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
 
    				// Mostrar la respuesta del servidor web
 
-   					runOnUiThread(new Runnable() {
+   				if (respuesta_WS.equalsIgnoreCase("Recibido Correctamente")) {
+					runOnUiThread(new Runnable() {
 
-   						@Override
-   						public void run() {
-   							if (respuesta_WS.equalsIgnoreCase("Recibido Correctamente")) {
-   								Toast.makeText(MainMenu.this, respuesta_WS,
-   									Toast.LENGTH_LONG).show();
-   							} else {
-   								Toast.makeText(MainMenu.this,
-   									"Error en el envio", Toast.LENGTH_LONG)
-   									.show();
-   							}
-   						}
+						@Override
+						public void run() {
+							Toast.makeText(MainMenu.this, respuesta_WS,
+									Toast.LENGTH_LONG).show();
+						}
 
-   					});
+					});
+				} else {
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							Toast.makeText(MainMenu.this,
+									"Error en el envio", Toast.LENGTH_LONG)
+									.show();
+						}
+
+					});
+				}
    			}
    		};
 
