@@ -43,7 +43,8 @@ public class BillRow extends TableRow {
 	private int rowNumber;
 	private boolean isHighlighted;
 	private DateFormat dateFormat;
-	private InputFilter[] inputFilters;
+	private InputFilter[] inputFiltersSmall;
+	private InputFilter[] inputFiltersLarge;
 	
 	/**
 	 * Default constructor of a TableRow, receives a context as a parameter.
@@ -150,8 +151,10 @@ public class BillRow extends TableRow {
 	}
 	
 	private void createInputFilters() {
-		InputFilter maxLengthFilter = new InputFilter.LengthFilter(15);
-		inputFilters = new InputFilter[]{ maxLengthFilter };
+		InputFilter maxLengthFilterSmall = new InputFilter.LengthFilter(10);
+		InputFilter maxLengthFilterLarge = new InputFilter.LengthFilter(15);
+		inputFiltersSmall = new InputFilter[]{ maxLengthFilterSmall };
+		inputFiltersLarge = new InputFilter[]{ maxLengthFilterLarge };
 	}
 
 	/**
@@ -229,7 +232,7 @@ public class BillRow extends TableRow {
     private EditText createNitEditText() {
     	final EditText t2 = new EditText(this.getContext());
     	t2.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t2.setFilters(inputFilters);
+    	t2.setFilters(inputFiltersSmall);
     	t2.setText("");
     	t2.addTextChangedListener(new TextWatcher() {
 			
@@ -271,7 +274,7 @@ public class BillRow extends TableRow {
     private EditText createBillNumberEditText() {
     	final EditText t3 = new EditText(this.getContext());
     	t3.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t3.setFilters(inputFilters);
+    	t3.setFilters(inputFiltersSmall);
     	t3.setText("");
     	t3.addTextChangedListener(new TextWatcher() {
 			
@@ -314,7 +317,7 @@ public class BillRow extends TableRow {
     private EditText createAuthorizationNumberEditText() {
     	final EditText t4 = new EditText(this.getContext());
     	t4.setInputType(InputType.TYPE_CLASS_NUMBER);
-    	t4.setFilters(inputFilters);
+    	t4.setFilters(inputFiltersLarge);
     	t4.setText("");
     	t4.addTextChangedListener(new TextWatcher() {
 			
@@ -419,7 +422,7 @@ public class BillRow extends TableRow {
     private EditText createAmountEditText() {
     	final EditText t6 = new EditText(this.getContext());
     	t6.setInputType(0x00002002);
-    	t6.setFilters(inputFilters);
+    	t6.setFilters(inputFiltersSmall);
     	t6.setText("");
     	t6.addTextChangedListener(new TextWatcher() {
 			
@@ -461,7 +464,7 @@ public class BillRow extends TableRow {
     private EditText createControlCodeEditText() {
     	final EditText t7 = new EditText(this.getContext());
     	t7.setText("");
-    	t7.setFilters(inputFilters);
+    	t7.setFilters(inputFiltersLarge);
     	t7.addTextChangedListener(new TextWatcher() {
 			
     		/**
