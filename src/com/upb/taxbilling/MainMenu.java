@@ -1,9 +1,23 @@
 package com.upb.taxbilling;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+
+import org.kobjects.base64.Base64;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -250,4 +264,116 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
             return rootView;
         }
     }
+    
+    //Metodo para realizar el envio del archivo txt al web service (cliente)
+   	private void enviartxt() {
+
+   		Thread thread = new Thread() {
+   			//Localizacion del archivo txt en la memoria sd del dispositivo android
+   			//File path = new File("/storage/sdcard/Factura/facturaprueba.txt");
+   			//File path = new File("/storage/emulated/0/DiCaprio/factura.txt");
+   			File ruta_sd = Environment.getExternalStorageDirectory();
+   		    File path = new File(ruta_sd.getAbsolutePath(), "Factura.txt");
+   			String respuesta_WS = "";
+
+   			@Override
+   			public void run() {
+   				
+   				// Datos del Servidor Web
+   				String NAMESPACE = "http://demo.android.org/";
+   				String URL = "http://192.168.4.133/SumadorWS/DemoWS.asmx";
+   				String METHOD_NAME = "UploadFile";
+   				String SOAP_ACTION = "http://demo.android.org/UploadFile";
+   				String TXTNAME = "factura" + new Date().getTime() + ".txt";
+
+   				// Creacion del request SOAP para la comunicacion del WS
+   				SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+   				// Agregando el dato de la primera variable requerida por el WS
+   				request.addProperty("fileName", TXTNAME);
+   				// Agregando el dato de la segunda variable requerida por el WS
+   				try {
+   					request.addProperty("f",
+   							Base64.encode(getBytesFromFile(path)));
+   				} catch (IOException e) {
+   					e.printStackTrace();
+   				}
+
+   				// Creacion del envelope con las caracteristicas del SOAP del
+   				// WS//Version del SOAP 1.1
+   				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+   						SoapEnvelope.VER11);
+   				// Conexion asp.net
+   				envelope.dotNet = true;
+   				// Carga del request SOAP al envelope para enviar
+   				envelope.setOutputSoapObject(request);
+
+   				// Creacion del transporte por http segun la URL del WS
+   				HttpTransportSE httpTransport = new HttpTransportSE(URL);
+   				try {
+   					// Envio del architoTxt al WS mediante el transporte http
+   					httpTransport.call(SOAP_ACTION, envelope);
+   					// Guarda la respuesta recibida por el WS
+   					SoapPrimitive resultado_xml = (SoapPrimitive) envelope
+   							.getResponse();
+   					respuesta_WS = resultado_xml.toString();
+   				} catch (Exception exception) {
+   					exception.printStackTrace();
+   				}
+
+   				// Mostrar la respuesta del servidor web
+
+   				//if (respuesta_WS.equalsIgnoreCase("Recibido Correctamente")) {
+   					runOnUiThread(new Runnable() {
+
+   						@Override
+   						public void run() {
+   							if (respuesta_WS.equalsIgnoreCase("Recibido Correctamente")) {
+   								Toast.makeText(MainMenu.this, respuesta_WS,
+   									Toast.LENGTH_LONG).show();
+   							} else {
+   								Toast.makeText(MainMenu.this,
+   									"Error en el envio", Toast.LENGTH_LONG)
+   									.show();
+   							}
+   						}
+
+   					});
+   				/*} else {
+   					runOnUiThread(new Runnable() {
+
+   						@Override
+   						public void run() {
+   							//Toast.makeText(MainMenu.this,
+   								//	"Error en el envio", Toast.LENGTH_LONG)
+   									//.show();
+   						}
+
+   					});
+   				}*/
+
+   			}
+   		};
+
+   		thread.start();
+   	}
+
+   	// Metodo para convertir el archivo en un array de bytes
+
+   	private byte[] getBytesFromFile(File file) throws IOException {
+   		InputStream is = new FileInputStream(file);
+
+   		long length = file.length();
+
+   		byte[] bytes = new byte[(int) length];
+
+   		int offset = 0;
+   		int numRead = 0;
+   		while (offset < bytes.length
+   				&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+   			offset += numRead;
+   		}
+
+   		is.close();
+   		return bytes;
+   	}
 }
