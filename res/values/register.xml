@@ -56,6 +56,18 @@
         <item >21</item><item >22</item><item >23</item><item >24</item><item >25</item>
         <item >26</item><item >27</item><item >28</item>
     </string-array>
+    <string-array name="expeditionPlace">
+        <item >La Paz</item>
+        <item >Cochabamba</item>
+        <item >Santa Cruz</item>
+        <item >Tarija</item>
+        <item >Oruro</item>
+        <item >Potosí</item>
+        <item >Pando</item>
+        <item >Chuquisaca</item>
+        <item >Beni</item>
+    </string-array>
+   
     <color name="registerBackgroundColor">#F2F1DF</color>
     <color name="Floating">#BED9BA</color>
     <color name="Black">#000000</color>
