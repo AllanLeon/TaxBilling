@@ -79,6 +79,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                                 getString(R.string.title_bill_table),
                                 getString(R.string.title_export_bill),
                                 getString(R.string.title_qr_reader),
+                                getString(R.string.title_send),
                         }),
                 this);
     }
@@ -175,7 +176,9 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            		getFragmentManager().beginTransaction()
                 .replace(R.id.container, new QRCameraFragment())
                 .commit();
-           		
+           		break;
+           	case 5:
+           		enviartxt();
            		break;
         }
          return true;

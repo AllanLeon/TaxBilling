@@ -10,6 +10,7 @@
     <string name="title_bill_table">Reg. Facturas</string>
     <string name="title_export_bill">Exportar Facturas</string>
     <string name="title_qr_reader">Leer Cod. QR</string>
+    <string name="title_send">Enviar .txt</string>
     <string name="action_settings">Configuración</string>
     <string name="welcome">Facturación de Impuestos Nacionales</string>
     <string name="receipt_desc">Factura</string>
