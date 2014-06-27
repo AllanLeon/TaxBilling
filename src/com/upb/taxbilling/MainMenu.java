@@ -177,7 +177,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Presiona nuevamente 'Atrás' para salir de F.I.N.", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
