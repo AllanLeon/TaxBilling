@@ -92,14 +92,11 @@
                         android:layout_weight="1"
                         android:entries="@array/months" />
 
-                    <EditText
-                        android:id="@+id/editText9"
+                    <TextView
+                        android:id="@+id/textView13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:maxLength="4" />
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -151,9 +148,7 @@
                         android:id="@+id/editText3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:maxLength="10" />
+                        android:ems="10" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -175,26 +170,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/email" />
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/editText10"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <EditText
-                            android:id="@+id/editText10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="textEmailAddress" />
-
-                        <Spinner
-                            android:id="@+id/spinner5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:entries="@array/expeditionPlace" />
-
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
                 </LinearLayout>
 
                 <LinearLayout

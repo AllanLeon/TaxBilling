@@ -37,6 +37,7 @@ public class RegisterFragment extends Fragment {
 	private static Taxpayer taxpayer;
 	private static Company company;
 	private static Calendar date;
+	private Calendar actualDate;
 	private static String place;
 	
 	private Button saveButton;
@@ -47,12 +48,11 @@ public class RegisterFragment extends Fragment {
 	private EditText nitNumber;
 	private EditText addressCompany;
 	private EditText email;
-	private EditText year;
+	private TextView year;
 	private Spinner expeditionPlace;
 	private Spinner place_presentation;
 	private Spinner day;
 	private Spinner month;
-	private Spinner domain;
 	
 	/**
      * {@inheritDoc}
@@ -72,11 +72,12 @@ public class RegisterFragment extends Fragment {
 		addressCompany = (EditText)view.findViewById(R.id.editText7);
 		email = (EditText)view.findViewById(R.id.editText10);
 		place_presentation = (Spinner)view.findViewById(R.id.spinner4);
-		year = (EditText)view.findViewById(R.id.editText9);
+		year = (TextView)view.findViewById(R.id.textView13);
 		saveButton = (Button)view.findViewById(R.id.button1);
 		month = (Spinner)view.findViewById(R.id.spinner1);
 		day = (Spinner)view.findViewById(R.id.spinner2);
-		domain = (Spinner)view.findViewById(R.id.spinner5);
+		actualDate = Calendar.getInstance();
+		year.setText(Integer.toString(actualDate.get(Calendar.YEAR)));
 		
 		InputFilter filterLetterOrDigitSpace = new InputFilter() {
 			
@@ -123,11 +124,12 @@ public class RegisterFragment extends Fragment {
 			}
 		};
 		
-		nameLastname.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterSpace});
-		address.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
-		employerBussinesName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20),filterLetterSpace});
-		addressCompany.setFilters(new InputFilter[] { new InputFilter.LengthFilter(50),filterLetterOrDigitSpace});
+		nameLastname.setFilters(new InputFilter[] {filterLetterSpace});
+		address.setFilters(new InputFilter[] {filterLetterOrDigitSpace});
+		employerBussinesName.setFilters(new InputFilter[] {filterLetterSpace});
+		addressCompany.setFilters(new InputFilter[] {filterLetterOrDigitSpace});
 		nitNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
+		identityNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(10),filterDigit});
 		
 		/**
 		 * Change day according to month
@@ -191,15 +193,15 @@ public class RegisterFragment extends Fragment {
 		UserDataException usde = new UserDataException();
 		if(usde.userData(nameLastname, address,
 				identityNumber, employerBussinesName, nitNumber,
-				addressCompany, email, year).equals("")) {
+				addressCompany, email).equals("")) {
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
 				address.getText().toString(), expeditionPlace.getSelectedItem().toString(),
-				email.getText().toString()+domain.getSelectedItem().toString(), Integer.parseInt(identityNumber.getText().toString()));
+				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
 		company = new Company(addressCompany.getText().toString(),
 				employerBussinesName.getText().toString(),
 				Integer.parseInt(nitNumber.getText().toString()));
 		date = Calendar.getInstance();
-		date.set(Integer.parseInt(year.getText().toString()), 
+		date.set(date.get(Calendar.YEAR), 
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
 		setPlace(place_presentation.getSelectedItem().toString());

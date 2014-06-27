@@ -25,14 +25,14 @@ public class UserDataException {
 		public String userData(EditText nameLastname, EditText address,
 				EditText identityNumber, 
 				EditText employerBussinesName, EditText nitNumber,
-				EditText addressCompany, EditText email, EditText year) {
+				EditText addressCompany, EditText email) {
 			if(fieldEmpty(nameLastname.getText().toString())
 			   || fieldEmpty(address.getText().toString())
 			   || fieldEmpty(identityNumber.getText().toString())
 			   || fieldEmpty(employerBussinesName.getText().toString())
 			   || fieldEmpty(nitNumber.getText().toString())
 			   || fieldEmpty(addressCompany.getText().toString())
-			   || fieldEmpty(year.getText().toString())) {
+			   || fieldEmpty(email.getText().toString())) {
 				return "Error";
 			} else {
 				return "";
