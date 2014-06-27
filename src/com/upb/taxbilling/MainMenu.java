@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.upb.taxbilling.view.ExportBill;
@@ -27,6 +28,8 @@ import com.upb.taxbilling.view.qr.QRCameraFragment;
  */
 public class MainMenu extends Activity implements ActionBar.OnNavigationListener {
 
+	static ActionBar actionBar;
+	
     /**
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
@@ -38,12 +41,12 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     
         // Set up the action bar to show a dropdown list.
-        final ActionBar actionBar = getActionBar();
+        actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
@@ -61,10 +64,10 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                                 getString(R.string.title_export_bill),
                                 getString(R.string.title_qr_reader),
                         }),
-                this);        
+                this);
     }
 
-    public void onStart(){
+	public void onStart(){
     	super.onStart();
     	
     }
@@ -156,6 +159,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            		getFragmentManager().beginTransaction()
                 .replace(R.id.container, new QRCameraFragment())
                 .commit();
+           		
            		break;
         }
          return true;
@@ -189,12 +193,45 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+        	
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
             TextView title = (TextView) rootView.findViewById(R.id.textView1);
         	Typeface font = Typeface.createFromAsset(rootView.getContext().getAssets(), "Woodstamp.otf");
         	title.setTypeface(font);
+        	
+            Button btn1 = (Button) rootView.findViewById(R.id.button1);
+            btn1.setOnClickListener(new View.OnClickListener() {
+            	@Override
+            	public void onClick(View v) {
+                	actionBar.setSelectedNavigationItem(1);
+                }
+            });
+            Button btn2 = (Button) rootView.findViewById(R.id.button2);
+            btn2.setOnClickListener(new View.OnClickListener() {
+            	@Override
+            	public void onClick(View v) {
+            		actionBar.setSelectedNavigationItem(2);
+            	}
+            });
+                    
+            Button btn3 = (Button) rootView.findViewById(R.id.button3);
+            btn3.setOnClickListener(new View.OnClickListener() {
+            	@Override
+            	public void onClick(View v) {
+            		actionBar.setSelectedNavigationItem(3);
+            	}
+            });
+                    
+            Button btn4 = (Button) rootView.findViewById(R.id.button4);
+            btn4.setOnClickListener(new View.OnClickListener() {
+            	@Override
+            	public void onClick(View v) {
+            		actionBar.setSelectedNavigationItem(4);
+            	}
+            });
+            
             return rootView;
         }
     }
