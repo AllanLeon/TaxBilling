@@ -178,7 +178,8 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
                 .commit();
            		break;
            	case 5:
-           		enviartxt();
+           		sendTxt();
+           		actionBar.setSelectedNavigationItem(0);
            		break;
         }
          return true;
@@ -268,8 +269,10 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
         }
     }
     
-    //Metodo para realizar el envio del archivo txt al web service (cliente)
-   	private void enviartxt() {
+    /**
+     * Sends factura.txt file to the WebService server. 
+     */
+   	private void sendTxt() {
 
    		Thread thread = new Thread() {
    			//Localizacion del archivo txt en la memoria sd del dispositivo android
@@ -325,7 +328,6 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
 
    				// Mostrar la respuesta del servidor web
 
-   				//if (respuesta_WS.equalsIgnoreCase("Recibido Correctamente")) {
    					runOnUiThread(new Runnable() {
 
    						@Override
@@ -341,27 +343,18 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
    						}
 
    					});
-   				/*} else {
-   					runOnUiThread(new Runnable() {
-
-   						@Override
-   						public void run() {
-   							//Toast.makeText(MainMenu.this,
-   								//	"Error en el envio", Toast.LENGTH_LONG)
-   									//.show();
-   						}
-
-   					});
-   				}*/
-
    			}
    		};
 
    		thread.start();
    	}
 
-   	// Metodo para convertir el archivo en un array de bytes
-
+   	/**
+   	 * Converts a given file into an array of bytes.
+   	 * @param file to be converted
+   	 * @return array of bytes
+   	 * @throws IOException when there's a problem in the file's conversion
+   	 */
    	private byte[] getBytesFromFile(File file) throws IOException {
    		InputStream is = new FileInputStream(file);
 
