@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.upb.taxbilling.MainActivity$PlaceholderFragment" >
+    tools:context="com.upb.taxbilling.MainActivity$PlaceholderFragment"
+    tools:ignore="Deprecated" >
 
     <!-- Receipt image -->
 
@@ -19,18 +20,50 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="93dp"
-        android:layout_x="16dp"
-        android:layout_y="61dp"
+        android:layout_x="31dp"
+        android:layout_y="51dp"
         android:text="@string/welcome"
-        android:textSize="100sp" />
+        android:textSize="60sp" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="271dp"
-        android:layout_height="233dp"
-        android:layout_x="60dp"
-        android:layout_y="240dp"
+        android:layout_width="match_parent"
+        android:layout_height="331dp"
+        android:layout_x="2dp"
+        android:layout_y="156dp"
         android:contentDescription="@string/receipt_desc"
         android:src="@drawable/ff" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="130dp"
+        android:layout_height="77dp"
+        android:layout_x="31dp"
+        android:layout_y="249dp"
+        android:text="@string/mainButton_register" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="130dp"
+        android:layout_height="77dp"
+        android:layout_x="173dp"
+        android:layout_y="249dp"
+        android:text="@string/mainButton_bill_table" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="130dp"
+        android:layout_height="77dp"
+        android:layout_x="31dp"
+        android:layout_y="338dp"
+        android:text="@string/mainButton_export_bill" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="130dp"
+        android:layout_height="77dp"
+        android:layout_x="173dp"
+        android:layout_y="338dp"
+        android:text="@string/mainButton_qr_reader" />
 
 </AbsoluteLayout>
