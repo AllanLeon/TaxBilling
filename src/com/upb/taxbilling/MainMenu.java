@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.upb.taxbilling.view.ExportBill;
+import com.upb.taxbilling.view.ExportFragment;
 import com.upb.taxbilling.view.RegisterFragment;
 import com.upb.taxbilling.view.billtable.BillTableFragment;
 import com.upb.taxbilling.view.qr.QRCameraFragment;
@@ -156,7 +156,7 @@ public class MainMenu extends Activity implements ActionBar.OnNavigationListener
            		break;
            	case 3:
            		getFragmentManager().beginTransaction()
-           		.replace(R.id.container, new ExportBill())
+           		.replace(R.id.container, new ExportFragment())
            		.commit();
            		break;
            	case 4:

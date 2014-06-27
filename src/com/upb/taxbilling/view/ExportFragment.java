@@ -33,7 +33,7 @@ import com.upb.taxbilling.view.billtable.BillTableFragment;
  * The fragment where the information about a User and Bill is export to a file
  * @author Kevin Aguilar
  */
-public class ExportBill extends Fragment{
+public class ExportFragment extends Fragment{
 		
 	private double totalAmount;
 	private boolean sdAvailable;
