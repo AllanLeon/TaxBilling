@@ -1,8 +1,12 @@
 package com.upb.taxbilling.view;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
+
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +19,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.text.InputFilter;
-import android.text.Spanned;
 
 import com.upb.taxbilling.R;
+import com.upb.taxbilling.exceptions.RegisterException;
 import com.upb.taxbilling.exceptions.UserDataException;
 import com.upb.taxbilling.model.data.Company;
 import com.upb.taxbilling.model.data.Taxpayer;
@@ -31,15 +34,14 @@ import com.upb.taxbilling.model.data.Taxpayer;
  */
 public class RegisterFragment extends Fragment {
 	
-	/**
-	 *EditText attributes to get user information
-	 *Taxpayer and Company attributes to save user information  
-	 */
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	private static boolean isChecked = false;
 	private static Taxpayer taxpayer;
 	private static Company company;
 	private static Calendar date;
-	private Calendar actualDate;
 	private static String place;
 	
 	private Button saveButton;
@@ -55,6 +57,9 @@ public class RegisterFragment extends Fragment {
 	private Spinner place_presentation;
 	private Spinner day;
 	private Spinner month;
+	private Calendar actualDate;
+	
+	private Pattern pattern;
 	
 	/**
      * {@inheritDoc}
@@ -183,21 +188,33 @@ public class RegisterFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				clickSaveData(v);
+				try {
+					clickSaveData(v);
+				} catch (RegisterException e) {
+					Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+				}
 			}
 		});
+		
+		pattern = Pattern.compile(EMAIL_PATTERN);
+		
 	    return view;
 	}
 	
 	/**
 	 * Method to save user data in taxpayer and company
 	 * @param v
+	 * @throws RegisterException if the email is invalid
 	 */
-	public void clickSaveData(View v) {
+	public void clickSaveData(View v) throws RegisterException {
 		UserDataException usde = new UserDataException();
 		if(usde.userData(nameLastname, address,
 				identityNumber, employerBussinesName, nitNumber,
 				addressCompany, email).equals("")) {
+			if (!pattern.matcher(email.getText().toString()).matches()) {
+				isChecked = false;
+				throw new RegisterException("Email invalido");
+			}
 		taxpayer = new Taxpayer(nameLastname.getText().toString(),
 				address.getText().toString(), expeditionPlace.getSelectedItem().toString(),
 				email.getText().toString(), Integer.parseInt(identityNumber.getText().toString()));
@@ -209,10 +226,10 @@ public class RegisterFragment extends Fragment {
 				 Integer.parseInt(month.getSelectedItem().toString()),
 				 Integer.parseInt(day.getSelectedItem().toString()));		 
 		setPlace(place_presentation.getSelectedItem().toString());
-			Toast.makeText(getActivity(), "Guardando", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Datos guardados", Toast.LENGTH_SHORT).show();
 			isChecked = true;
 		} else {
-			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Faltan Datos de Usuario", Toast.LENGTH_LONG).show();
 			isChecked = false;
 		}
 	}
