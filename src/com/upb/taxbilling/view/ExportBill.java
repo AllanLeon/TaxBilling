@@ -237,7 +237,7 @@ public class ExportBill extends Fragment{
 	 * @return the information of a bill in the form of a string.
 	 */
 	public String getBillInfoString(Bill bill) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 		String info = Long.toString(bill.getNit()) + "|"
 		              + Long.toString(bill.getBillNumber()) + "|"
 		              + Long.toString(bill.getAuthorizationNumber()) + "|"
