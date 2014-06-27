@@ -15,5 +15,9 @@
     <string name="receipt_desc">Factura</string>
     <string name="tap">Tap the image to open the camera</string>
     <string name="qr_info">Información código QR</string>
+    <string name="mainButton_register">Registrar Información</string>
+    <string name="mainButton_bill_table">Registrar Facturas</string>
+    <string name="mainButton_export_bill">Exportar Facturas</string>
+    <string name="mainButton_qr_reader">Leer Código QR</string>
 
 </resources>
